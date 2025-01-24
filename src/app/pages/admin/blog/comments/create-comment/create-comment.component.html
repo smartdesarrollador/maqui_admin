@@ -1,0 +1,103 @@
+<div
+  class="container mx-auto py-8 bg-white p-10 shadow-md rounded-md md:max-w-[100%] lg:max-w-[80%] xl:max-w-[60%]"
+>
+  <h1 class="text-2xl font-bold mb-6">Crear Comentario</h1>
+
+  <form
+    [formGroup]="commentForm"
+    (ngSubmit)="createComment()"
+    class="space-y-4"
+  >
+    <div>
+      <label for="id_articulo" class="block text-sm font-medium text-gray-700"
+        >Post</label
+      >
+      <select
+        id="id_articulo"
+        formControlName="id_articulo"
+        class="mt-1 block w-full border-gray-300 shadow-sm sm:text-sm rounded-md"
+      >
+        <option value="" disabled>Selecciona un post</option>
+        <option *ngFor="let post of posts" [value]="post.id">
+          {{ post.titulo }}
+        </option>
+      </select>
+      <div
+        *ngIf="
+          commentForm.controls['id_articulo'].invalid &&
+          commentForm.controls['id_articulo'].touched
+        "
+        class="text-red-600 text-sm"
+      >
+        Debes seleccionar un post.
+      </div>
+    </div>
+
+    <div>
+      <label
+        for="nombre_comentarista"
+        class="block text-sm font-medium text-gray-700"
+        >Nombre del comentarista</label
+      >
+      <input
+        id="nombre_comentarista"
+        type="text"
+        formControlName="nombre_comentarista"
+        class="mt-1 block w-full border-gray-300 shadow-sm sm:text-sm rounded-md"
+        placeholder="Nombre del comentarista"
+      />
+      <div
+        *ngIf="
+          commentForm.controls['nombre_comentarista'].invalid &&
+          commentForm.controls['nombre_comentarista'].touched
+        "
+        class="text-red-600 text-sm"
+      >
+        El nombre es obligatorio y debe tener menos de 255 caracteres.
+      </div>
+    </div>
+
+    <div>
+      <label for="contenido" class="block text-sm font-medium text-gray-700"
+        >Contenido</label
+      >
+      <textarea
+        id="contenido"
+        formControlName="contenido"
+        class="mt-1 block w-full border-gray-300 shadow-sm sm:text-sm rounded-md"
+        placeholder="Contenido del comentario"
+      ></textarea>
+      <div
+        *ngIf="
+          commentForm.controls['contenido'].invalid &&
+          commentForm.controls['contenido'].touched
+        "
+        class="text-red-600 text-sm"
+      >
+        El contenido es obligatorio.
+      </div>
+    </div>
+
+    <div>
+      <label
+        for="fecha_comentario"
+        class="block text-sm font-medium text-gray-700"
+        >Fecha del Comentario</label
+      >
+      <input
+        id="fecha_comentario"
+        type="date"
+        formControlName="fecha_comentario"
+        class="mt-1 block w-full border-gray-300 shadow-sm sm:text-sm rounded-md"
+      />
+    </div>
+
+    <button
+      type="submit"
+      class="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700"
+      [disabled]="commentForm.invalid"
+    >
+      Crear Comentario
+    </button>
+  </form>
+</div>

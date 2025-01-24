@@ -1,0 +1,52 @@
+<div class="py-5">
+  <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg px-4 py-4">
+      <!--Tabla lista de items   -->
+      <div
+        class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg"
+      >
+        <div class="grid grid-cols-12 gap-4">
+          <div class="col-span-3">Imagen:</div>
+          <div class="max-w-sm col-span-7">
+            <img src="{{ urlRaiz + datos_mision.url_imagen_mision }}" alt="" />
+          </div>
+          <div class="col-span-2">
+            <button
+              (click)="onEdit(datos_mision)"
+              class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition"
+            >
+              <i class="fas fa-edit"></i>
+            </button>
+          </div>
+          <div class="col-span-3">Titulo:</div>
+          <div class="col-span-7">
+            {{ datos_mision.titulo_mision }}
+          </div>
+          <div class="col-span-2"></div>
+          <div class="col-span-3">Misión:</div>
+          <div class="col-span-7">
+            {{ datos_mision.contenido_mision }}
+          </div>
+          <div class="col-span-2"></div>
+          <div class="col-span-3">Visión</div>
+          <div class="col-span-7">
+            {{ datos_mision.contenido_vision }}
+          </div>
+          <div class="col-span-2"></div>
+          <div class="col-span-3">Valores</div>
+          <div class="col-span-7">
+            {{ datos_mision.contenido_valores }}
+          </div>
+          <div class="col-span-2">
+            <button
+              (click)="onUpdate(datos_mision)"
+              class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition"
+            >
+              <i class="fas fa-edit"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

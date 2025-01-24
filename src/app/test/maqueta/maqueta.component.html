@@ -1,0 +1,188 @@
+<section>
+  <div class="container">
+    <div class="grid grid-cols-12">
+      <div class="col-span-2">
+        <div
+          class="bg-white mr-14 mt-20 gap-y-14 py-10 px-5 rounded-[35px] h-full"
+        >
+          <img src="assets/images/img1.png" class="" />
+          <br />
+          <img class="w-1/2 mt-10 ml-10" src="assets/images/img7.png" />
+
+          <img class="w-1/2 mt-10 ml-10" src="assets/images/img6.png" />
+
+          <img class="w-1/2 mt-10 ml-10" src="assets/images/img5.png" />
+
+          <img class="w-1/2 mt-10 ml-10" src="assets/images/img4.png" />
+
+          <img class="w-1/2 mt-10 ml-10" src="assets/images/img3.png" />
+
+          <img class="w-1/2 mt-10 ml-10" src="assets/images/img2.png" />
+        </div>
+      </div>
+      <div class="col-span-10">
+        <div *appPermission="['Editar']" class="grid grid-cols-1">
+          <div class="bg-white mr-14 mt-20 gap-y-14 p-10 rounded-[35px]">
+            <h2 class="text-xl font-bold">Vencimiento</h2>
+            <hr class="bg-celeste h-1" />
+
+            <div class="grid grid-cols-12 mt-4">
+              <div class="col-span-2 gap-y-40 font-bold text-lg">
+                <h2 class="">15</h2>
+              </div>
+              <div class="col-span-7 font-bold text-lg">
+                <h2>Pago de gratificaciones personal Administrativo</h2>
+              </div>
+              <div class="col-span-3">
+                <button
+                  type="button"
+                  class="text-naranja bg-naranja_claro hover:bg-naranja hover:text-white focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-10 py-2.5 mr-2 mb-2 focus:outline-none"
+                >
+                  Pendiente
+                </button>
+              </div>
+            </div>
+            <hr />
+            <div class="grid grid-cols-12 mt-4">
+              <div class="col-span-2 gap-y-40 font-bold text-lg">
+                <h2 class="">18</h2>
+              </div>
+              <div class="col-span-7 font-bold text-lg">
+                <h2>
+                  Firma de Contrato indeterminado - Trabajador Rafael Pérez
+                </h2>
+              </div>
+              <div class="col-span-3">
+                <button
+                  type="button"
+                  class="text-verde bg-verde_claro hover:bg-verde hover:text-white focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-10 py-2.5 mr-2 mb-2 focus:outline-none"
+                >
+                  Pendiente
+                </button>
+              </div>
+            </div>
+            <hr />
+            <div class="grid grid-cols-12 mt-4">
+              <div class="col-span-2 gap-y-40 font-bold text-lg">
+                <h2 class="">25</h2>
+              </div>
+              <div class="col-span-7 font-bold text-lg">
+                <h2>
+                  Procedimiento de Denuncia N 15023 - Trabajador José Perez
+                </h2>
+              </div>
+              <div class="col-span-3">
+                <button
+                  type="button"
+                  class="text-naranja bg-naranja_claro hover:bg-naranja hover:text-white focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-10 py-2.5 mr-2 mb-2 focus:outline-none"
+                >
+                  Pendiente
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="grid grid-cols-1">
+          <div class="bg-white mr-14 mt-20 gap-y-14 p-10 rounded-[35px]">
+            <h2 class="text-xl font-bold">Tareas</h2>
+            <hr class="bg-celeste h-1" />
+            <table class="table-auto w-full font-bold text-lg mt-4 gap-3">
+              <thead>
+                <tr class="rounded-t-lg bg-gris_claro">
+                  <th></th>
+                  <th>Fecha</th>
+                  <th>Estado</th>
+                  <th>Prioridad</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Terminar el PPT solicitado</td>
+                  <td class="text-center">18 julio 23</td>
+                  <td class="flex justify-center">
+                    <button
+                      type="button"
+                      class="text-verde bg-verde_claro hover:bg-verde hover:text-white focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-10 py-2.5 mr-2 mb-2 focus:outline-none"
+                    >
+                      Culminado
+                    </button>
+                  </td>
+                  <td class="text-center">A</td>
+                </tr>
+                <tr>
+                  <td>Llamar por consulta laboral</td>
+                  <td class="text-center">11 julio 23</td>
+                  <td class="flex justify-center">
+                    <button
+                      type="button"
+                      class="text-naranja bg-naranja_claro hover:bg-naranja hover:text-white focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-10 py-2.5 mr-2 mb-2 focus:outline-none"
+                    >
+                      En Proceso
+                    </button>
+                  </td>
+                  <td class="text-center">C</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="grid grid-cols-12">
+          <div class="col-span-5">
+            <div class="grid grid-cols-1">
+              <div class="bg-white mr-14 mt-20 gap-y-14 p-10 rounded-[35px]">
+                <h2 class="text-xl font-bold">Cumpleaños</h2>
+                <hr class="bg-azul h-1" />
+                <div class="flex justify-center">
+                  <img
+                    class=""
+                    src="assets/images/img9.png"
+                    class="w-1/2 m-4"
+                  />
+                </div>
+                <div class="font-bold text-lg text-center">Lorena Nuñes</div>
+                <div class="font-bold text-5xl text-center">24</div>
+                <div class="font-bold text-2xl text-center text-azul">
+                  AGOSTO
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-span-7">
+            <div class="grid grid-cols-1">
+              <div class="bg-white mr-14 mt-20 gap-y-14 p-10 rounded-[35px]">
+                <h2 class="text-xl font-bold">Ultimas Noticias</h2>
+                <hr class="bg-celeste h-1" />
+                <div class="grid grid-cols-12 mt-4">
+                  <div class="col-span-4 gap-y-40 font-bold text-lg">
+                    <h2 class="">25</h2>
+                  </div>
+                  <div class="col-span-8 font-bold text-lg">
+                    <h2>Declaran nuevo feriado nacional</h2>
+                  </div>
+                </div>
+                <hr />
+                <div class="grid grid-cols-12 mt-4">
+                  <div class="col-span-4 gap-y-40 font-bold text-lg">
+                    <h2 class="">20</h2>
+                  </div>
+                  <div class="col-span-8 font-bold text-lg">
+                    <h2>Triple remuneraciónn para trabajos en feriado</h2>
+                  </div>
+                </div>
+                <hr />
+                <div class="grid grid-cols-12 mt-4">
+                  <div class="col-span-4 gap-y-40 font-bold text-lg">
+                    <h2 class="">10</h2>
+                  </div>
+                  <div class="col-span-8 font-bold text-lg">
+                    <h2>Fecha maxima para pagos de remuneraciones</h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

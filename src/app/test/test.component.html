@@ -1,0 +1,27 @@
+<!-- <app-test-navbar></app-test-navbar> -->
+<app-navbar-basico></app-navbar-basico>
+<section>
+  <div
+    class="container fixed top-100 left-0 right-0 bg-gris_claro h-[900px] rounded-r-[40px] -z-10 mt-10"
+  >
+    <div class="grid"></div>
+  </div>
+</section>
+<aside></aside>
+<section>
+  <div class="container">
+    <div class="grid sm:grid-cols-8 md:grid-cols-12">
+      <div class="hidden md:block md:col-span-3">
+        <div
+          class="bg-white mr-14 mt-20 gap-y-14 py-10 px-5 rounded-[35px] h-full"
+        >
+          <!-- <app-test-sidebar></app-test-sidebar> -->
+          <app-test-menu-lateral></app-test-menu-lateral>
+        </div>
+      </div>
+      <div class="sm:col-span-8 md:col-span-9">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</section>

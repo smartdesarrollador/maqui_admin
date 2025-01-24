@@ -1,0 +1,25 @@
+<div class="container">
+  <div class="flex justify-center shadow overflow-hidden sm:rounded-lg">
+    <table class="bg-slate-50 w-[60%] divide-y divide-gray-200 table-auto">
+      <thead class="rounded-t-lg bg-blue-500 text-white">
+        <tr class="text-left text-xs font-bold uppercase">
+          <td scope="col" class="px-6 py-3">Nombre</td>
+          <td scope="col" class="px-6 py-3">Correo</td>
+          <td scope="col" class="px-6 py-3">Telefono</td>
+          <td scope="col" class="px-6 py-3">Asunto</td>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200">
+        <tr
+          *ngFor="let item of listContactos"
+          class="text-sm font-medium text-gray-900"
+        >
+          <td class="px-6 py-4">{{ item.nombre }}</td>
+          <td class="px-6 py-4">{{ item.correo }}</td>
+          <td class="px-6 py-4">{{ item.telefono }}</td>
+          <td class="px-6 py-4">{{ item.asunto }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

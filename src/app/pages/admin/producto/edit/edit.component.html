@@ -1,0 +1,233 @@
+<div class="py-5">
+  <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
+    <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg px-4 py-4">
+      <!--Tabla lista de items   -->
+      <h2 class="text-center text-xl text-blue-500 font-bold">
+        Editar registro
+      </h2>
+      <form
+        (ngSubmit)="onSubmit()"
+        [formGroup]="form"
+        class="max-w-4xl mx-auto"
+      >
+        <div class="mb-5" form-group>
+          <label
+            for="base-input"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Título</label
+          >
+          <input
+            type="text"
+            id="nombre"
+            formControlName="nombre"
+            name="nombre"
+            class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          />
+        </div>
+        <div class="mb-5" form-group>
+          <label
+            for="base-input"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Resumen del contenido</label
+          >
+          <input
+            type="text"
+            id="resumen"
+            formControlName="resumen"
+            name="resumen"
+            class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          />
+        </div>
+        <div class="mb-5" form-group>
+          <label
+            for="base-input"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Contenido</label
+          >
+          <!-- <ckeditor
+            formControlName="descripcion"
+            name="descripcion"
+            [editor]="Editor"
+            data="<p>Hello, world!</p>"
+          ></ckeditor> -->
+          <!-- <input
+            type="text"
+            id="descripcion"
+            formControlName="descripcion"
+            name="descripcion"
+            class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          /> -->
+          <quill-editor
+            formControlName="descripcion"
+            name="descripcion"
+            id="txtContent"
+            [modules]="moduleQuill"
+            (onEditorChanged)="onChangeEditor($event)"
+          ></quill-editor>
+        </div>
+        <!--  <div class="mb-5" form-group>
+          <label
+            for="duracion"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Duración</label
+          >
+          <input
+            type="text"
+            id="duracion"
+            formControlName="duracion"
+            name="duracion"
+            class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          />
+        </div> -->
+        <div class="mb-5" form-group>
+          <label
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            for="image"
+            >Imagen</label
+          >
+          <input
+            formControlName="image"
+            name="image"
+            id="image"
+            (change)="uploadImage($event)"
+            class="form-control block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+            type="file"
+          />
+          <div *ngIf="submitted && f['image'].errors" class="invalid-feedback">
+            <div class="text-red-500" *ngIf="f['image'].errors['required']">
+              Seleccionar archivo
+            </div>
+          </div>
+        </div>
+        <!--  <div class="mb-5" form-group>
+          <div class="grid grid-cols-2">
+            <div>
+              <label
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                for="pdf"
+                >Pdf</label
+              >
+              <input
+                formControlName="pdf"
+                name="pdf"
+                id="pdf"
+                (change)="uploadImagePdf($event)"
+                class="form-control block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                type="file"
+              />
+              <div
+                *ngIf="submitted && f['pdf'].errors"
+                class="invalid-feedback"
+              >
+                <div class="text-red-500" *ngIf="f['pdf'].errors['required']">
+                  Seleccionar Pdf
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-center">
+                <a
+                  class="pt-10 text-blue-500 hover:underline"
+                  target="_blank"
+                  [href]="currentImageUrlPdf"
+                  *ngIf="currentImageUrlPdf"
+                  >Descargar Pdf</a
+                >
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+        <!-- <div class="mb-5" form-group>
+          <label
+            for="base-input"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Maestro</label
+          >
+          <input
+            type="text"
+            id="maestro"
+            formControlName="maestro"
+            name="maestro"
+            class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          />
+        </div> -->
+        <!-- <div class="mb-5" form-group>
+          <label
+            for="base-input"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Instructor</label
+          >
+          <input
+            type="text"
+            id="observacion"
+            formControlName="observacion"
+            name="observacion"
+            class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          />
+        </div> -->
+        <!--  <div class="mb-5" form-group>
+          <label
+            for="number-input"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Precio:</label
+          >
+          <input
+            type="number"
+            id="precio"
+            formControlName="precio"
+            name="precio"
+            aria-describedby="helper-text-explanation"
+            class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder=""
+          />
+        </div> -->
+
+        <div class="mb-5" form-group>
+          @if (valor_destacado == "true") {
+          <div class="flex items-center mb-4">
+            <input
+              formControlName="destacado"
+              id="destacado"
+              name="destacado"
+              type="checkbox"
+              value=""
+              [checked]="true"
+              class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+            />
+            <label
+              for="default-checkbox"
+              class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              >Estado</label
+            >
+          </div>
+          } @if (valor_destacado == "false") {
+          <div class="flex items-center mb-4">
+            <input
+              formControlName="destacado"
+              id="destacado"
+              name="destacado"
+              type="checkbox"
+              value=""
+              [checked]="false"
+              class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+            />
+            <label
+              for="default-checkbox"
+              class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              >Estado</label
+            >
+          </div>
+          }
+        </div>
+
+        <button
+          type="submit"
+          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        >
+          Actualizar
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

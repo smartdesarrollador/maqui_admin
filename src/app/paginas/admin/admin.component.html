@@ -1,0 +1,47 @@
+<app-navbar></app-navbar>
+<a (click)="cambiarTranslate()" class="md:hidden absolute top-0">
+  <i class="fa fa-bars fa-lg"></i>
+</a>
+<br />
+<br />
+
+<section>
+  <div
+    class="container fixed top-100 left-0 right-0 bg-gris_claro h-[900px] rounded-r-[40px] -z-10 mt-10"
+  >
+    <div class="grid"></div>
+  </div>
+</section>
+<aside></aside>
+<section>
+  <div class="container">
+    <div class="grid sm:grid-cols-8 md:grid-cols-12">
+      <div class="hidden md:block md:col-span-3">
+        <div
+          class="bg-white mr-14 mt-20 gap-y-14 py-10 px-5 rounded-[35px] h-full"
+        >
+          <app-sidebar></app-sidebar>
+        </div>
+      </div>
+      <div
+        class="fixed inset-0 transition-transform mt-10"
+        [ngClass]="{
+          'translate-x-[-100%]': !claseCambiada,
+          'translate-x-0': claseCambiada,
+        }"
+      >
+        <div class="absolute inset-x-0 sm:z-10 md:hidden">
+          <div
+            class="bg-white mr-14 mt-20 gap-y-14 py-10 px-5 w-40 rounded-[35px] h-full"
+          >
+            <app-sidebar></app-sidebar>
+          </div>
+        </div>
+      </div>
+
+      <div class="sm:col-span-8 sm:z-0 md:col-span-9">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</section>

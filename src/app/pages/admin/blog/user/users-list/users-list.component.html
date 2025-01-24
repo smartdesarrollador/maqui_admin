@@ -1,0 +1,22 @@
+<div class="container mx-auto py-8">
+  <h1 class="text-2xl font-bold mb-6">Listado de Usuarios</h1>
+
+  <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+    <thead class="bg-gray-100">
+      <tr>
+        <th class="text-left px-6 py-3 text-gray-600 font-semibold">ID</th>
+        <th class="text-left px-6 py-3 text-gray-600 font-semibold">Nombre</th>
+        <th class="text-left px-6 py-3 text-gray-600 font-semibold">Email</th>
+        <th class="text-left px-6 py-3 text-gray-600 font-semibold">Rol</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users" class="border-b hover:bg-gray-50">
+        <td class="px-6 py-4">{{ user.id }}</td>
+        <td class="px-6 py-4">{{ user.nombre }}</td>
+        <td class="px-6 py-4">{{ user.email }}</td>
+        <td class="px-6 py-4">{{ user.rol }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

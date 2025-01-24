@@ -1,0 +1,87 @@
+<div class="container mx-auto my-8">
+  <h2 class="text-2xl font-bold mb-4">Listado de Registros</h2>
+  <div class="overflow-x-auto">
+    <table class="min-w-full bg-white border border-gray-300">
+      <thead>
+        <tr>
+          <th class="py-2 px-4 border-b border-gray-300 text-left">ID</th>
+          <th class="py-2 px-4 border-b border-gray-300 text-left">NOMBRE</th>
+          <th class="py-2 px-4 border-b border-gray-300 text-left">CARGO</th>
+          <!-- <th class="py-2 px-4 border-b border-gray-300 text-left">TELEFONO</th> -->
+          <!-- <th class="py-2 px-4 border-b border-gray-300 text-left">
+            DESCRIPCIÓN
+          </th> -->
+          <th class="py-2 px-4 border-b border-gray-300 text-left">IMAGEN</th>
+          <th class="py-2 px-4 border-b border-gray-300 text-left">ESTADO</th>
+          <th class="py-2 px-4 border-b border-gray-300 text-left">EDITAR</th>
+          <th class="py-2 px-4 border-b border-gray-300 text-left">ELIMINAR</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="
+            let tabla of tablas
+              | paginate : { itemsPerPage: 10, currentPage: p }
+          "
+          class="hover:bg-gray-100"
+        >
+          <td class="py-2 px-4 border-b border-gray-300">{{ tabla.id }}</td>
+          <td class="py-2 px-4 border-b border-gray-300">
+            {{ tabla.varchar1 }}
+          </td>
+          <td class="py-2 px-4 border-b border-gray-300">
+            {{ tabla.varchar2 }}
+          </td>
+          <!-- <td class="py-2 px-4 border-b border-gray-300">
+            {{ tabla.varchar3 }}
+          </td> -->
+          <!-- <td class="py-2 px-4 border-b border-gray-300">{{ tabla.text1 }}</td> -->
+          <td class="py-2 px-4 border-b border-gray-300">
+            <img
+              *ngIf="tabla.varchar7"
+              [src]="dominio + '/' + tabla.varchar7"
+              alt="Imagen"
+              class="w-16 h-16 object-cover"
+            />
+          </td>
+          <td class="py-2 px-4 border-b border-gray-300">
+            <span
+              [ngClass]="tabla.boolean1 ? 'text-green-600' : 'text-red-600'"
+            >
+              {{ tabla.boolean1 ? "Activo" : "Inactivo" }}
+            </span>
+          </td>
+          <td class="py-2 px-4 border-b border-gray-300">
+            <button
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded"
+              [routerLink]="['/admin/equipo/edit', tabla.id]"
+            >
+              Editar
+            </button>
+          </td>
+          <td class="py-2 px-4 border-b border-gray-300">
+            <button
+              (click)="deleteTabla(tabla.id)"
+              class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 rounded"
+            >
+              Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="flex items-center justify-center">
+      <pagination-controls
+        (pageChange)="p = $event"
+        previousLabel="Anterior"
+        nextLabel="Siguiente"
+      ></pagination-controls>
+    </div>
+    <button
+      routerLink="/admin/equipo/create"
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer mt-4"
+    >
+      Crear
+    </button>
+  </div>
+</div>

@@ -1,0 +1,56 @@
+<div class="grid grid-cols-1">
+  <div class="bg-white mr-14 mt-20 gap-y-14 p-10 rounded-[35px] shadow-xl">
+    <h2 class="titulo-naranja">Contrato</h2>
+    <hr class="bg-naranja h-1" />
+    <div class="mx-10">
+      <form (ngSubmit)="saveToLocalStorage()" #form1="ngForm">
+        <label for="" class="subtitulo"
+          >¿Qué tipo de Contrato vamos a elaborar?</label
+        >
+        <select
+          id="trab"
+          name="trab"
+          class="bg-gray-50 border border-gray-100 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-10"
+          [(ngModel)]="selectedValue"
+          required
+          #TipoContrato="ngModel"
+        >
+          <option value="" selected>Seleccionar</option>
+          <option value="Contrato modal">Contrato modal</option>
+          <option value="Contrato a plazo indeterminado">
+            Contrato a plazo indeterminado
+          </option>
+        </select>
+        <div
+          class="alerta-rojo mt-5"
+          role="alert"
+          [hidden]="TipoContrato.valid || TipoContrato.pristine"
+        >
+          <span class="font-medium">Requiere seleccionar Trabajador</span>
+        </div>
+
+        <div class="flex justify-start mt-20">
+          <button class="boton-naranja">Siguiente</button>
+        </div>
+      </form>
+      <div class="flex justify-end mt-20">
+        <a routerLink="/admin/contratacion/contrato/proceso_3"
+          ><button class="boton-azul">Atras</button></a
+        >
+      </div>
+      <span class="flex justify-center mt-10 gap-3">
+        <span class="w-3 h-3 bg-gray-200 rounded-full"></span>
+        <span class="w-3 h-3 bg-gray-200 rounded-full"></span>
+        <span class="w-3 h-3 bg-gray-200 rounded-full"></span>
+        <span class="w-3 h-3 bg-gray-900 rounded-full"></span>
+        <span class="w-3 h-3 bg-gray-200 rounded-full"></span>
+        <span class="w-3 h-3 bg-gray-200 rounded-full"></span>
+        <span class="w-3 h-3 bg-gray-200 rounded-full"></span>
+        <span class="w-3 h-3 bg-gray-200 rounded-full"></span>
+        <span class="w-3 h-3 bg-gray-200 rounded-full"></span>
+        <span class="w-3 h-3 bg-gray-200 rounded-full"></span>
+        <span class="w-3 h-3 bg-gray-200 rounded-full"></span>
+      </span>
+    </div>
+  </div>
+</div>

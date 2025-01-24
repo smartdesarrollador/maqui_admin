@@ -1,0 +1,60 @@
+<div class="grid grid-cols-1">
+  <div class="bg-white mr-14 mt-20 gap-y-14 p-10 rounded-[35px] shadow-md">
+    <h2 class="titulo-naranja">Contrato</h2>
+    <hr class="bg-naranja h-1" />
+    <div class="mx-10">
+      <p class="subtitulo mt-5">
+        ¿Para quien sera el <span class="subtitulo-naranja">contrato</span>?
+      </p>
+      <form (ngSubmit)="saveToLocalStorage()" #form1="ngForm">
+        <select
+          id="trab"
+          name="trab"
+          class="bg-gray-50 border border-gray-100 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-10"
+          [(ngModel)]="selectedValue"
+          required
+          #trab="ngModel"
+        >
+          <option value="" selected>Seleccionar Trabajador</option>
+          <option
+            *ngFor="let trabajador of listTrabajadores"
+            value="{{ trabajador.id_trabajador }}"
+          >
+            {{ trabajador.trabajador }}
+          </option>
+        </select>
+        <div
+          class="alerta-rojo mt-5"
+          role="alert"
+          [hidden]="trab.valid || trab.pristine"
+        >
+          <span class="font-medium">Requiere seleccionar Trabajador</span>
+        </div>
+        <div class="flex justify-start mt-20">
+          <button class="boton-naranja">Siguiente</button>
+        </div>
+      </form>
+
+      <div class="flex justify-end mt-20">
+        <a routerLink="/admin/contratacion/contrato/proceso_2"
+          ><button class="boton-verde">Registrar Trabajador</button></a
+        >
+      </div>
+
+      <!-- {{ trab.errors | json }} -->
+      <span class="flex justify-center mt-10 gap-3">
+        <span class="w-3 h-3 bg-gray-900 rounded-full"></span>
+        <span class="w-3 h-3 bg-gray-200 rounded-full"></span>
+        <span class="w-3 h-3 bg-gray-200 rounded-full"></span>
+        <span class="w-3 h-3 bg-gray-200 rounded-full"></span>
+        <span class="w-3 h-3 bg-gray-200 rounded-full"></span>
+        <span class="w-3 h-3 bg-gray-200 rounded-full"></span>
+        <span class="w-3 h-3 bg-gray-200 rounded-full"></span>
+        <span class="w-3 h-3 bg-gray-200 rounded-full"></span>
+        <span class="w-3 h-3 bg-gray-200 rounded-full"></span>
+        <span class="w-3 h-3 bg-gray-200 rounded-full"></span>
+        <span class="w-3 h-3 bg-gray-200 rounded-full"></span>
+      </span>
+    </div>
+  </div>
+</div>

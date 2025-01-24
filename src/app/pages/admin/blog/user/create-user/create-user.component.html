@@ -1,0 +1,62 @@
+<div class="container mx-auto py-8">
+  <h1 class="text-2xl font-bold mb-6">Crear nuevo Usuario</h1>
+
+  <form (ngSubmit)="createUser()" class="space-y-4">
+    <div>
+      <label for="nombre" class="block text-sm font-medium text-gray-700"
+        >Nombre</label
+      >
+      <input
+        id="nombre"
+        type="text"
+        [formControl]="nombre"
+        class="mt-1 block w-full border-gray-300 shadow-sm sm:text-sm rounded-md"
+        placeholder="Nombre del usuario"
+      />
+      <div
+        *ngIf="nombre.invalid && nombre.touched"
+        class="text-red-600 text-sm"
+      >
+        El nombre es obligatorio.
+      </div>
+    </div>
+
+    <div>
+      <label for="email" class="block text-sm font-medium text-gray-700"
+        >Email</label
+      >
+      <input
+        id="email"
+        type="email"
+        [formControl]="email"
+        class="mt-1 block w-full border-gray-300 shadow-sm sm:text-sm rounded-md"
+        placeholder="Email del usuario"
+      />
+      <div *ngIf="email.invalid && email.touched" class="text-red-600 text-sm">
+        El email es obligatorio y debe ser válido.
+      </div>
+    </div>
+
+    <div>
+      <label for="rol" class="block text-sm font-medium text-gray-700"
+        >Rol</label
+      >
+      <select
+        id="rol"
+        [formControl]="rol"
+        class="mt-1 block w-full border-gray-300 shadow-sm sm:text-sm rounded-md"
+      >
+        <option value="autor">Autor</option>
+        <option value="administrador">Administrador</option>
+      </select>
+    </div>
+
+    <button
+      type="submit"
+      class="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700"
+      [disabled]="nombre.invalid || email.invalid"
+    >
+      Crear Usuario
+    </button>
+  </form>
+</div>

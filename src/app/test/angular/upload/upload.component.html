@@ -1,0 +1,26 @@
+<div class="container">
+  <header>
+    <h3 class="bg-black text-white p-4 text-center">
+      File Upload In Angular & Laravel
+    </h3>
+  </header>
+
+  <form (ngSubmit)="onSubmit()" [formGroup]="form">
+    <div class="form-group">
+      <label for="image">Post Image</label>
+      <input
+        type="file"
+        formControlName="image"
+        name="image"
+        id="image"
+        class="form-control"
+        (change)="uploadImage($event)"
+      />
+
+      <div *ngIf="submitted && f['image'].errors" class="invalid-feedback">
+        <div *ngIf="f['image'].errors['required']">Image is required</div>
+      </div>
+    </div>
+    <button type="submit" class="boton-azul">Submit</button>
+  </form>
+</div>

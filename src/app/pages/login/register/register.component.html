@@ -1,0 +1,138 @@
+<section class="bg-['#c6d8e7']">
+  <div
+    class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0"
+  >
+    <a href="#" class="flex items-center mb-6">
+      <img
+        src="assets/images/img8.png"
+        class="mt-3"
+        width="300px"
+        height="300px"
+      />
+    </a>
+    <div
+      class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0"
+    >
+      <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+        <h1
+          class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl"
+        >
+          Registro
+        </h1>
+        <form
+          (ngSubmit)="submit()"
+          [formGroup]="form"
+          class="space-y-4 md:space-y-6"
+        >
+          <div class="mb-6">
+            <label
+              for="name"
+              class="block mb-2 text-sm font-medium text-gray-900"
+              >Nombre</label
+            >
+            <input
+              type="name"
+              formControlName="name"
+              name="name"
+              id="name"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              placeholder="Nombre"
+              [ngClass]="{ 'is-invalid': submitted && name.errors }"
+              required
+            />
+            <div
+              *ngIf="submitted && name.errors"
+              class="invalid-feedback texto-rojo"
+            >
+              <div *ngIf="name.errors?.['required']">Se requiere el nombre</div>
+            </div>
+          </div>
+          <div class="mb-6">
+            <label
+              for="email"
+              class="block mb-2 text-sm font-medium text-gray-900"
+              >Correo</label
+            >
+            <input
+              type="email"
+              formControlName="email"
+              name="email"
+              id="email"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              placeholder="Correo"
+              [ngClass]="{ 'is-invalid': submitted && email.errors }"
+              required
+            />
+            <div
+              *ngIf="submitted && email.errors"
+              class="invalid-feedback texto-rojo"
+            >
+              <div *ngIf="email.errors?.['required']">correo es requerido</div>
+              <div *ngIf="email.errors?.['email']">El correo debe valido</div>
+            </div>
+          </div>
+          <div class="mb-6">
+            <label
+              for="password"
+              class="block mb-2 text-sm font-medium text-gray-900"
+              >Contraseña</label
+            >
+            <input
+              type="password"
+              formControlName="password"
+              name="password"
+              id="password"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              placeholder="Contraseña"
+              required
+            />
+            <div
+              *ngIf="submitted && password.errors"
+              class="invalid-feedback texto-rojo"
+            >
+              <div *ngIf="password.errors?.['required']">
+                se requiere contraseña
+              </div>
+              <div *ngIf="password.errors?.['minlength']">
+                La contraseña debe tener al menos 6 caracteres
+              </div>
+            </div>
+          </div>
+          <div class="mb-6">
+            <label
+              for="confirm_password"
+              class="block mb-2 text-sm font-medium text-gray-900"
+              >Confirmar contraseña</label
+            >
+            <input
+              type="password"
+              formControlName="confirmPassword"
+              name="confirm_password"
+              id="confirm_password"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              placeholder="Confirmar contraseña"
+              required
+            />
+            <div
+              *ngIf="submitted && confirmPassword.errors"
+              class="invalid-feedback texto-rojo"
+            >
+              <div *ngIf="confirmPassword.errors?.['required']">
+                Confirmar se requiere contraseña
+              </div>
+              <div *ngIf="confirmPassword.errors?.['mustMatch']">
+                La contraseña debe tener al menos 6 caracteres
+              </div>
+            </div>
+          </div>
+          <button
+            type="submit"
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+          >
+            Registrarse
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,23 @@
+<p>class-binding works!</p>
+
+<div>
+    <button [class.rounded]="borde_rounded" class="bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" 
+    (click)="text_color = 'text-red-300'">
+        Boton
+      </button>
+      <button [class.rounded]="borde_rounded" class="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" 
+      (click)="text_color = 'text-green-300'">
+        Boton
+      </button>
+      <button [class.rounded]="borde_rounded" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" 
+      (click)="text_color = 'text-blue-300'">
+        Boton
+      </button>
+</div>
+
+<p [class]="text_color">Texto que va a cambiar de color</p>
+
+<span>{{ text_color }}</span>
+
+<button class="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+(click)="borde_rounded = !borde_rounded">Activar/Desactivar</button>

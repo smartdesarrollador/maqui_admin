@@ -1,0 +1,135 @@
+<!-- <nav>
+  <ul>
+    <li>
+      <a routerLink="/test/carga-perezosa/welcome">welcome</a>
+    </li>
+    <li>
+      <a routerLink="/test/carga-perezosa/blog">blog</a>
+    </li>
+    <li>
+      <a routerLink="/test/tailwind/botones">botones</a>
+    </li>
+    <li>
+      <a routerLink="/test/angular/formulario">Formulario</a>
+    </li>
+    <li>
+      <a routerLink="/test/maqueta/">Maqueta</a>
+    </li>
+  </ul>
+</nav> -->
+
+<!-- Nuevo Menu -->
+
+<!-- navbar.component.html -->
+<nav class="bg-blue-500 p-4">
+  <div class="container mx-auto">
+    <div class="flex justify-between items-center">
+      <div class="text-white font-bold text-xl">Mi Sitio Web</div>
+      <!-- Menú para dispositivos móviles -->
+      <div class="lg:hidden">
+        <button
+          class="text-white hover:text-gray-300 focus:outline-none"
+          (click)="toggleMobileMenu()"
+        >
+          ☰
+        </button>
+      </div>
+      <!-- Menú para dispositivos de escritorio -->
+      <ul class="hidden lg:flex space-x-4">
+        <li>
+          <a routerLink="/test/carga-perezosa/welcome" class="text-white"
+            >Welcome</a
+          >
+        </li>
+        <li>
+          <button class="text-white" (click)="toggleSubmenu()">Tailwind</button>
+          <ul
+            *ngIf="mostrarSubmenu"
+            class="absolute mt-8 bg-white border rounded-lg shadow-lg z-50"
+          >
+            <li>
+              <a
+                routerLink="/test/tailwind/layout/layout"
+                class="block px-4 py-2 text-gray-800"
+                >Layout</a
+              >
+            </li>
+            <li>
+              <a
+                routerLink="/test/tailwind/botones"
+                class="block px-4 py-2 text-gray-800"
+                >Botones</a
+              >
+            </li>
+            <li>
+              <a
+                routerLink="/test/tailwind/cards"
+                class="block px-4 py-2 text-gray-800"
+                >Cards</a
+              >
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a routerLink="/test/tailwind/grid" class="text-white">grid</a>
+        </li>
+        <li>
+          <a routerLink="/test/maqueta/" class="text-white">Maqueta</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- Menú desplegable para dispositivos móviles -->
+  <div class="lg:hidden" *ngIf="mostrarMobileMenu">
+    <ul class="bg-blue-500">
+      <li>
+        <a
+          routerLink="/test/carga-perezosa/welcome"
+          class="block px-4 py-2 text-white"
+          >Welcome</a
+        >
+      </li>
+      <li>
+        <a
+          routerLink="/test/angular/formulario2"
+          class="block px-4 py-2 text-white"
+          >Formulario2</a
+        >
+      </li>
+      <li>
+        <button class="text-white" (click)="toggleSubmenu()">Tailwind</button>
+        <ul
+          *ngIf="mostrarSubmenu"
+          class="absolute mt-8 bg-white border rounded-lg shadow-lg"
+        >
+          <li>
+            <a
+              routerLink="/test/tailwind/alertas"
+              class="block px-4 py-2 text-gray-800"
+              >Alertas</a
+            >
+          </li>
+          <li>
+            <a
+              routerLink="/test/tailwind/botones"
+              class="block px-4 py-2 text-gray-800"
+              >Botones</a
+            >
+          </li>
+          <li>
+            <a
+              routerLink="/test/tailwind/cards"
+              class="block px-4 py-2 text-gray-800"
+              >Cards</a
+            >
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a routerLink="/test/maqueta/" class="block px-4 py-2 text-white"
+          >Maqueta</a
+        >
+      </li>
+    </ul>
+  </div>
+</nav>

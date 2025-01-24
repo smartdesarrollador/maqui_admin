@@ -1,0 +1,30 @@
+<div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+  <div
+    class="flex justify-center bg-white overflow-hidden shadow-xl sm:rounded-lg px-4 py-4"
+  >
+    <form (ngSubmit)="onSubmit()" [formGroup]="form" class="my-10">
+      <p class="text-xs text-gray-400">
+        Dimensiones recomendadas: 750px por 750px.
+      </p>
+      <div class="form-group py-5">
+        <label for="image">Cargar imagen </label>
+        <input
+          type="file"
+          formControlName="image"
+          name="image"
+          id="image"
+          class="form-control"
+          (change)="uploadImage($event)"
+        />
+
+        <div *ngIf="submitted && f['image'].errors" class="invalid-feedback">
+          <div *ngIf="f['image'].errors['required']">Image is required</div>
+        </div>
+      </div>
+      <button type="submit" class="boton-azul">Actualizar</button>
+    </form>
+  </div>
+  <a routerLink="/admin/carousel"
+    ><button class="boton-rojo mt-5">Atras</button></a
+  >
+</div>

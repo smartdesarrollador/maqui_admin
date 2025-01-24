@@ -1,0 +1,157 @@
+<div class="grid grid-cols-1">
+  <div class="bg-white mr-14 mt-20 gap-y-14 p-10 rounded-[35px] shadow-xl">
+    <h2 class="titulo-naranja">Contrato</h2>
+    <hr class="bg-naranja h-1" />
+    <div class="mx-10">
+      <form (ngSubmit)="saveToLocalStorage()" #formProceso1="ngForm">
+        <p class="subtitulo my-5">Calificación Especial</p>
+
+        <div class="flex flex-row justify-normal mt-5">
+          <div class="basis-[50%]">
+            ¿El trabajador tiene Fiscalización inmediata en la jornada?
+          </div>
+          <div class="basis-[50%]">
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input
+                type="checkbox"
+                name="fiscalizacion_inmediata"
+                class="sr-only peer"
+                required
+                [(ngModel)]="fiscalizacion_inmediata"
+                (change)="onCheckboxChange('fiscalizacion_inmediata')"
+              />
+              <div
+                class="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"
+              ></div>
+            </label>
+          </div>
+        </div>
+        <div class="flex flex-row justify-normal mt-5">
+          <div class="basis-[50%]">
+            ¿El trabajador se encuentra comprendido en la jornada máxima?
+          </div>
+          <div class="basis-[50%]">
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input
+                type="checkbox"
+                name="jornada_maxima"
+                class="sr-only peer"
+                required
+                [(ngModel)]="jornada_maxima"
+                (change)="onCheckboxChange('jornada_maxima')"
+              />
+              <div
+                class="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"
+              ></div>
+            </label>
+          </div>
+        </div>
+        <div *ngIf="jornada_maxima == true" class="mb-10 mt-10">
+          <label class="subtitulo" for="">Horario de Trabajo: </label>
+          <div class="mt-7">
+            <label for="diaInicio">De: </label>
+            <select
+              id="diaInicio"
+              name="diaInicio"
+              class="bg-gray-50 border border-gray-100 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
+              [(ngModel)]="dia_inicio"
+              required
+            >
+              <option value="lunes">Lunes</option>
+              <option value="martes">Martes</option>
+              <option value="miercoles">Miércoles</option>
+              <option value="jueves">Jueves</option>
+              <option value="viernes">Viernes</option>
+              <option value="sabado">Sábado</option>
+              <option value="domingo">Domingo</option>
+            </select>
+
+            <label for="diaFin"> a: </label>
+            <select
+              id="diaFin"
+              name="diaFin"
+              class="bg-gray-50 border border-gray-100 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
+              [(ngModel)]="dia_final"
+              required
+            >
+              <option value="lunes">Lunes</option>
+              <option value="martes">Martes</option>
+              <option value="miercoles">Miércoles</option>
+              <option value="jueves">Jueves</option>
+              <option value="viernes">Viernes</option>
+              <option value="sabado">Sábado</option>
+              <option value="domingo">Domingo</option>
+            </select>
+          </div>
+          <div class="mt-7">
+            <label for="">De: </label>
+            <select
+              id=""
+              name="horarioInicio"
+              class="bg-gray-50 border border-gray-100 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
+              [(ngModel)]="horario_inicio"
+              required
+            >
+              <option value="1:00 am">1:00 am</option>
+              <option value="2:00 am">2:00 am</option>
+              <option value="3:00 am">3:00 am</option>
+              <option value="4:00 am">4:00 am</option>
+              <option value="5:00 am">5:00 am</option>
+              <option value="6:00 am">6:00 am</option>
+              <option value="7:00 am">7:00 am</option>
+              <option value="8:00 am">8:00 am</option>
+              <option value="9:00 am">9:00 am</option>
+              <option value="10:00 am">10:00 am</option>
+              <option value="11:00 am">11:00 am</option>
+              <option value="12:00 am">12:00 am</option>
+            </select>
+
+            <label for=""> hasta: </label>
+            <select
+              id="horario_inicio"
+              name="horarioFinal"
+              class="bg-gray-50 border border-gray-100 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
+              [(ngModel)]="horario_final"
+              required
+            >
+              <option value="1:00 pm">1:00 pm</option>
+              <option value="2:00 pm">2:00 pm</option>
+              <option value="3:00 pm">3:00 pm</option>
+              <option value="4:00 pm">4:00 pm</option>
+              <option value="5:00 pm">5:00 pm</option>
+              <option value="6:00 pm">6:00 pm</option>
+              <option value="7:00 pm">7:00 pm</option>
+              <option value="8:00 pm">8:00 pm</option>
+              <option value="9:00 pm">9:00 pm</option>
+              <option value="10:00pm">10:00 pm</option>
+              <option value="11:00 pm">11:00 pm</option>
+              <option value="12:00 pm">12:00 pm</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <button class="boton-naranja">Siguiente</button>
+        </div>
+      </form>
+
+      <div class="flex justify-end mt-20">
+        <a routerLink="/admin/contratacion/contrato/proceso_8"
+          ><button class="boton-azul">Atras</button></a
+        >
+      </div>
+      <span class="flex justify-center mt-10 gap-3">
+        <span class="w-3 h-3 bg-gray-200 rounded-full"></span>
+        <span class="w-3 h-3 bg-gray-200 rounded-full"></span>
+        <span class="w-3 h-3 bg-gray-200 rounded-full"></span>
+        <span class="w-3 h-3 bg-gray-200 rounded-full"></span>
+        <span class="w-3 h-3 bg-gray-200 rounded-full"></span>
+        <span class="w-3 h-3 bg-gray-200 rounded-full"></span>
+        <span class="w-3 h-3 bg-gray-200 rounded-full"></span>
+        <span class="w-3 h-3 bg-gray-200 rounded-full"></span>
+        <span class="w-3 h-3 bg-gray-900 rounded-full"></span>
+        <span class="w-3 h-3 bg-gray-200 rounded-full"></span>
+        <span class="w-3 h-3 bg-gray-200 rounded-full"></span>
+      </span>
+    </div>
+  </div>
+</div>

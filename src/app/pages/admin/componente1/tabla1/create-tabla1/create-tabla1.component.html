@@ -1,0 +1,136 @@
+<div
+  class="container mx-auto my-8 p-6 bg-white border border-gray-300 rounded shadow"
+>
+  <h2 class="text-2xl font-bold mb-6">Crear Nuevo Registro</h2>
+  <form [formGroup]="tablaForm" (ngSubmit)="onSubmit()" class="space-y-4">
+    <div>
+      <label for="varchar1" class="block text-sm font-medium">Nombre</label>
+      <input
+        type="text"
+        id="varchar1"
+        formControlName="varchar1"
+        class="mt-1 p-2 w-full border border-gray-300 rounded"
+        placeholder="Nombre"
+      />
+      <div
+        *ngIf="
+          tablaForm.get('varchar1')?.invalid &&
+          tablaForm.get('varchar1')?.touched
+        "
+        class="text-red-500 text-sm"
+      >
+        El nombre es obligatorio y debe tener un máximo de 250 caracteres.
+      </div>
+    </div>
+
+    <div>
+      <label for="varchar2" class="block text-sm font-medium">Cargo</label>
+      <input
+        type="email"
+        id="varchar2"
+        formControlName="varchar2"
+        class="mt-1 p-2 w-full border border-gray-300 rounded"
+        placeholder="Cargo"
+      />
+      <div
+        *ngIf="
+          tablaForm.get('varchar2')?.invalid &&
+          tablaForm.get('varchar2')?.touched
+        "
+        class="text-red-500 text-sm"
+      >
+        El correo es obligatorio y debe tener un máximo de 250 caracteres.
+      </div>
+    </div>
+
+    <!-- <div>
+      <label for="varchar3" class="block text-sm font-medium">Teléfono</label>
+      <input
+        type="text"
+        id="varchar3"
+        formControlName="varchar3"
+        class="mt-1 p-2 w-full border border-gray-300 rounded"
+        placeholder="Teléfono"
+      />
+    </div> -->
+
+    <div>
+      <label for="text1" class="block text-sm font-medium">Descripción</label>
+      <!-- <textarea
+        id="text1"
+        formControlName="text1"
+        class="mt-1 p-2 w-full border border-gray-300 rounded"
+        placeholder="Descripción"
+      ></textarea> -->
+      <quill-editor
+        formControlName="text1"
+        name="text1"
+        id="txtContent"
+        [modules]="moduleQuill"
+        (onEditorChanged)="onChangeEditor($event)"
+        class="w-full"
+      ></quill-editor>
+    </div>
+
+    <div>
+      <label for="boolean1" class="inline-flex items-center">
+        <input
+          type="checkbox"
+          id="boolean1"
+          formControlName="boolean1"
+          class="form-checkbox"
+        />
+        <span class="ml-2">Activo</span>
+      </label>
+    </div>
+    <div>
+      <label for="categoria1_id" class="block text-sm font-medium"
+        >Categoría</label
+      >
+      <select
+        id="categoria1_id"
+        formControlName="categoria1_id"
+        class="mt-1 p-2 w-full border border-gray-300 rounded"
+      >
+        <option *ngFor="let categoria of categorias" [value]="categoria.id">
+          {{ categoria.varchar1 }}
+        </option>
+      </select>
+    </div>
+
+    <div>
+      <label for="varchar7" class="block text-sm font-medium">Imagen</label>
+      <input
+        type="file"
+        id="varchar7"
+        (change)="onFileChange($event)"
+        accept=".jpg, .png"
+        class="mt-1 p-2 w-full border border-gray-300 rounded"
+      />
+      <div
+        *ngIf="
+          tablaForm.get('varchar7')?.invalid &&
+          tablaForm.get('varchar7')?.touched
+        "
+        class="text-red-500 text-sm"
+      >
+        La imagen es obligatoria, debe ser jpg o png, y no puede exceder los 2
+        MB.
+      </div>
+    </div>
+
+    <button
+      type="submit"
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      [disabled]="tablaForm.invalid"
+    >
+      Crear Registro
+    </button>
+  </form>
+  <button
+    routerLink="/admin/equipo"
+    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer mt-4"
+  >
+    Atras
+  </button>
+</div>

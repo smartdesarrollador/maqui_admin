@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="">
+      <app-header-1></app-header-1>
+      <nav>
+        <div class="relative z-50">
+          <app-navbar-dropdown></app-navbar-dropdown>
+        </div>
+        <div class="relative z-40">
+          <app-carousel-owl-1></app-carousel-owl-1>
+        </div>
+      </nav>
+
+      <div class="container mx-auto">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+
+    <app-subscribe-1></app-subscribe-1>
+    <app-footer-1></app-footer-1>
+  </body>
+</html>

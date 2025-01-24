@@ -1,0 +1,105 @@
+<div
+  class="container mx-auto my-8 p-6 bg-white border border-gray-300 rounded shadow"
+>
+  <h2 class="text-2xl font-bold mb-6">Crear Nueva Categoría</h2>
+  <form [formGroup]="categoriaForm" (ngSubmit)="onSubmit()" class="space-y-4">
+    <div>
+      <label for="varchar1" class="block text-sm font-medium">Nombre</label>
+      <input
+        type="text"
+        id="varchar1"
+        formControlName="varchar1"
+        class="mt-1 p-2 w-full border border-gray-300 rounded"
+        placeholder="Nombre de la categoría"
+      />
+      <div
+        *ngIf="
+          categoriaForm.get('varchar1')?.invalid &&
+          categoriaForm.get('varchar1')?.touched
+        "
+        class="text-red-500 text-sm"
+      >
+        El nombre es obligatorio y debe tener un máximo de 250 caracteres.
+      </div>
+    </div>
+
+    <!-- <div>
+      <label for="varchar2" class="block text-sm font-medium"
+        >Descripción</label
+      >
+      <input
+        type="text"
+        id="varchar2"
+        formControlName="varchar2"
+        class="mt-1 p-2 w-full border border-gray-300 rounded"
+        placeholder="Descripción de la categoría"
+      />
+    </div> -->
+
+    <div>
+      <label for="text1" class="block text-sm font-medium">Descripción</label>
+      <textarea
+        id="text1"
+        formControlName="text1"
+        class="mt-1 p-2 w-full border border-gray-300 rounded"
+        placeholder="Detalles adicionales"
+      ></textarea>
+      <!--  <quill-editor
+        formControlName="text1"
+        name="text1"
+        id="txtContent"
+        [modules]="moduleQuill"
+        (onEditorChanged)="onChangeEditor($event)"
+        class="w-full"
+      ></quill-editor> -->
+      <small class="text-blue-500">Max. 500 caracteres</small>
+    </div>
+
+    <div>
+      <label for="boolean1" class="inline-flex items-center">
+        <input
+          type="checkbox"
+          id="boolean1"
+          formControlName="boolean1"
+          class="form-checkbox"
+        />
+        <span class="ml-2">Activo</span>
+      </label>
+    </div>
+
+    <div>
+      <label for="varchar3" class="block text-sm font-medium">Imagen</label>
+      <input
+        type="file"
+        id="varchar3"
+        (change)="onFileChange($event)"
+        accept=".jpg, .png"
+        class="mt-1 p-2 w-full border border-gray-300 rounded"
+      />
+      <div
+        *ngIf="
+          categoriaForm.get('varchar3')?.invalid &&
+          categoriaForm.get('varchar3')?.touched
+        "
+        class="text-red-500 text-sm"
+      >
+        La imagen es obligatoria, debe ser jpg o png, y no puede exceder los 2
+        MB.
+      </div>
+    </div>
+
+    <button
+      type="submit"
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      [disabled]="categoriaForm.invalid"
+    >
+      Crear Categoría
+    </button>
+  </form>
+  <button
+    routerLink="/admin/categoria/equipo"
+    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer mt-4"
+  >
+    Atras
+  </button>
+</div>

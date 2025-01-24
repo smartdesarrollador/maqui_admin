@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="flex justify-center shadow overflow-hidden sm:rounded-lg">
+    <table class="bg-slate-50 w-[60%] divide-y divide-gray-200 table-auto">
+      <thead class="rounded-t-lg bg-blue-500 text-white">
+        <tr class="text-left text-xs font-bold uppercase">
+          <td scope="col" class="px-6 py-3">Nombre</td>
+          <td scope="col" class="px-6 py-3">Url</td>
+          <td scope="col" class="px-6 py-3">Editar</td>
+          <td scope="col" class="px-6 py-3">Eliminar</td>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200">
+        <tr
+          *ngFor="let item of listCategories"
+          class="text-sm font-medium text-gray-900"
+        >
+          <td class="px-6 py-4">{{ item.titulo }}</td>
+          <td class="px-6 py-4">
+            <img
+              class="max-w-[30%]"
+              src="{{ urlRaiz + item.ruta_imagen }}"
+              alt=""
+            />
+          </td>
+          <td class="px-6 py-4">
+            <button
+              (click)="onEdit(item)"
+              class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition"
+            >
+              <i class="fas fa-edit"></i>
+            </button>
+          </td>
+          <td>
+            <button
+              (click)="onDelete(item.id_testimonio)"
+              class="inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:ring focus:ring-red-200 active:bg-red-600 disabled:opacity-25 transition"
+            >
+              <i class="fas fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <a
+    routerLink="/admin/testimonios/create"
+    class="boton-azul inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
+  >
+    Crear Testimonio
+  </a>
+</div>

@@ -1,0 +1,84 @@
+<h2 class="text-center text-2xl">Editar contenido</h2>
+<div class="w-full max-w-3xl m-auto">
+  <form
+    #categoryForm="ngForm"
+    (ngSubmit)="submitForm(categoryForm)"
+    class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+  >
+    <!--  <input type="text" name="id" [(ngModel)]="id_mision" /> -->
+    <!--  <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2"> Imagen </label>
+      <input
+        [(ngModel)]="categoryService.selectCategory.imagen_mision"
+        name="imagen_mision"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="username"
+        type="text"
+        placeholder="imagen_mision"
+      />
+    </div> -->
+    <div class="mb-6">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
+        Titulo
+      </label>
+      <input
+        [(ngModel)]="categoryService.selectCategory.titulo_mision"
+        name="titulo_mision"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="password"
+        type="text"
+        placeholder="Titulo"
+      />
+    </div>
+    <div class="mb-6">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
+        Misión
+      </label>
+      <textarea
+        [(ngModel)]="categoryService.selectCategory.contenido_mision"
+        name="contenido_mision"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="password"
+        placeholder="Contenido"
+      ></textarea>
+    </div>
+    <div class="mb-6">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
+        Visión
+      </label>
+      <textarea
+        [(ngModel)]="categoryService.selectCategory.contenido_vision"
+        name="contenido_vision"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="password"
+        placeholder="Contenido"
+      ></textarea>
+    </div>
+    <div class="mb-6">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
+        Valores
+      </label>
+      <textarea
+        [(ngModel)]="categoryService.selectCategory.contenido_valores"
+        name="contenido_valores"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="password"
+        placeholder="Contenido"
+      ></textarea>
+    </div>
+    <div class="flex items-center justify-between">
+      <button
+        type="submit"
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+      >
+        Guardar
+      </button>
+      <a
+        routerLink="/admin/mision"
+        class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
+      >
+        Regresar
+      </a>
+    </div>
+  </form>
+</div>
