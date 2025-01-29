@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ClientesMotosService } from '../../../services/services_motos/clientes-motos.service';
 
+// Interfaces
 interface Cliente {
   id_cliente: number;
   nombre: string;
@@ -32,7 +33,7 @@ export class ClientesComponent implements OnInit {
   currentPage: number = 1;
   perPage: number = 10;
   totalItems: number = 0;
-  totalPages: number = 0;
+  lastPage: number = 0;
   loading: boolean = false;
   orderBy: string = 'nombre';
   orderDirection: 'asc' | 'desc' = 'asc';
@@ -57,27 +58,31 @@ export class ClientesComponent implements OnInit {
         next: (response) => {
           this.clientes = response.clientes;
           this.totalItems = response.pagination.total_items;
-          this.totalPages = response.pagination.last_page;
+          this.lastPage = response.pagination.last_page;
           this.loading = false;
         },
         error: (error) => {
-          console.error('Error cargando clientes:', error);
+          console.error('Error al cargar clientes:', error);
           this.loading = false;
         },
       });
   }
 
-  onSearch() {
-    this.currentPage = 1;
+  onSearch(event: Event) {
+    const target = event.target as HTMLInputElement;
+    this.searchTerm = target.value;
+    this.currentPage = 1; // Resetear a la primera página
     this.loadClientes();
   }
 
   onPageChange(page: number) {
-    this.currentPage = page;
-    this.loadClientes();
+    if (page >= 1 && page <= this.lastPage) {
+      this.currentPage = page;
+      this.loadClientes();
+    }
   }
 
-  toggleSort(field: string) {
+  toggleOrder(field: string) {
     if (this.orderBy === field) {
       this.orderDirection = this.orderDirection === 'asc' ? 'desc' : 'asc';
     } else {
@@ -87,14 +92,9 @@ export class ClientesComponent implements OnInit {
     this.loadClientes();
   }
 
-  getSortIcon(field: string): string {
-    if (this.orderBy !== field) return '↕️';
-    return this.orderDirection === 'asc' ? '↑' : '↓';
-  }
-
   getPages(): number[] {
     const pages: number[] = [];
-    for (let i = 1; i <= this.totalPages; i++) {
+    for (let i = 1; i <= this.lastPage; i++) {
       pages.push(i);
     }
     return pages;
