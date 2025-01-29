@@ -9,17 +9,17 @@ import { InicioComponent } from './pages/vista/inicio/inicio.component';
 import { DashboardComponent } from './pages/admin/dashboard/dashboard.component';
 import { CursosComponent } from './pages/vista/cursos/cursos.component';
 
-import { AdminGuard } from './guards/admin.guard';
+/* import { AdminGuard } from './guards/admin.guard';
 import { EmpleadorGuard } from './guards/empleador.guard';
-import { TrabajadorGuard } from './guards/trabajador';
+import { TrabajadorGuard } from './guards/trabajador'; */
 import { AuthGuard } from './guards/auth.guard';
 
 /* ---------------------------------------------------------------------- */
 
 import { PortalComponent } from './paginas/login/portal/portal.component';
-import { LayoutUnoComponent } from './layout/layout-uno/layout-uno.component';
-import { LayoutDosComponent } from './layout/layout-dos/layout-dos.component';
 import { LayoutComponent } from './layout/layout.component';
+/* import { LayoutUnoComponent } from './layout/layout-uno/layout-uno.component';
+import { LayoutDosComponent } from './layout/layout-dos/layout-dos.component';
 import { LayoutTresComponent } from './layout/layout-tres/layout-tres.component';
 import { BannersComponent } from './pages/admin/banners/banners.component';
 import { UpdateFileComponent } from './pages/admin/banners/update-file/update-file.component';
@@ -51,7 +51,7 @@ import { CreateCommentComponent } from './pages/admin/blog/comments/create-comme
 import { EditCategoryComponent } from './pages/admin/blog/categories/edit-category/edit-category.component';
 import { EditTagComponent } from './pages/admin/blog/tag/edit-tag/edit-tag.component';
 import { EditPostComponent } from './pages/admin/blog/post/edit-post/edit-post.component';
-import { EditCommentComponent } from './pages/admin/blog/comments/edit-comment/edit-comment.component';
+import { EditCommentComponent } from './pages/admin/blog/comments/edit-comment/edit-comment.component'; */
 import { ListCategoria1Component } from './pages/admin/componente1/categoria1/list-categoria1/list-categoria1.component';
 import { CreateCategoria1Component } from './pages/admin/componente1/categoria1/create-categoria1/create-categoria1.component';
 import { EditCategoria1Component } from './pages/admin/componente1/categoria1/edit-categoria1/edit-categoria1.component';
@@ -107,139 +107,268 @@ export const routes: Routes = [
       {
         path: 'banners',
         canActivate: [AuthGuard],
-        component: BannersComponent,
+        //component: BannersComponent,
+        loadComponent: () =>
+          import('./pages/admin/banners/banners.component').then(
+            (m) => m.BannersComponent
+          ),
       },
       {
         path: 'update/file',
         canActivate: [AuthGuard],
-        component: UpdateFileComponent,
+        //component: UpdateFileComponent,
+        loadComponent: () =>
+          import(
+            './pages/admin/banners/update-file/update-file.component'
+          ).then((m) => m.UpdateFileComponent),
       },
       {
         path: 'mision',
         canActivate: [AuthGuard],
-        component: MisionComponent,
+        //component: MisionComponent,
+        loadComponent: () =>
+          import('./pages/admin/mision/mision.component').then(
+            (m) => m.MisionComponent
+          ),
       },
       {
         path: 'mision/update/file',
         canActivate: [AuthGuard],
-        component: UpdateFileMisionComponent,
+        //component: UpdateFileMisionComponent,
+        loadComponent: () =>
+          import(
+            './pages/admin/mision/update-file-mision/update-file-mision.component'
+          ).then((m) => m.UpdateFileMisionComponent),
       },
       {
         path: 'mision/update',
         canActivate: [AuthGuard],
-        component: UpdateMisionComponent,
+        //component: UpdateMisionComponent,
+        loadComponent: () =>
+          import(
+            './pages/admin/mision/update-mision/update-mision.component'
+          ).then((m) => m.UpdateMisionComponent),
       },
       {
         path: 'carousel',
         canActivate: [AuthGuard],
-        component: CarouselComponent,
+        //component: CarouselComponent,
+        loadComponent: () =>
+          import('./pages/admin/carousel/carousel.component').then(
+            (m) => m.CarouselComponent
+          ),
       },
       {
         path: 'carousel/update/file',
         canActivate: [AuthGuard],
-        component: UpdateFileCarouselComponent,
+        //component: UpdateFileCarouselComponent,
+        loadComponent: () =>
+          import(
+            './pages/admin/carousel/update-file-carousel/update-file-carousel.component'
+          ).then((m) => m.UpdateFileCarouselComponent),
       },
       {
         path: 'servicio1',
         canActivate: [AuthGuard],
-        component: ProductoComponent,
+        //component: ProductoComponent,
+        loadComponent: () =>
+          import('./pages/admin/producto/producto.component').then(
+            (m) => m.ProductoComponent
+          ),
       },
       {
         path: 'servicio1/create',
         canActivate: [AuthGuard],
-        component: CreateComponent,
+        //component: CreateComponent,
+        loadComponent: () =>
+          import('./pages/admin/producto/create/create.component').then(
+            (m) => m.CreateComponent
+          ),
       },
       {
         path: 'servicio1/edit',
         canActivate: [AuthGuard],
-        component: EditComponent,
+        //component: EditComponent,
+        loadComponent: () =>
+          import('./pages/admin/producto/edit/edit.component').then(
+            (m) => m.EditComponent
+          ),
       },
       {
         path: 'servicio2',
         canActivate: [AuthGuard],
-        component: EspecialidadComponent,
+        //component: EspecialidadComponent,
+        loadComponent: () =>
+          import('./pages/admin/especialidad/especialidad.component').then(
+            (m) => m.EspecialidadComponent
+          ),
       },
       {
         path: 'servicio2/create',
         canActivate: [AuthGuard],
-        component: CreateEspecialidadComponent,
+        //component: CreateEspecialidadComponent,
+        loadComponent: () =>
+          import(
+            './pages/admin/especialidad/create-especialidad/create-especialidad.component'
+          ).then((m) => m.CreateEspecialidadComponent),
       },
       {
         path: 'servicio2/edit',
         canActivate: [AuthGuard],
-        component: EditEspecialidadComponent,
+        //component: EditEspecialidadComponent,
+        loadComponent: () =>
+          import(
+            './pages/admin/especialidad/edit-especialidad/edit-especialidad.component'
+          ).then((m) => m.EditEspecialidadComponent),
       },
       {
         path: 'contactos',
         canActivate: [AuthGuard],
-        component: ContactoComponent,
+        //component: ContactoComponent,
+        loadComponent: () =>
+          import('./pages/admin/contacto/contacto.component').then(
+            (m) => m.ContactoComponent
+          ),
       },
       {
         path: 'testimonios',
         canActivate: [AuthGuard],
-        component: TestimonioComponent,
+        //component: TestimonioComponent,
+        loadComponent: () =>
+          import('./pages/admin/testimonio/testimonio.component').then(
+            (m) => m.TestimonioComponent
+          ),
       },
       {
         path: 'testimonios/create',
         canActivate: [AuthGuard],
-        component: CreateTestimonioComponent,
+        //component: CreateTestimonioComponent,
+        loadComponent: () =>
+          import(
+            './pages/admin/testimonio/create-testimonio/create-testimonio.component'
+          ).then((m) => m.CreateTestimonioComponent),
       },
       {
         path: 'testimonios/edit',
         canActivate: [AuthGuard],
-        component: EditTestimonioComponent,
+        //component: EditTestimonioComponent,
+        loadComponent: () =>
+          import(
+            './pages/admin/testimonio/edit-testimonio/edit-testimonio.component'
+          ).then((m) => m.EditTestimonioComponent),
       },
       {
         path: 'blog/posts',
-        component: PostsListComponent,
+        //component: PostsListComponent,
+        loadComponent: () =>
+          import(
+            './pages/admin/blog/post/posts-list/posts-list.component'
+          ).then((m) => m.PostsListComponent),
       },
       {
         path: 'blog/posts/create',
-        component: CreatePostComponent,
+        //component: CreatePostComponent,
+        loadComponent: () =>
+          import(
+            './pages/admin/blog/post/create-post/create-post.component'
+          ).then((m) => m.CreatePostComponent),
       },
       {
         path: 'blog/posts/edit/:id',
-        component: EditPostComponent,
+        //component: EditPostComponent,
+        loadComponent: () =>
+          import('./pages/admin/blog/post/edit-post/edit-post.component').then(
+            (m) => m.EditPostComponent
+          ),
       },
       {
         path: 'blog/users',
-        component: UsersListComponent,
+        //component: UsersListComponent,
+        loadComponent: () =>
+          import(
+            './pages/admin/blog/user/users-list/users-list.component'
+          ).then((m) => m.UsersListComponent),
       },
       {
         path: 'blog/comments',
-        component: CommentsListComponent,
+        //component: CommentsListComponent,
+        loadComponent: () =>
+          import(
+            './pages/admin/blog/comments/comments-list/comments-list.component'
+          ).then((m) => m.CommentsListComponent),
       },
       {
         path: 'blog/comments/create',
-        component: CreateCommentComponent,
+        //component: CreateCommentComponent,
+        loadComponent: () =>
+          import(
+            './pages/admin/blog/comments/create-comment/create-comment.component'
+          ).then((m) => m.CreateCommentComponent),
       },
       {
         path: 'blog/comments/edit/:id',
-        component: EditCommentComponent,
+        //component: EditCommentComponent,
+        loadComponent: () =>
+          import(
+            './pages/admin/blog/comments/edit-comment/edit-comment.component'
+          ).then((m) => m.EditCommentComponent),
       },
       {
         path: 'blog/tags',
-        component: TagsListComponent,
+        //component: TagsListComponent,
+        loadComponent: () =>
+          import('./pages/admin/blog/tag/tags-list/tags-list.component').then(
+            (m) => m.TagsListComponent
+          ),
       },
       {
         path: 'blog/tags/create',
-        component: CreateTagComponent,
+        //component: CreateTagComponent,
+        loadComponent: () =>
+          import('./pages/admin/blog/tag/create-tag/create-tag.component').then(
+            (m) => m.CreateTagComponent
+          ),
       },
       {
         path: 'blog/tags/edit/:id',
-        component: EditTagComponent,
+        //component: EditTagComponent,
+        loadComponent: () =>
+          import('./pages/admin/blog/tag/edit-tag/edit-tag.component').then(
+            (m) => m.EditTagComponent
+          ),
       },
       {
         path: 'blog/categories',
-        component: CategoriesListComponent,
+        //component: CategoriesListComponent,
+        loadComponent: () =>
+          import(
+            './pages/admin/blog/categories/categories-list/categories-list.component'
+          ).then((m) => m.CategoriesListComponent),
       },
       {
         path: 'blog/categories/create',
-        component: CreateCategoryComponent,
+        //component: CreateCategoryComponent,
+        loadComponent: () =>
+          import(
+            './pages/admin/blog/categories/create-category/create-category.component'
+          ).then((m) => m.CreateCategoryComponent),
       },
       {
         path: 'blog/categories/edit/:id',
-        component: EditCategoryComponent,
+        //component: EditCategoryComponent,
+        loadComponent: () =>
+          import(
+            './pages/admin/blog/categories/edit-category/edit-category.component'
+          ).then((m) => m.EditCategoryComponent),
+      },
+      {
+        path: 'clientes',
+        canActivate: [AuthGuard],
+        //component: ClientesComponent,
+        loadComponent: () =>
+          import('./pages/admin/clientes/clientes.component').then(
+            (m) => m.ClientesComponent
+          ),
       },
       { path: 'categoria/equipo', component: ListCategoria1Component },
       { path: 'categoria/equipo/create', component: CreateCategoria1Component },
@@ -255,15 +384,27 @@ export const routes: Routes = [
     children: [
       {
         path: 'layout-uno',
-        component: LayoutUnoComponent,
+        //component: LayoutUnoComponent,
+        loadComponent: () =>
+          import('./layout/layout-uno/layout-uno.component').then(
+            (m) => m.LayoutUnoComponent
+          ),
       },
       {
         path: 'layout-dos',
-        component: LayoutDosComponent,
+        //component: LayoutDosComponent,
+        loadComponent: () =>
+          import('./layout/layout-dos/layout-dos.component').then(
+            (m) => m.LayoutDosComponent
+          ),
       },
       {
         path: 'layout-tres',
-        component: LayoutTresComponent,
+        //component: LayoutTresComponent,
+        loadComponent: () =>
+          import('./layout/layout-tres/layout-tres.component').then(
+            (m) => m.LayoutTresComponent
+          ),
       },
     ],
   },

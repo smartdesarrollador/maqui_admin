@@ -1,0 +1,99 @@
+<div class="p-6">
+  <!-- Header y Buscador -->
+  <div class="mb-6">
+    <h1 class="text-2xl font-bold text-gray-800 mb-4">Gestión de Clientes</h1>
+    <div class="flex gap-4">
+      <div class="flex-1">
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          (keyup.enter)="onSearch()"
+          placeholder="Buscar clientes..."
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        />
+      </div>
+      <button
+        (click)="onSearch()"
+        class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+      >
+        Buscar
+      </button>
+    </div>
+  </div>
+
+  <!-- Tabla de Clientes -->
+  <div class="overflow-x-auto bg-white rounded-lg shadow">
+    <table class="min-w-full table-auto">
+      <thead class="bg-gray-50">
+        <tr>
+          <th
+            *ngFor="let header of ['Nombre', 'Email', 'Teléfono', 'Documento']"
+            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+            (click)="toggleSort(header.toLowerCase())"
+          >
+            {{ header }}
+            <span class="ml-1">{{ getSortIcon(header.toLowerCase()) }}</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-200">
+        <tr *ngIf="loading" class="text-center">
+          <td colspan="4" class="px-6 py-4">Cargando clientes...</td>
+        </tr>
+        <tr *ngIf="!loading && clientes.length === 0" class="text-center">
+          <td colspan="4" class="px-6 py-4">No se encontraron clientes</td>
+        </tr>
+        <tr
+          *ngFor="let cliente of clientes"
+          class="hover:bg-gray-50 transition-colors"
+        >
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="flex items-center">
+              <img
+                *ngIf="cliente.imagen"
+                [src]="cliente.imagen"
+                class="h-10 w-10 rounded-full mr-3"
+                alt="Perfil"
+              />
+              <div>
+                <div class="text-sm font-medium text-gray-900">
+                  {{ cliente.nombre }} {{ cliente.apellido }}
+                </div>
+                <div class="text-sm text-gray-500">
+                  {{ cliente.tipo_usuario }}
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="text-sm text-gray-900">{{ cliente.email }}</div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="text-sm text-gray-900">{{ cliente.telefono }}</div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="text-sm text-gray-900">
+              {{ cliente.tipo_documento }}: {{ cliente.numero_documento }}
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Paginación -->
+  <div class="mt-4 flex justify-center">
+    <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
+      <button
+        *ngFor="let page of getPages()"
+        (click)="onPageChange(page)"
+        [class.bg-blue-50]="currentPage === page"
+        [class.text-blue-600]="currentPage === page"
+        [class.bg-white]="currentPage !== page"
+        class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium hover:bg-gray-50"
+      >
+        {{ page }}
+      </button>
+    </nav>
+  </div>
+</div>
