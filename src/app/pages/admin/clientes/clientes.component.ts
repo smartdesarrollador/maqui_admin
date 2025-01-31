@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ClientesMotosService } from '../../../services/services_motos/clientes-motos.service';
@@ -38,7 +38,7 @@ export class ClientesComponent implements OnInit {
   orderBy: string = 'nombre';
   orderDirection: 'asc' | 'desc' = 'asc';
 
-  constructor(private clientesService: ClientesMotosService) {}
+  private clientesService = inject(ClientesMotosService);
 
   ngOnInit(): void {
     this.loadClientes();
