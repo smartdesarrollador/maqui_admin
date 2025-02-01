@@ -388,6 +388,15 @@ export const routes: Routes = [
             (m) => m.MotoComponent
           ),
       },
+      {
+        path: 'motos/create',
+        canActivate: [AuthGuard],
+        //component: CreateMotoComponent,
+        loadComponent: () =>
+          import('./pages/admin/moto/create-moto/create-moto.component').then(
+            (m) => m.CreateMotoComponent
+          ),
+      },
       { path: 'categoria/equipo', component: ListCategoria1Component },
       { path: 'categoria/equipo/create', component: CreateCategoria1Component },
       { path: 'categoria/equipo/edit/:id', component: EditCategoria1Component },
