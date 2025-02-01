@@ -370,10 +370,20 @@ export const routes: Routes = [
             (m) => m.ClientesComponent
           ),
       },
+      {
+        path: 'tipos-motos',
+        canActivate: [AuthGuard],
+        //component: TipoMotoComponent,
+        loadComponent: () =>
+          import('./pages/admin/tipo-moto/tipo-moto.component').then(
+            (m) => m.TipoMotoComponent
+          ),
+      },
       { path: 'categoria/equipo', component: ListCategoria1Component },
       { path: 'categoria/equipo/create', component: CreateCategoria1Component },
       { path: 'categoria/equipo/edit/:id', component: EditCategoria1Component },
       { path: 'equipo', component: ListTabla1Component },
+
       { path: 'equipo/create', component: CreateTabla1Component },
       { path: 'equipo/edit/:id', component: EditTabla1Component },
     ],
