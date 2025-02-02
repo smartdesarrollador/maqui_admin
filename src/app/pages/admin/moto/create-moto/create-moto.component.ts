@@ -56,7 +56,13 @@ export class CreateMotoComponent implements OnInit {
     potencia: ['', [Validators.required]],
     arranque: ['', [Validators.required]],
     transmision: ['', [Validators.required]],
-    capacidad_tanque: ['', [Validators.required]],
+    capacidad_tanque: [
+      '',
+      [
+        Validators.required,
+        Validators.pattern(/^\d*\.?\d+$/), // Permite números decimales
+      ],
+    ],
     peso_neto: [0, [Validators.required, Validators.min(0)]],
     carga_util: [0, [Validators.required, Validators.min(0)]],
     peso_bruto: [0, [Validators.required, Validators.min(0)]],
@@ -175,6 +181,26 @@ export class CreateMotoComponent implements OnInit {
   // Helper para verificar si un campo es inválido
   isFieldInvalid(field: string): boolean {
     const control = this.motoForm.get(field);
+    return !!control && control.invalid && (control.dirty || control.touched);
+  }
+
+  // Método para obtener el mensaje de error para capacidad_tanque
+  getCapacidadTanqueError(): string {
+    const control = this.motoForm.get('capacidad_tanque');
+    if (control?.errors) {
+      if (control.errors['required']) {
+        return 'Este campo es requerido';
+      }
+      if (control.errors['pattern']) {
+        return 'El valor debe ser un número decimal válido';
+      }
+    }
+    return '';
+  }
+
+  // Método para verificar si el campo capacidad_tanque es inválido
+  isCapacidadTanqueInvalid(): boolean {
+    const control = this.motoForm.get('capacidad_tanque');
     return !!control && control.invalid && (control.dirty || control.touched);
   }
 }
