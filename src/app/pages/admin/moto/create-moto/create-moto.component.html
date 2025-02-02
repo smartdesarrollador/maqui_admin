@@ -20,7 +20,11 @@
             [class.border-red-500]="isFieldInvalid('modelo_id')"
           >
             <option value="">Selecciona un modelo</option>
-            <!-- Aquí irían las opciones de modelos -->
+            @for (modelo of modelos; track modelo.id_modelo) {
+            <option [value]="modelo.id_modelo">
+              {{ modelo.nombre }} - {{ modelo.marca.nombre }}
+            </option>
+            }
           </select>
           @if (isFieldInvalid('modelo_id')) {
           <p class="mt-1 text-sm text-red-600">Este campo es requerido</p>
@@ -29,16 +33,20 @@
 
         <!-- Tipo de Moto -->
         <div>
-          <label class="block text-sm font-medium text-gray-700">
-            Tipo de Moto
-          </label>
+          <label class="block text-sm font-medium text-gray-700"
+            >Tipo de Moto</label
+          >
           <select
             formControlName="tipo_moto_id"
             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
             [class.border-red-500]="isFieldInvalid('tipo_moto_id')"
           >
             <option value="">Selecciona un tipo</option>
-            <!-- Aquí irían las opciones de tipos -->
+            @for (tipo of tipoMotos; track tipo.id_tipo_moto) {
+            <option [value]="tipo.id_tipo_moto">
+              {{ tipo.nombre }}
+            </option>
+            }
           </select>
           @if (isFieldInvalid('tipo_moto_id')) {
           <p class="mt-1 text-sm text-red-600">Este campo es requerido</p>
@@ -102,6 +110,23 @@
           <p class="mt-1 text-sm text-red-600">Ingresa una cantidad válida</p>
           }
         </div>
+
+        <!-- Descripción -->
+        <div class="col-span-full">
+          <label class="block text-sm font-medium text-gray-700"
+            >Descripción</label
+          >
+          <textarea
+            rows="3"
+            formControlName="descripcion"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            [class.border-red-500]="isFieldInvalid('descripcion')"
+            placeholder="Describe las características principales de la moto..."
+          ></textarea>
+          @if (isFieldInvalid('descripcion')) {
+          <p class="mt-1 text-sm text-red-600">Este campo es requerido</p>
+          }
+        </div>
       </div>
     </div>
 
@@ -141,6 +166,210 @@
             formControlName="potencia"
             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
           />
+        </div>
+
+        <!-- Arranque -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700"
+            >Arranque</label
+          >
+          <input
+            type="text"
+            formControlName="arranque"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            [class.border-red-500]="isFieldInvalid('arranque')"
+          />
+          @if (isFieldInvalid('arranque')) {
+          <p class="mt-1 text-sm text-red-600">Este campo es requerido</p>
+          }
+        </div>
+
+        <!-- Transmisión -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700"
+            >Transmisión</label
+          >
+          <input
+            type="text"
+            formControlName="transmision"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            [class.border-red-500]="isFieldInvalid('transmision')"
+          />
+          @if (isFieldInvalid('transmision')) {
+          <p class="mt-1 text-sm text-red-600">Este campo es requerido</p>
+          }
+        </div>
+
+        <!-- Capacidad del Tanque -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700">
+            Capacidad del Tanque
+          </label>
+          <input
+            type="text"
+            formControlName="capacidad_tanque"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            [class.border-red-500]="isFieldInvalid('capacidad_tanque')"
+          />
+          @if (isFieldInvalid('capacidad_tanque')) {
+          <p class="mt-1 text-sm text-red-600">Este campo es requerido</p>
+          }
+        </div>
+
+        <!-- Peso Neto -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700"
+            >Peso Neto (kg)</label
+          >
+          <input
+            type="number"
+            formControlName="peso_neto"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            [class.border-red-500]="isFieldInvalid('peso_neto')"
+          />
+          @if (isFieldInvalid('peso_neto')) {
+          <p class="mt-1 text-sm text-red-600">Ingrese un peso válido</p>
+          }
+        </div>
+
+        <!-- Carga Útil -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700"
+            >Carga Útil (kg)</label
+          >
+          <input
+            type="number"
+            formControlName="carga_util"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            [class.border-red-500]="isFieldInvalid('carga_util')"
+          />
+          @if (isFieldInvalid('carga_util')) {
+          <p class="mt-1 text-sm text-red-600">Ingrese una carga válida</p>
+          }
+        </div>
+
+        <!-- Peso Bruto -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700"
+            >Peso Bruto (kg)</label
+          >
+          <input
+            type="number"
+            formControlName="peso_bruto"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            [class.border-red-500]="isFieldInvalid('peso_bruto')"
+          />
+          @if (isFieldInvalid('peso_bruto')) {
+          <p class="mt-1 text-sm text-red-600">Ingrese un peso válido</p>
+          }
+        </div>
+
+        <!-- Dimensiones -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700"
+            >Largo (mm)</label
+          >
+          <input
+            type="number"
+            formControlName="largo"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            [class.border-red-500]="isFieldInvalid('largo')"
+          />
+          @if (isFieldInvalid('largo')) {
+          <p class="mt-1 text-sm text-red-600">Ingrese una medida válida</p>
+          }
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700"
+            >Ancho (mm)</label
+          >
+          <input
+            type="number"
+            formControlName="ancho"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            [class.border-red-500]="isFieldInvalid('ancho')"
+          />
+          @if (isFieldInvalid('ancho')) {
+          <p class="mt-1 text-sm text-red-600">Ingrese una medida válida</p>
+          }
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700"
+            >Alto (mm)</label
+          >
+          <input
+            type="number"
+            formControlName="alto"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            [class.border-red-500]="isFieldInvalid('alto')"
+          />
+          @if (isFieldInvalid('alto')) {
+          <p class="mt-1 text-sm text-red-600">Ingrese una medida válida</p>
+          }
+        </div>
+
+        <!-- Neumáticos -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700">
+            Neumático Delantero
+          </label>
+          <input
+            type="text"
+            formControlName="neumatico_delantero"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            [class.border-red-500]="isFieldInvalid('neumatico_delantero')"
+          />
+          @if (isFieldInvalid('neumatico_delantero')) {
+          <p class="mt-1 text-sm text-red-600">Este campo es requerido</p>
+          }
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700">
+            Neumático Posterior
+          </label>
+          <input
+            type="text"
+            formControlName="neumatico_posterior"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            [class.border-red-500]="isFieldInvalid('neumatico_posterior')"
+          />
+          @if (isFieldInvalid('neumatico_posterior')) {
+          <p class="mt-1 text-sm text-red-600">Este campo es requerido</p>
+          }
+        </div>
+
+        <!-- Frenos -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700">
+            Freno Delantero
+          </label>
+          <input
+            type="text"
+            formControlName="freno_delantero"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            [class.border-red-500]="isFieldInvalid('freno_delantero')"
+          />
+          @if (isFieldInvalid('freno_delantero')) {
+          <p class="mt-1 text-sm text-red-600">Este campo es requerido</p>
+          }
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700">
+            Freno Posterior
+          </label>
+          <input
+            type="text"
+            formControlName="freno_posterior"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            [class.border-red-500]="isFieldInvalid('freno_posterior')"
+          />
+          @if (isFieldInvalid('freno_posterior')) {
+          <p class="mt-1 text-sm text-red-600">Este campo es requerido</p>
+          }
         </div>
       </div>
     </div>

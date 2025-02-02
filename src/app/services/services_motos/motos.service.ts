@@ -91,12 +91,36 @@ interface MotosFilter {
   tipo_moto_id?: number;
 }
 
+interface Marca {
+  id_marca: number;
+  nombre: string;
+  origen: string;
+  fundacion: string;
+  logo: string;
+}
+
+interface Modelo {
+  id_modelo: number;
+  marca_id: number;
+  nombre: string;
+  tipo: string;
+  cilindrada: number;
+  imagen: string;
+  marca: Marca;
+}
+
+interface TipoMoto {
+  id_tipo_moto: number;
+  nombre: string;
+  descripcion: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class MotosService {
   private readonly http = inject(HttpClient);
-  private readonly baseUrl = `${environment.apiBaseUrl}/motos`;
+  private readonly baseUrl = `${environment.apiBaseUrl}`;
 
   /**
    * Obtiene el listado de motos con filtros y paginación
@@ -119,14 +143,14 @@ export class MotosService {
     if (filters.tipo_moto_id)
       params = params.set('tipo_moto_id', filters.tipo_moto_id);
 
-    return this.http.get<MotosResponse>(this.baseUrl, { params });
+    return this.http.get<MotosResponse>(this.baseUrl + '/motos', { params });
   }
 
   /**
    * Obtiene una moto específica por su ID
    */
   getMotoById(id: number): Observable<{ data: Moto }> {
-    return this.http.get<{ data: Moto }>(`${this.baseUrl}/${id}`);
+    return this.http.get<{ data: Moto }>(this.baseUrl + '/motos/' + id);
   }
 
   /**
@@ -135,9 +159,18 @@ export class MotosService {
   createMoto(
     moto: Partial<Moto>
   ): Observable<{ status: boolean; message: string; data: Moto }> {
+    // Asegurarse de que los campos booleanos se envíen como números
+    const formattedMoto = {
+      ...moto,
+      cargador_usb: moto.cargador_usb ? 1 : 0,
+      luz_led: moto.luz_led ? 1 : 0,
+      alarma: moto.alarma ? 1 : 0,
+      bluetooth: moto.bluetooth ? 1 : 0,
+    };
+
     return this.http.post<{ status: boolean; message: string; data: Moto }>(
-      this.baseUrl,
-      moto
+      this.baseUrl + '/motos',
+      formattedMoto
     );
   }
 
@@ -149,7 +182,7 @@ export class MotosService {
     moto: Partial<Moto>
   ): Observable<{ status: boolean; message: string; data: Moto }> {
     return this.http.put<{ status: boolean; message: string; data: Moto }>(
-      `${this.baseUrl}/${id}`,
+      this.baseUrl + '/motos/' + id,
       moto
     );
   }
@@ -159,7 +192,21 @@ export class MotosService {
    */
   deleteMoto(id: number): Observable<{ status: boolean; message: string }> {
     return this.http.delete<{ status: boolean; message: string }>(
-      `${this.baseUrl}/${id}`
+      this.baseUrl + '/motos/' + id
     );
+  }
+
+  /**
+   * Obtiene todos los modelos de motos
+   */
+  getModelos(): Observable<Modelo[]> {
+    return this.http.get<Modelo[]>(this.baseUrl + '/modelos');
+  }
+
+  /**
+   * Obtiene todos los tipos de motos
+   */
+  getTipoMotos(): Observable<TipoMoto[]> {
+    return this.http.get<TipoMoto[]>(this.baseUrl + '/tipos-motos');
   }
 }
