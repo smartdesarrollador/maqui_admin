@@ -42,6 +42,9 @@ export class CreateMotoComponent implements OnInit {
   modelos: Modelo[] = [];
   tipoMotos: TipoMoto[] = [];
 
+  selectedFile: File | null = null;
+  previewUrl: string | null = null;
+
   motoForm: FormGroup = this.fb.group({
     modelo_id: ['', [Validators.required]],
     tipo_moto_id: ['', [Validators.required]],
@@ -50,7 +53,7 @@ export class CreateMotoComponent implements OnInit {
     color: ['', [Validators.required]],
     stock: [0, [Validators.required, Validators.min(0)]],
     descripcion: ['', [Validators.required]],
-    imagen: ['moto-default.jpg'],
+    imagen: [null, [Validators.required]],
     cilindrada: ['', [Validators.required]],
     motor: ['', [Validators.required]],
     potencia: ['', [Validators.required]],
@@ -109,38 +112,80 @@ export class CreateMotoComponent implements OnInit {
     });
   }
 
-  onSubmit() {
-    if (this.motoForm.valid) {
-      this.isSubmitting = true;
+  /**
+   * Maneja la selección de archivo
+   */
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+      // Actualizar el control del formulario
+      this.motoForm.patchValue({
+        imagen: file,
+      });
 
-      const formData = {
-        ...this.motoForm.value,
-        // Asegurar que los campos numéricos sean números
-        precio_base: Number(this.motoForm.value.precio_base),
-        stock: Number(this.motoForm.value.stock),
-        peso_neto: Number(this.motoForm.value.peso_neto),
-        carga_util: Number(this.motoForm.value.carga_util),
-        peso_bruto: Number(this.motoForm.value.peso_bruto),
-        largo: Number(this.motoForm.value.largo),
-        ancho: Number(this.motoForm.value.ancho),
-        alto: Number(this.motoForm.value.alto),
-        año: Number(this.motoForm.value.año),
-        // Convertir booleanos a números
-        cargador_usb: this.motoForm.value.cargador_usb ? 1 : 0,
-        luz_led: this.motoForm.value.luz_led ? 1 : 0,
-        alarma: this.motoForm.value.alarma ? 1 : 0,
-        bluetooth: this.motoForm.value.bluetooth ? 1 : 0,
+      // Crear preview de la imagen
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.previewUrl = e.target.result;
       };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  onSubmit() {
+    console.log('Form validity:', this.motoForm.valid);
+    console.log('Selected file:', this.selectedFile);
+    console.log('Form values:', this.motoForm.value);
+
+    if (this.motoForm.valid && this.selectedFile) {
+      this.isSubmitting = true;
+      const formData = new FormData();
+
+      // Agregar todos los campos del formulario al FormData
+      Object.keys(this.motoForm.value).forEach((key) => {
+        if (key !== 'imagen') {
+          let value = this.motoForm.get(key)?.value;
+
+          // Convertir booleanos a números
+          if (typeof value === 'boolean') {
+            value = value ? 1 : 0;
+          }
+
+          // Asegurar que los campos numéricos sean números
+          if (
+            [
+              'precio_base',
+              'stock',
+              'peso_neto',
+              'carga_util',
+              'peso_bruto',
+              'largo',
+              'ancho',
+              'alto',
+              'año',
+            ].includes(key)
+          ) {
+            value = Number(value);
+          }
+
+          formData.append(key, value);
+        }
+      });
+
+      // Agregar el archivo de imagen
+      formData.append('imagen', this.selectedFile);
+
+      console.log('Enviando formData:', formData);
 
       this.motosService.createMoto(formData).subscribe({
         next: (response) => {
-          console.log('Moto creada exitosamente:', response);
+          console.log('Respuesta exitosa:', response);
           this.router.navigate(['/admin/motos']);
         },
         error: (error) => {
-          console.error('Error al crear moto:', error);
+          console.error('Error completo:', error);
           if (error.error && error.error.errors) {
-            // Manejar errores de validación
             Object.keys(error.error.errors).forEach((key) => {
               const control = this.motoForm.get(key);
               if (control) {
@@ -155,10 +200,13 @@ export class CreateMotoComponent implements OnInit {
         },
       });
     } else {
-      // Marcar todos los campos como touched para mostrar los errores
+      console.log('Formulario inválido o archivo no seleccionado');
       Object.keys(this.motoForm.controls).forEach((key) => {
         const control = this.motoForm.get(key);
         control?.markAsTouched();
+        if (control?.errors) {
+          console.log(`Errores en ${key}:`, control.errors);
+        }
       });
     }
   }

@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { MotosService } from '../../../services/services_motos/motos.service';
 import { NgOptimizedImage } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { environment } from '../../../../environments/environment';
 
 // Interfaces
 interface Moto {
@@ -38,6 +39,8 @@ interface Moto {
   styleUrl: './moto.component.css',
 })
 export class MotoComponent implements OnInit {
+  protected readonly baseUrl = environment.apiBaseUrl;
+
   protected readonly Math = Math;
   protected readonly Array = Array;
 

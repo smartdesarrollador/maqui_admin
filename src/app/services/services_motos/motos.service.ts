@@ -157,20 +157,11 @@ export class MotosService {
    * Crea una nueva moto
    */
   createMoto(
-    moto: Partial<Moto>
+    data: FormData
   ): Observable<{ status: boolean; message: string; data: Moto }> {
-    // Asegurarse de que los campos booleanos se envíen como números
-    const formattedMoto = {
-      ...moto,
-      cargador_usb: moto.cargador_usb ? 1 : 0,
-      luz_led: moto.luz_led ? 1 : 0,
-      alarma: moto.alarma ? 1 : 0,
-      bluetooth: moto.bluetooth ? 1 : 0,
-    };
-
     return this.http.post<{ status: boolean; message: string; data: Moto }>(
-      this.baseUrl + '/motos',
-      formattedMoto
+      `${this.baseUrl}/motos`,
+      data
     );
   }
 
