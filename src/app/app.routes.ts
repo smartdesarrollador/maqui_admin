@@ -398,6 +398,15 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'motos/edit/:id',
+        canActivate: [AuthGuard],
+        //component: EditMotoComponent,
+        loadComponent: () =>
+          import('./pages/admin/moto/edit-moto/edit-moto.component').then(
+            (m) => m.EditMotoComponent
+          ),
+      },
+      {
         path: 'modelos',
         canActivate: [AuthGuard],
         //component: ModeloMotoComponent,

@@ -170,11 +170,11 @@ export class MotosService {
    */
   updateMoto(
     id: number,
-    moto: Partial<Moto>
+    data: FormData
   ): Observable<{ status: boolean; message: string; data: Moto }> {
-    return this.http.put<{ status: boolean; message: string; data: Moto }>(
-      this.baseUrl + '/motos/' + id,
-      moto
+    return this.http.post<{ status: boolean; message: string; data: Moto }>(
+      `${this.baseUrl}/motos/${id}`,
+      data
     );
   }
 
