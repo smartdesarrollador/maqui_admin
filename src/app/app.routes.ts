@@ -16,8 +16,6 @@ import { AuthGuard } from './guards/auth.guard';
 
 /* ---------------------------------------------------------------------- */
 
-import { PortalComponent } from './paginas/login/portal/portal.component';
-import { LayoutComponent } from './layout/layout.component';
 /* import { LayoutUnoComponent } from './layout/layout-uno/layout-uno.component';
 import { LayoutDosComponent } from './layout/layout-dos/layout-dos.component';
 import { LayoutTresComponent } from './layout/layout-tres/layout-tres.component';
@@ -51,13 +49,16 @@ import { CreateCommentComponent } from './pages/admin/blog/comments/create-comme
 import { EditCategoryComponent } from './pages/admin/blog/categories/edit-category/edit-category.component';
 import { EditTagComponent } from './pages/admin/blog/tag/edit-tag/edit-tag.component';
 import { EditPostComponent } from './pages/admin/blog/post/edit-post/edit-post.component';
-import { EditCommentComponent } from './pages/admin/blog/comments/edit-comment/edit-comment.component'; */
+import { EditCommentComponent } from './pages/admin/blog/comments/edit-comment/edit-comment.component';
 import { ListCategoria1Component } from './pages/admin/componente1/categoria1/list-categoria1/list-categoria1.component';
 import { CreateCategoria1Component } from './pages/admin/componente1/categoria1/create-categoria1/create-categoria1.component';
 import { EditCategoria1Component } from './pages/admin/componente1/categoria1/edit-categoria1/edit-categoria1.component';
-import { ListTabla1Component } from './pages/admin/componente1/tabla1/list-tabla1/list-tabla1.component';
 import { CreateTabla1Component } from './pages/admin/componente1/tabla1/create-tabla1/create-tabla1.component';
-import { EditTabla1Component } from './pages/admin/componente1/tabla1/edit-tabla1/edit-tabla1.component';
+import { EditTabla1Component } from './pages/admin/componente1/tabla1/edit-tabla1/edit-tabla1.component'; */
+
+import { PortalComponent } from './paginas/login/portal/portal.component';
+import { LayoutComponent } from './layout/layout.component';
+import { ListTabla1Component } from './pages/admin/componente1/tabla1/list-tabla1/list-tabla1.component';
 
 export const routes: Routes = [
   {
@@ -415,13 +416,51 @@ export const routes: Routes = [
             (m) => m.ModeloMotoComponent
           ),
       },
-      { path: 'categoria/equipo', component: ListCategoria1Component },
-      { path: 'categoria/equipo/create', component: CreateCategoria1Component },
-      { path: 'categoria/equipo/edit/:id', component: EditCategoria1Component },
+      {
+        path: 'categoria/equipo',
+        //component: ListCategoria1Component,
+        loadComponent: () =>
+          import(
+            './pages/admin/componente1/categoria1/list-categoria1/list-categoria1.component'
+          ).then((m) => m.ListCategoria1Component),
+      },
+
+      {
+        path: 'categoria/equipo/create',
+        //component: CreateCategoria1Component,
+        loadComponent: () =>
+          import(
+            './pages/admin/componente1/categoria1/create-categoria1/create-categoria1.component'
+          ).then((m) => m.CreateCategoria1Component),
+      },
+
+      {
+        path: 'categoria/equipo/edit/:id',
+        //component: EditCategoria1Component,
+        loadComponent: () =>
+          import(
+            './pages/admin/componente1/categoria1/edit-categoria1/edit-categoria1.component'
+          ).then((m) => m.EditCategoria1Component),
+      },
       { path: 'equipo', component: ListTabla1Component },
 
-      { path: 'equipo/create', component: CreateTabla1Component },
-      { path: 'equipo/edit/:id', component: EditTabla1Component },
+      {
+        path: 'equipo/create',
+        //component: CreateTabla1Component,
+        loadComponent: () =>
+          import(
+            './pages/admin/componente1/tabla1/create-tabla1/create-tabla1.component'
+          ).then((m) => m.CreateTabla1Component),
+      },
+
+      {
+        path: 'equipo/edit/:id',
+        //component: EditTabla1Component,
+        loadComponent: () =>
+          import(
+            './pages/admin/componente1/tabla1/edit-tabla1/edit-tabla1.component'
+          ).then((m) => m.EditTabla1Component),
+      },
     ],
   },
   {

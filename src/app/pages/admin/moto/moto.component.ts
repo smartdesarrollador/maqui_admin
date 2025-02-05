@@ -39,7 +39,7 @@ interface Moto {
   styleUrl: './moto.component.css',
 })
 export class MotoComponent implements OnInit {
-  protected readonly baseUrl = environment.apiBaseUrl;
+  protected readonly baseUrl = environment.urlRaiz;
 
   protected readonly Math = Math;
   protected readonly Array = Array;
