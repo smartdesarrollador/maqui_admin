@@ -417,6 +417,15 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'marcas',
+        canActivate: [AuthGuard],
+        //component: MarcaComponent,
+        loadComponent: () =>
+          import('./pages/admin/marca/marca.component').then(
+            (m) => m.MarcaComponent
+          ),
+      },
+      {
         path: 'categoria/equipo',
         //component: ListCategoria1Component,
         loadComponent: () =>
