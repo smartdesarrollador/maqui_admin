@@ -1,0 +1,174 @@
+<div class="container mx-auto px-4 py-8">
+  <!-- Mensajes de estado -->
+  @if (error()) {
+  <div
+    class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+    role="alert"
+  >
+    <span class="block sm:inline">{{ error() }}</span>
+    <button class="absolute top-0 right-0 px-4 py-3" (click)="clearMessages()">
+      <span class="sr-only">Cerrar</span>
+      <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+        <path
+          d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z"
+        />
+      </svg>
+    </button>
+  </div>
+  } @if (success()) {
+  <div
+    class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
+    role="alert"
+  >
+    <span class="block sm:inline">{{ success() }}</span>
+    <button class="absolute top-0 right-0 px-4 py-3" (click)="clearMessages()">
+      <span class="sr-only">Cerrar</span>
+      <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+        <path
+          d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z"
+        />
+      </svg>
+    </button>
+  </div>
+  }
+
+  <!-- Formulario de creación -->
+  <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <h2 class="text-xl font-bold mb-4">Crear Nuevo Tipo de Repuesto</h2>
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="nombre">
+        Nombre
+      </label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="nombre"
+        type="text"
+        [(ngModel)]="newTipoRepuesto.nombre"
+        placeholder="Nombre del tipo de repuesto"
+      />
+    </div>
+    <div class="mb-4">
+      <label
+        class="block text-gray-700 text-sm font-bold mb-2"
+        for="descripcion"
+      >
+        Descripción
+      </label>
+      <textarea
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="descripcion"
+        [(ngModel)]="newTipoRepuesto.descripcion"
+        placeholder="Descripción del tipo de repuesto"
+        rows="3"
+      ></textarea>
+    </div>
+    <div class="flex items-center justify-end">
+      <button
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        [disabled]="isLoading()"
+        (click)="createTipoRepuesto()"
+      >
+        @if (isLoading()) {
+        <span class="inline-block animate-spin mr-2">⌛</span>
+        } Crear Tipo de Repuesto
+      </button>
+    </div>
+  </div>
+
+  <!-- Lista de tipos de repuesto -->
+  <div class="bg-white shadow-md rounded px-8 pt-6 pb-8">
+    <h2 class="text-xl font-bold mb-4">Tipos de Repuesto</h2>
+
+    @if (isLoading()) {
+    <div class="flex justify-center items-center py-4">
+      <div
+        class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"
+      ></div>
+    </div>
+    } @else if (tiposRepuesto().length === 0) {
+    <p class="text-gray-500 text-center py-4">
+      No hay tipos de repuesto registrados
+    </p>
+    } @else {
+    <div class="overflow-x-auto">
+      <table class="min-w-full leading-normal">
+        <thead>
+          <tr>
+            <th
+              class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+            >
+              Nombre
+            </th>
+            <th
+              class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+            >
+              Descripción
+            </th>
+            <th
+              class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+            >
+              Acciones
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (tipo of tiposRepuesto(); track tipo.id_tipo_repuesto) { @if
+          (tipoRepuestoEdit()?.id_tipo_repuesto === tipo.id_tipo_repuesto) {
+          <tr>
+            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <input
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                [(ngModel)]="tipoRepuestoEdit()!.nombre"
+              />
+            </td>
+            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <input
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                [(ngModel)]="tipoRepuestoEdit()!.descripcion"
+              />
+            </td>
+            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <button
+                class="text-green-600 hover:text-green-900 mr-4"
+                (click)="updateTipoRepuesto()"
+              >
+                Guardar
+              </button>
+              <button
+                class="text-gray-600 hover:text-gray-900"
+                (click)="tipoRepuestoEdit.set(null)"
+              >
+                Cancelar
+              </button>
+            </td>
+          </tr>
+          } @else {
+          <tr>
+            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              {{ tipo.nombre }}
+            </td>
+            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              {{ tipo.descripcion }}
+            </td>
+            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <button
+                class="text-blue-600 hover:text-blue-900 mr-4"
+                (click)="startEdit(tipo)"
+              >
+                Editar
+              </button>
+              <button
+                class="text-red-600 hover:text-red-900"
+                (click)="deleteTipoRepuesto(tipo.id_tipo_repuesto)"
+              >
+                Eliminar
+              </button>
+            </td>
+          </tr>
+          } }
+        </tbody>
+      </table>
+    </div>
+    }
+  </div>
+</div>

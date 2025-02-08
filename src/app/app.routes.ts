@@ -435,6 +435,15 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'tipos-repuestos',
+        canActivate: [AuthGuard],
+        //component: TipoRepuestoComponent,
+        loadComponent: () =>
+          import('./pages/admin/tipo-repuesto/tipo-repuesto.component').then(
+            (m) => m.TipoRepuestoComponent
+          ),
+      },
+      {
         path: 'categoria/equipo',
         //component: ListCategoria1Component,
         loadComponent: () =>
