@@ -426,6 +426,15 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'tipos-accesorios',
+        canActivate: [AuthGuard],
+        //component: TipoAccesorioComponent,
+        loadComponent: () =>
+          import('./pages/admin/tipo-accesorio/tipo-accesorio.component').then(
+            (m) => m.TipoAccesorioComponent
+          ),
+      },
+      {
         path: 'categoria/equipo',
         //component: ListCategoria1Component,
         loadComponent: () =>

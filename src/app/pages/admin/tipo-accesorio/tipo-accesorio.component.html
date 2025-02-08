@@ -1,0 +1,145 @@
+<div class="container mx-auto p-4">
+  <h2 class="text-2xl font-bold mb-4">Gestión de Tipos de Accesorios</h2>
+
+  <!-- Formulario -->
+  <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <h3 class="text-lg font-semibold mb-4">
+      @if (editando) { Editar Tipo de Accesorio } @else { Nuevo Tipo de
+      Accesorio }
+    </h3>
+
+    @if (error) {
+    <div
+      class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4"
+      role="alert"
+    >
+      <span class="block sm:inline">{{ error }}</span>
+    </div>
+    }
+
+    <form (ngSubmit)="guardar()" #form="ngForm">
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="nombre">
+          Nombre
+        </label>
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="nombre"
+          type="text"
+          name="nombre"
+          [(ngModel)]="tipoAccesorioForm.nombre"
+          required
+          placeholder="Nombre del tipo de accesorio"
+        />
+      </div>
+
+      <div class="mb-6">
+        <label
+          class="block text-gray-700 text-sm font-bold mb-2"
+          for="descripcion"
+        >
+          Descripción
+        </label>
+        <textarea
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="descripcion"
+          name="descripcion"
+          [(ngModel)]="tipoAccesorioForm.descripcion"
+          required
+          rows="3"
+          placeholder="Descripción del tipo de accesorio"
+        ></textarea>
+      </div>
+
+      <div class="flex items-center justify-between">
+        <button
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          type="submit"
+          [disabled]="loading"
+        >
+          @if (loading) {
+          <span>Guardando...</span>
+          } @else {
+          <span>{{ editando ? "Actualizar" : "Guardar" }}</span>
+          }
+        </button>
+        @if (editando) {
+        <button
+          type="button"
+          class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          (click)="resetForm()"
+        >
+          Cancelar
+        </button>
+        }
+      </div>
+    </form>
+  </div>
+
+  <!-- Lista de Tipos de Accesorios -->
+  <div class="bg-white shadow-md rounded px-8 pt-6 pb-8">
+    <h3 class="text-lg font-semibold mb-4">Lista de Tipos de Accesorios</h3>
+
+    @if (loading) {
+    <div class="flex justify-center items-center py-4">
+      <div
+        class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"
+      ></div>
+    </div>
+    } @else if (tiposAccesorios.length === 0) {
+    <p class="text-gray-500 text-center py-4">
+      No hay tipos de accesorios registrados
+    </p>
+    } @else {
+    <div class="overflow-x-auto">
+      <table class="min-w-full leading-normal">
+        <thead>
+          <tr>
+            <th
+              class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+            >
+              Nombre
+            </th>
+            <th
+              class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+            >
+              Descripción
+            </th>
+            <th
+              class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+            >
+              Acciones
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (tipo of tiposAccesorios; track tipo.id_tipo_accesorio) {
+          <tr>
+            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              {{ tipo.nombre }}
+            </td>
+            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              {{ tipo.descripcion }}
+            </td>
+            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <button
+                class="text-blue-600 hover:text-blue-900 mr-4"
+                (click)="editar(tipo)"
+              >
+                Editar
+              </button>
+              <button
+                class="text-red-600 hover:text-red-900"
+                (click)="eliminar(tipo.id_tipo_accesorio)"
+              >
+                Eliminar
+              </button>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    }
+  </div>
+</div>
