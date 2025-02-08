@@ -1,51 +1,69 @@
 export const environment = {
   production: true,
-  urlRaiz: 'https://apimaquimotora.com',
-  apiUrl: 'https://apimaquimotora.com/api/test_api_crud',
-  apiUrl2: 'https://apimaquimotora.com/api/test_api',
-  apiUrl3: 'https://apimaquimotora.com/api/upload',
-  apiUpdateFile: 'https://apimaquimotora.com/api/update/upload',
-  apiListarFiles: 'https://apimaquimotora.com/api/listar/files',
-  apiDeleteFile: 'https://apimaquimotora.com/api/update/upload',
-  apiUrlTrabajador: 'https://apimaquimotora.com/api/trabajador',
-  apiUrlRegister: 'https://apimaquimotora.com/api/register',
-  apiUrlLogin: 'https://apimaquimotora.com/api/login',
-  apiUrlEmail: 'https://apimaquimotora.com/api/enviar_correo',
-  apiUrlEmpleador: 'https://apimaquimotora.com/api/empleador',
-  apiUrlUltimoEmpleador: 'https://apimaquimotora.com/api/ultimo_empleador',
+  urlRaiz: 'https://apimaquimotora.enfocussoluciones.pe',
+  apiUrl: 'https://apimaquimotora.enfocussoluciones.pe/api/test_api_crud',
+  apiUrl2: 'https://apimaquimotora.enfocussoluciones.pe/api/test_api',
+  apiUrl3: 'https://apimaquimotora.enfocussoluciones.pe/api/upload',
+  apiUpdateFile:
+    'https://apimaquimotora.enfocussoluciones.pe/api/update/upload',
+  apiListarFiles:
+    'https://apimaquimotora.enfocussoluciones.pe/api/listar/files',
+  apiDeleteFile:
+    'https://apimaquimotora.enfocussoluciones.pe/api/update/upload',
+  apiUrlTrabajador:
+    'https://apimaquimotora.enfocussoluciones.pe/api/trabajador',
+  apiUrlRegister: 'https://apimaquimotora.enfocussoluciones.pe/api/register',
+  apiUrlLogin: 'https://apimaquimotora.enfocussoluciones.pe/api/login',
+  apiUrlEmail: 'https://apimaquimotora.enfocussoluciones.pe/api/enviar_correo',
+  apiUrlEmpleador: 'https://apimaquimotora.enfocussoluciones.pe/api/empleador',
+  apiUrlUltimoEmpleador:
+    'https://apimaquimotora.enfocussoluciones.pe/api/ultimo_empleador',
   apiUrlActividadUltimoEmpleador:
-    'https://apimaquimotora.com/api/actividad_ultimo_empleador',
-  apiUrlMision: 'https://apimaquimotora.com/api/mision',
-  apiUrlMisionActualizar: 'https://apimaquimotora.com/api/mision/actualizar',
-  apiUrlMisionUpdate: 'https://apimaquimotora.com/api/mision/update/upload',
-  apiUrl3Carousel: 'https://apimaquimotora.com/api/carousel/upload',
+    'https://apimaquimotora.enfocussoluciones.pe/api/actividad_ultimo_empleador',
+  apiUrlMision: 'https://apimaquimotora.enfocussoluciones.pe/api/mision',
+  apiUrlMisionActualizar:
+    'https://apimaquimotora.enfocussoluciones.pe/api/mision/actualizar',
+  apiUrlMisionUpdate:
+    'https://apimaquimotora.enfocussoluciones.pe/api/mision/update/upload',
+  apiUrl3Carousel:
+    'https://apimaquimotora.enfocussoluciones.pe/api/carousel/upload',
   apiUpdateFileCarousel:
-    'https://apimaquimotora.com/api/carousel/update/upload',
+    'https://apimaquimotora.enfocussoluciones.pe/api/carousel/update/upload',
   apiListarFilesCarousel:
-    'https://apimaquimotora.com/api/carousel/listar/files',
+    'https://apimaquimotora.enfocussoluciones.pe/api/carousel/listar/files',
   apiDeleteFileCarousel:
-    'https://apimaquimotora.com/api/carousel/update/upload',
-  apiUrl3Producto: 'https://apimaquimotora.com/api/productos/subir',
-  apiUpdateFileProducto: 'https://apimaquimotora.com/api/productos/update',
-  apiListarFilesProducto: 'https://apimaquimotora.com/api/productos',
-  apiListarCursosProducto: 'https://apimaquimotora.com/api/productos/cursos',
+    'https://apimaquimotora.enfocussoluciones.pe/api/carousel/update/upload',
+  apiUrl3Producto:
+    'https://apimaquimotora.enfocussoluciones.pe/api/productos/subir',
+  apiUpdateFileProducto:
+    'https://apimaquimotora.enfocussoluciones.pe/api/productos/update',
+  apiListarFilesProducto:
+    'https://apimaquimotora.enfocussoluciones.pe/api/productos',
+  apiListarCursosProducto:
+    'https://apimaquimotora.enfocussoluciones.pe/api/productos/cursos',
   apiListarEspecialidadesProducto:
-    'https://apimaquimotora.com/api/productos/especialidades',
-  apiDeleteFileProducto: 'https://apimaquimotora.com/api/productos',
-  apiListarContactos: 'https://apimaquimotora.com/api/contactos',
-  apiUrl3Testimonio: 'https://apimaquimotora.com/api/testimonios/subir',
-  apiUpdateFileTestimonio: 'https://apimaquimotora.com/api/testimonios/update',
-  apiListarFilesTestimonio: 'https://apimaquimotora.com/api/testimonios',
-  apiDeleteFileTestimonio: 'https://apimaquimotora.com/api/testimonios',
+    'https://apimaquimotora.enfocussoluciones.pe/api/productos/especialidades',
+  apiDeleteFileProducto:
+    'https://apimaquimotora.enfocussoluciones.pe/api/productos',
+  apiListarContactos:
+    'https://apimaquimotora.enfocussoluciones.pe/api/contactos',
+  apiUrl3Testimonio:
+    'https://apimaquimotora.enfocussoluciones.pe/api/testimonios/subir',
+  apiUpdateFileTestimonio:
+    'https://apimaquimotora.enfocussoluciones.pe/api/testimonios/update',
+  apiListarFilesTestimonio:
+    'https://apimaquimotora.enfocussoluciones.pe/api/testimonios',
+  apiDeleteFileTestimonio:
+    'https://apimaquimotora.enfocussoluciones.pe/api/testimonios',
   /* blog */
-  postsUrl: 'https://apimaquimotora.com/api/posts',
-  usersUrl: 'https://apimaquimotora.com/api/users',
-  categoriesUrl: 'https://apimaquimotora.com/api/categories',
-  commentsUrl: 'https://apimaquimotora.com/api/comments',
-  tagsUrl: 'https://apimaquimotora.com/api/tags',
+  postsUrl: 'https://apimaquimotora.enfocussoluciones.pe/api/posts',
+  usersUrl: 'https://apimaquimotora.enfocussoluciones.pe/api/users',
+  categoriesUrl: 'https://apimaquimotora.enfocussoluciones.pe/api/categories',
+  commentsUrl: 'https://apimaquimotora.enfocussoluciones.pe/api/comments',
+  tagsUrl: 'https://apimaquimotora.enfocussoluciones.pe/api/tags',
   /* componente1 */
-  dominio: 'https://apimaquimotora.com',
-  apiBaseUrl: 'https://apimaquimotora.com/api', // URL base para la API en producción
+  dominio: 'https://apimaquimotora.enfocussoluciones.pe',
+  apiBaseUrl: 'https://apimaquimotora.enfocussoluciones.pe/api', // URL base para la API en producción
   endpoints: {
     categoria1: '/categoria1',
     tabla1: '/tabla1',
