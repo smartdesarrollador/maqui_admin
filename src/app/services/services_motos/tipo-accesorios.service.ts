@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 
 // Interfaces
@@ -31,7 +32,9 @@ export class TipoAccesoriosService {
    * Obtiene todos los tipos de accesorios
    */
   getTiposAccesorios(): Observable<TipoAccesorio[]> {
-    return this.http.get<TipoAccesorio[]>(this.apiUrl);
+    return this.http
+      .get<{ data: TipoAccesorio[] }>(this.apiUrl)
+      .pipe(map((response) => response.data));
   }
 
   /**

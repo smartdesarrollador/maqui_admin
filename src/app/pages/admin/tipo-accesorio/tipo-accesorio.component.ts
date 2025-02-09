@@ -42,13 +42,15 @@ export class TipoAccesorioComponent implements OnInit {
 
   cargarTiposAccesorios() {
     this.loading = true;
+    this.error = '';
     this.tipoAccesorioService.getTiposAccesorios().subscribe({
       next: (data) => {
         this.tiposAccesorios = data;
         this.loading = false;
       },
       error: (error) => {
-        this.error = 'Error al cargar los tipos de accesorios';
+        this.error =
+          error.error?.message || 'Error al cargar los tipos de accesorios';
         this.loading = false;
         console.error(error);
       },
