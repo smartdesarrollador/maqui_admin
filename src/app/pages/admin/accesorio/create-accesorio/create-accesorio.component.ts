@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -6,17 +6,19 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AccesoriosService } from '../../../../services/services_motos/accesorios.service';
+import { TipoAccesorio } from '../../../../services/services_motos/accesorios.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-create-accesorio',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './create-accesorio.component.html',
   styleUrl: './create-accesorio.component.css',
 })
-export class CreateAccesorioComponent {
+export class CreateAccesorioComponent implements OnInit {
   private fb = inject(FormBuilder);
   private accesoriosService = inject(AccesoriosService);
   private router = inject(Router);
@@ -38,6 +40,25 @@ export class CreateAccesorioComponent {
     tipo_accesorio_id: ['', Validators.required],
     imagen: [null as unknown as File, Validators.required],
   });
+
+  // Agregar esta propiedad
+  tiposAccesorios: TipoAccesorio[] = [];
+
+  ngOnInit() {
+    this.loadTiposAccesorios();
+  }
+
+  private loadTiposAccesorios() {
+    this.accesoriosService.getTiposAccesorios().subscribe({
+      next: (tipos) => {
+        this.tiposAccesorios = tipos;
+      },
+      error: (error) => {
+        console.error('Error cargando tipos de accesorios:', error);
+        this.error = 'Error al cargar los tipos de accesorios';
+      },
+    });
+  }
 
   onFileSelected(event: Event) {
     const file = (event.target as HTMLInputElement).files?.[0];

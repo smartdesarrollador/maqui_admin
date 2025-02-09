@@ -7,6 +7,7 @@ import {
   AccesorioFilters,
 } from '../../../services/services_motos/accesorios.service';
 import { RouterModule } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-accesorio',
@@ -16,6 +17,7 @@ import { RouterModule } from '@angular/router';
   styleUrl: './accesorio.component.css',
 })
 export class AccesorioComponent implements OnInit {
+  protected readonly baseUrl = environment.urlRaiz;
   private accesoriosService = inject(AccesoriosService);
   protected Math = Math;
 

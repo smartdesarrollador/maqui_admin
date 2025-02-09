@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { tap, catchError } from 'rxjs/operators';
+import { tap, catchError, map } from 'rxjs/operators';
 
 // Interfaces
 export interface Accesorio {
@@ -45,6 +45,12 @@ export interface AccesorioFilters {
   sort_order?: 'asc' | 'desc';
   per_page?: number;
   page?: number;
+}
+
+export interface TipoAccesorio {
+  id_tipo_accesorio: number;
+  nombre: string;
+  descripcion?: string;
 }
 
 @Injectable({
@@ -133,5 +139,16 @@ export class AccesoriosService {
     }
 
     return formData;
+  }
+
+  /**
+   * Obtiene los tipos de accesorios
+   */
+  getTiposAccesorios(): Observable<TipoAccesorio[]> {
+    return this.http
+      .get<{ data: TipoAccesorio[] }>(
+        `${environment.apiBaseUrl}/tipos-accesorios`
+      )
+      .pipe(map((response) => response.data));
   }
 }
