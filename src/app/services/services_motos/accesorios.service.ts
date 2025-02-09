@@ -115,18 +115,19 @@ export class AccesoriosService {
   /**
    * Construye un FormData para enviar al servidor
    */
-  buildFormData(accesorio: Partial<Accesorio>, imagen?: File): FormData {
+  buildFormData(
+    accesorio: Partial<Record<string, any>>,
+    imagen?: File
+  ): FormData {
     const formData = new FormData();
 
-    // Agregar campos del accesorio al FormData
     Object.keys(accesorio).forEach((key) => {
-      const value = accesorio[key as keyof Accesorio];
-      if (value !== undefined && value !== null) {
+      const value = accesorio[key];
+      if (value !== undefined && value !== null && key !== 'imagen') {
         formData.append(key, value.toString());
       }
     });
 
-    // Agregar imagen si existe
     if (imagen) {
       formData.append('imagen', imagen);
     }

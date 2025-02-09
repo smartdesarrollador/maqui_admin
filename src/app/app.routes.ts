@@ -453,6 +453,15 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'accesorios/create',
+        canActivate: [AuthGuard],
+        //component: CreateAccesorioComponent,
+        loadComponent: () =>
+          import(
+            './pages/admin/accesorio/create-accesorio/create-accesorio.component'
+          ).then((m) => m.CreateAccesorioComponent),
+      },
+      {
         path: 'categoria/equipo',
         //component: ListCategoria1Component,
         loadComponent: () =>
