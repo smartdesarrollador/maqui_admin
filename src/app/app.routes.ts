@@ -471,6 +471,15 @@ export const routes: Routes = [
           ).then((m) => m.EditAccesorioComponent),
       },
       {
+        path: 'repuestos',
+        canActivate: [AuthGuard],
+        //component: RepuestoComponent,
+        loadComponent: () =>
+          import('./pages/admin/repuesto/repuesto.component').then(
+            (m) => m.RepuestoComponent
+          ),
+      },
+      {
         path: 'categoria/equipo',
         //component: ListCategoria1Component,
         loadComponent: () =>
