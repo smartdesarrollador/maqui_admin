@@ -498,6 +498,15 @@ export const routes: Routes = [
           ).then((m) => m.EditRepuestoComponent),
       },
       {
+        path: 'cotizaciones',
+        canActivate: [AuthGuard],
+        //component: CotizacionComponent,
+        loadComponent: () =>
+          import('./pages/admin/cotizacion/cotizacion.component').then(
+            (m) => m.CotizacionComponent
+          ),
+      },
+      {
         path: 'categoria/equipo',
         //component: ListCategoria1Component,
         loadComponent: () =>
