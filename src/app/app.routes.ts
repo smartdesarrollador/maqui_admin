@@ -507,6 +507,15 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'financiaciones',
+        canActivate: [AuthGuard],
+        //component: FinanciacionComponent,
+        loadComponent: () =>
+          import('./pages/admin/financiacion/financiacion.component').then(
+            (m) => m.FinanciacionComponent
+          ),
+      },
+      {
         path: 'categoria/equipo',
         //component: ListCategoria1Component,
         loadComponent: () =>
