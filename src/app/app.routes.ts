@@ -480,6 +480,24 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'repuestos/create',
+        canActivate: [AuthGuard],
+        //component: CreateRepuestoComponent,
+        loadComponent: () =>
+          import(
+            './pages/admin/repuesto/create-repuesto/create-repuesto.component'
+          ).then((m) => m.CreateRepuestoComponent),
+      },
+      {
+        path: 'repuestos/edit/:id',
+        canActivate: [AuthGuard],
+        //component: EditRepuestoComponent,
+        loadComponent: () =>
+          import(
+            './pages/admin/repuesto/edit-repuesto/edit-repuesto.component'
+          ).then((m) => m.EditRepuestoComponent),
+      },
+      {
         path: 'categoria/equipo',
         //component: ListCategoria1Component,
         loadComponent: () =>

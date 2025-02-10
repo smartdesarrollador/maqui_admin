@@ -21,7 +21,7 @@
       </div>
       <button
         class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-        routerLink="nuevo"
+        routerLink="/admin/repuestos/create"
       >
         Nuevo Repuesto
       </button>
@@ -100,7 +100,7 @@
           <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
             <div class="flex gap-2">
               <button
-                [routerLink]="['/admin/repuestos/editar', repuesto.id_repuesto]"
+                [routerLink]="['/admin/repuestos/edit', repuesto.id_repuesto]"
                 class="text-indigo-600 hover:text-indigo-900"
               >
                 Editar

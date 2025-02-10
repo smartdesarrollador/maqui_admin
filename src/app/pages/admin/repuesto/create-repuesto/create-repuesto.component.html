@@ -1,0 +1,177 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="max-w-2xl mx-auto">
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <h2 class="text-2xl font-bold mb-6">Crear Nuevo Repuesto</h2>
+
+      <form
+        [formGroup]="repuestoForm"
+        (ngSubmit)="onSubmit()"
+        class="space-y-6"
+      >
+        <!-- Nombre -->
+        <div>
+          <label for="nombre" class="block text-sm font-medium text-gray-700">
+            Nombre
+          </label>
+          <input
+            type="text"
+            id="nombre"
+            formControlName="nombre"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            [class.border-red-500]="
+              repuestoForm.get('nombre')?.invalid &&
+              repuestoForm.get('nombre')?.touched
+            "
+          />
+          @if (repuestoForm.get('nombre')?.invalid &&
+          repuestoForm.get('nombre')?.touched) {
+          <p class="mt-1 text-sm text-red-600">
+            El nombre es requerido y debe tener al menos 3 caracteres
+          </p>
+          }
+        </div>
+
+        <!-- Tipo -->
+        <div>
+          <label for="tipo" class="block text-sm font-medium text-gray-700">
+            Tipo
+          </label>
+          <input
+            type="text"
+            id="tipo"
+            formControlName="tipo"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+          />
+        </div>
+
+        <!-- Precio -->
+        <div>
+          <label for="precio" class="block text-sm font-medium text-gray-700">
+            Precio
+          </label>
+          <input
+            type="number"
+            id="precio"
+            formControlName="precio"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            min="0"
+            step="0.01"
+          />
+        </div>
+
+        <!-- Stock -->
+        <div>
+          <label for="stock" class="block text-sm font-medium text-gray-700">
+            Stock
+          </label>
+          <input
+            type="number"
+            id="stock"
+            formControlName="stock"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            min="0"
+          />
+        </div>
+
+        <!-- Descripción -->
+        <div>
+          <label
+            for="descripcion"
+            class="block text-sm font-medium text-gray-700"
+          >
+            Descripción
+          </label>
+          <textarea
+            id="descripcion"
+            formControlName="descripcion"
+            rows="3"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+          ></textarea>
+        </div>
+
+        <!-- Tipo de Repuesto ID -->
+        <div>
+          <label
+            for="tipo_repuesto_id"
+            class="block text-sm font-medium text-gray-700"
+          >
+            Tipo de Repuesto
+          </label>
+          <select
+            id="tipo_repuesto_id"
+            formControlName="tipo_repuesto_id"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+          >
+            <option value="">Seleccione un tipo</option>
+            @for (tipo of tiposRepuesto(); track tipo.id_tipo_repuesto) {
+            <option [value]="tipo.id_tipo_repuesto">{{ tipo.nombre }}</option>
+            }
+          </select>
+        </div>
+
+        <!-- Imagen -->
+        <div>
+          <label for="imagen" class="block text-sm font-medium text-gray-700">
+            Imagen
+          </label>
+          <input
+            type="file"
+            id="imagen"
+            (change)="onFileSelected($event)"
+            accept="image/*"
+            class="mt-1 block w-full"
+          />
+          @if (previewImage()) {
+          <img
+            [src]="previewImage()"
+            alt="Preview"
+            class="mt-2 h-32 w-32 object-cover rounded-lg"
+          />
+          }
+        </div>
+
+        <!-- Botones -->
+        <div class="flex justify-end space-x-4">
+          <button
+            type="button"
+            routerLink="/admin/repuestos"
+            class="px-4 py-2 border rounded-md text-gray-700 hover:bg-gray-50"
+          >
+            Cancelar
+          </button>
+          <button
+            type="submit"
+            [disabled]="repuestoForm.invalid || isLoading()"
+            class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            [class.opacity-50]="repuestoForm.invalid || isLoading()"
+          >
+            @if (isLoading()) {
+            <span class="inline-flex items-center">
+              <svg
+                class="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  class="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  stroke-width="4"
+                ></circle>
+                <path
+                  class="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+              Guardando...
+            </span>
+            } @else { Guardar }
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

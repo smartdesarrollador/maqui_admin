@@ -47,6 +47,12 @@ interface PaginatedResponse<T> extends Omit<ApiResponse<any>, 'data'> {
   data: PaginationData<T>;
 }
 
+export interface TipoRepuesto {
+  id_tipo_repuesto: number;
+  nombre: string;
+  descripcion: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -126,5 +132,14 @@ export class RepuestosService {
     }
 
     return formData;
+  }
+
+  /**
+   * Obtiene los tipos de repuestos
+   */
+  getTiposRepuesto(): Observable<ApiResponse<TipoRepuesto[]>> {
+    return this.http.get<ApiResponse<TipoRepuesto[]>>(
+      `${environment.apiBaseUrl}/tipos-repuestos`
+    );
   }
 }
