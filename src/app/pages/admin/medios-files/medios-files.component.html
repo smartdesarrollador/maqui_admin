@@ -1,0 +1,172 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="bg-white rounded-lg shadow-lg p-6">
+    <!-- Encabezado con botón crear -->
+    <div class="mb-8 flex justify-between items-center">
+      <h2 class="text-2xl font-bold text-gray-800">Archivos Multimedia</h2>
+      <button
+        (click)="crearMedio()"
+        class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors flex items-center gap-2"
+      >
+        <i class="fas fa-plus"></i>
+        Crear Medio
+      </button>
+    </div>
+
+    <!-- Mensajes de estado -->
+    @if (mensaje) {
+    <div
+      [class]="
+        'p-4 mb-4 rounded-lg ' +
+        (tipoMensaje === 'success'
+          ? 'bg-green-100 text-green-700'
+          : 'bg-red-100 text-red-700')
+      "
+      role="alert"
+    >
+      {{ mensaje }}
+    </div>
+    }
+
+    <!-- Filtros -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+      <!-- Búsqueda -->
+      <div>
+        <input
+          type="text"
+          [(ngModel)]="busqueda"
+          (keyup.enter)="buscar()"
+          placeholder="Buscar archivos..."
+          class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-red-500"
+        />
+      </div>
+
+      <!-- Filtro por categoría -->
+      <div>
+        <select
+          [(ngModel)]="categoriaSeleccionada"
+          (change)="buscar()"
+          class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-red-500"
+        >
+          <option [ngValue]="null">Todas las categorías</option>
+          @for (categoria of categorias; track categoria.id) {
+          <option [value]="categoria.id">{{ categoria.name }}</option>
+          }
+        </select>
+      </div>
+
+      <!-- Filtro por tipo -->
+      <div>
+        <select
+          [(ngModel)]="tipoArchivo"
+          (change)="buscar()"
+          class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-red-500"
+        >
+          <option value="">Todos los tipos</option>
+          <option value="image">Imágenes</option>
+          <option value="video">Videos</option>
+          <option value="document">Documentos</option>
+        </select>
+      </div>
+
+      <!-- Botón de búsqueda -->
+      <div>
+        <button
+          (click)="buscar()"
+          class="w-full px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+        >
+          Buscar
+        </button>
+      </div>
+    </div>
+
+    <!-- Lista de archivos -->
+    @if (cargando) {
+    <div class="text-center py-8">
+      <div
+        class="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mx-auto"
+      ></div>
+    </div>
+    } @else { @if (archivos.length === 0) {
+    <div class="text-center py-8 text-gray-500">No se encontraron archivos</div>
+    } @else {
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      @for (archivo of archivos; track archivo.id) {
+      <div
+        class="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+      >
+        <!-- Vista previa -->
+        <div class="aspect-video bg-gray-100 flex items-center justify-center">
+          @if (medioFileService.esImagen(archivo.mime_type)) {
+          <img
+            [src]="medioFileService.obtenerUrlArchivo(archivo.file_path)"
+            [alt]="archivo.title"
+            class="object-cover w-full h-full"
+          />
+          } @else {
+          <div class="text-4xl text-gray-400">
+            <i class="fas fa-file"></i>
+          </div>
+          }
+        </div>
+
+        <!-- Información del archivo -->
+        <div class="p-4">
+          <h3 class="font-semibold text-lg mb-2">{{ archivo.title }}</h3>
+          <p class="text-sm text-gray-600 mb-2">
+            {{ archivo.description || "Sin descripción" }}
+          </p>
+          <div class="text-sm text-gray-500">
+            <p>Tamaño: {{ formatearTamano(archivo.file_size) }}</p>
+            <p>Tipo: {{ archivo.mime_type }}</p>
+            @if (archivo.category) {
+            <p>Categoría: {{ archivo.category.name }}</p>
+            }
+          </div>
+
+          <!-- Acciones -->
+          <div class="mt-4 flex justify-end space-x-2">
+            <button
+              (click)="editarMedio(archivo)"
+              class="px-3 py-1 bg-blue-100 text-blue-700 rounded hover:bg-blue-200 transition-colors text-sm"
+              title="Editar medio"
+            >
+              <i class="fas fa-edit mr-1"></i>
+              Editar
+            </button>
+            <button
+              (click)="copiarRuta(archivo)"
+              class="px-3 py-1 bg-gray-100 text-gray-700 rounded hover:bg-gray-200 transition-colors text-sm"
+              title="Copiar URL"
+            >
+              <i class="fas fa-copy mr-1"></i>
+              Copiar URL
+            </button>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+    }
+
+    <!-- Paginación -->
+    @if (totalItems > porPagina) {
+    <div class="mt-6 flex justify-center">
+      <nav class="flex space-x-2">
+        @for (pagina of generatePageArray(); track pagina) {
+        <button
+          (click)="cambiarPagina(pagina)"
+          [class]="
+            'px-3 py-1 rounded ' +
+            (paginaActual === pagina
+              ? 'bg-red-600 text-white'
+              : 'bg-gray-100 text-gray-700 hover:bg-gray-200')
+          "
+        >
+          {{ pagina }}
+        </button>
+        }
+      </nav>
+    </div>
+    } }
+  </div>
+</div>

@@ -476,6 +476,22 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'categoria-medios',
+        canActivate: [AuthGuard],
+        loadComponent: () =>
+          import(
+            './pages/admin/categoria-medios/categoria-medios.component'
+          ).then((m) => m.CategoriaMediosComponent),
+      },
+      {
+        path: 'medios-archivos',
+        canActivate: [AuthGuard],
+        loadComponent: () =>
+          import('./pages/admin/medios-files/medios-files.component').then(
+            (m) => m.MediosFilesComponent
+          ),
+      },
+      {
         path: 'categoria/equipo',
         //component: ListCategoria1Component,
         loadComponent: () =>

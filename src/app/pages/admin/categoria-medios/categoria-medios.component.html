@@ -1,0 +1,235 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="bg-white rounded-lg shadow-lg p-6">
+    <!-- Encabezado -->
+    <div class="mb-8">
+      <h2 class="text-2xl font-bold text-gray-800">
+        {{ modoEdicion ? "Editar" : "Nueva" }} Categoría de Medios
+      </h2>
+    </div>
+
+    <!-- Mensajes de estado -->
+    @if (mensaje) {
+    <div
+      [class]="
+        'p-4 mb-4 rounded-lg ' +
+        (tipoMensaje === 'success'
+          ? 'bg-green-100 text-green-700'
+          : 'bg-red-100 text-red-700')
+      "
+      role="alert"
+    >
+      {{ mensaje }}
+    </div>
+    }
+
+    <!-- Formulario -->
+    <form [formGroup]="categoriaForm" (ngSubmit)="onSubmit()" class="space-y-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Nombre -->
+        <div>
+          <label for="name" class="block text-sm font-medium text-gray-700"
+            >Nombre</label
+          >
+          <input
+            type="text"
+            id="name"
+            formControlName="name"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500"
+            [class.border-red-500]="
+              categoriaForm.get('name')?.invalid &&
+              categoriaForm.get('name')?.touched
+            "
+          />
+          @if ( categoriaForm.get('name')?.invalid &&
+          categoriaForm.get('name')?.touched ) {
+          <p class="mt-1 text-sm text-red-600">
+            El nombre es requerido y debe tener al menos 3 caracteres
+          </p>
+          }
+        </div>
+
+        <!-- Descripción -->
+        <div>
+          <label
+            for="description"
+            class="block text-sm font-medium text-gray-700"
+            >Descripción</label
+          >
+          <textarea
+            id="description"
+            formControlName="description"
+            rows="3"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500"
+          ></textarea>
+        </div>
+
+        <!-- Categoría Padre -->
+        <div>
+          <label for="parent_id" class="block text-sm font-medium text-gray-700"
+            >Categoría Padre</label
+          >
+          <select
+            id="parent_id"
+            formControlName="parent_id"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500"
+          >
+            <option [ngValue]="null">Sin categoría padre</option>
+            @for (categoria of categorias; track categoria.id) {
+            <option [ngValue]="categoria.id">{{ categoria.name }}</option>
+            }
+          </select>
+        </div>
+
+        <!-- Orden -->
+        <div>
+          <label
+            for="sort_order"
+            class="block text-sm font-medium text-gray-700"
+            >Orden</label
+          >
+          <input
+            type="number"
+            id="sort_order"
+            formControlName="sort_order"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500"
+          />
+        </div>
+
+        <!-- Estado -->
+        <div class="flex items-center">
+          <input
+            type="checkbox"
+            id="is_active"
+            formControlName="is_active"
+            class="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded"
+          />
+          <label for="is_active" class="ml-2 block text-sm text-gray-900"
+            >Activo</label
+          >
+        </div>
+      </div>
+
+      <!-- Botones -->
+      <div class="flex justify-end space-x-4">
+        <button
+          type="button"
+          (click)="resetearFormulario()"
+          class="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+        >
+          Cancelar
+        </button>
+        <button
+          type="submit"
+          [disabled]="categoriaForm.invalid || cargando"
+          class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:bg-gray-400"
+        >
+          {{ cargando ? "Guardando..." : modoEdicion ? "Actualizar" : "Crear" }}
+        </button>
+      </div>
+    </form>
+
+    <!-- Lista de Categorías -->
+    <div class="mt-8">
+      <h3 class="text-lg font-medium text-gray-900 mb-4">
+        Categorías Existentes
+      </h3>
+      @if (cargando) {
+      <div class="text-center py-4">
+        <div
+          class="animate-spin rounded-full h-8 w-8 border-b-2 border-red-600 mx-auto"
+        ></div>
+      </div>
+      } @else if (categorias.length === 0) {
+      <p class="text-gray-500 text-center py-4">
+        No hay categorías registradas
+      </p>
+      } @else {
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th
+                scope="col"
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Nombre
+              </th>
+              <th
+                scope="col"
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Descripción
+              </th>
+              <th
+                scope="col"
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Estado
+              </th>
+              <th
+                scope="col"
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Orden
+              </th>
+              <th
+                scope="col"
+                class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Acciones
+              </th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            @for (categoria of categorias; track categoria.id) {
+            <tr>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="text-sm font-medium text-gray-900">
+                  {{ categoria.name }}
+                </div>
+              </td>
+              <td class="px-6 py-4">
+                <div class="text-sm text-gray-500">
+                  {{ categoria.description || "Sin descripción" }}
+                </div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <span
+                  class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full"
+                  [class]="
+                    categoria.is_active
+                      ? 'bg-green-100 text-green-800'
+                      : 'bg-red-100 text-red-800'
+                  "
+                >
+                  {{ categoria.is_active ? "Activo" : "Inactivo" }}
+                </span>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                {{ categoria.sort_order }}
+              </td>
+              <td
+                class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium"
+              >
+                <button
+                  (click)="editarCategoria(categoria)"
+                  class="text-indigo-600 hover:text-indigo-900 mr-4"
+                >
+                  Editar
+                </button>
+                <button
+                  (click)="eliminarCategoria(categoria.id)"
+                  class="text-red-600 hover:text-red-900"
+                >
+                  Eliminar
+                </button>
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+      }
+    </div>
+  </div>
+</div>
