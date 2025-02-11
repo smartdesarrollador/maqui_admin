@@ -16,46 +16,6 @@ import { AuthGuard } from './guards/auth.guard';
 
 /* ---------------------------------------------------------------------- */
 
-/* import { LayoutUnoComponent } from './layout/layout-uno/layout-uno.component';
-import { LayoutDosComponent } from './layout/layout-dos/layout-dos.component';
-import { LayoutTresComponent } from './layout/layout-tres/layout-tres.component';
-import { BannersComponent } from './pages/admin/banners/banners.component';
-import { UpdateFileComponent } from './pages/admin/banners/update-file/update-file.component';
-import { MisionComponent } from './pages/admin/mision/mision.component';
-import { UpdateFileMisionComponent } from './pages/admin/mision/update-file-mision/update-file-mision.component';
-import { UpdateMisionComponent } from './pages/admin/mision/update-mision/update-mision.component';
-import { CarouselComponent } from './pages/admin/carousel/carousel.component';
-import { UpdateFileCarouselComponent } from './pages/admin/carousel/update-file-carousel/update-file-carousel.component';
-import { VerCursoComponent } from './layout/componentes/ver-curso/ver-curso.component';
-import { ProductoComponent } from './pages/admin/producto/producto.component';
-import { CreateComponent } from './pages/admin/producto/create/create.component';
-import { EditComponent } from './pages/admin/producto/edit/edit.component';
-import { EspecialidadComponent } from './pages/admin/especialidad/especialidad.component';
-import { CreateEspecialidadComponent } from './pages/admin/especialidad/create-especialidad/create-especialidad.component';
-import { EditEspecialidadComponent } from './pages/admin/especialidad/edit-especialidad/edit-especialidad.component';
-import { ContactoComponent } from './pages/admin/contacto/contacto.component';
-import { TestimonioComponent } from './pages/admin/testimonio/testimonio.component';
-import { CreateTestimonioComponent } from './pages/admin/testimonio/create-testimonio/create-testimonio.component';
-import { EditTestimonioComponent } from './pages/admin/testimonio/edit-testimonio/edit-testimonio.component';
-import { PostsListComponent } from './pages/admin/blog/post/posts-list/posts-list.component';
-import { UsersListComponent } from './pages/admin/blog/user/users-list/users-list.component';
-import { CommentsListComponent } from './pages/admin/blog/comments/comments-list/comments-list.component';
-import { TagsListComponent } from './pages/admin/blog/tag/tags-list/tags-list.component';
-import { CategoriesListComponent } from './pages/admin/blog/categories/categories-list/categories-list.component';
-import { CreatePostComponent } from './pages/admin/blog/post/create-post/create-post.component';
-import { CreateCategoryComponent } from './pages/admin/blog/categories/create-category/create-category.component';
-import { CreateTagComponent } from './pages/admin/blog/tag/create-tag/create-tag.component';
-import { CreateCommentComponent } from './pages/admin/blog/comments/create-comment/create-comment.component';
-import { EditCategoryComponent } from './pages/admin/blog/categories/edit-category/edit-category.component';
-import { EditTagComponent } from './pages/admin/blog/tag/edit-tag/edit-tag.component';
-import { EditPostComponent } from './pages/admin/blog/post/edit-post/edit-post.component';
-import { EditCommentComponent } from './pages/admin/blog/comments/edit-comment/edit-comment.component';
-import { ListCategoria1Component } from './pages/admin/componente1/categoria1/list-categoria1/list-categoria1.component';
-import { CreateCategoria1Component } from './pages/admin/componente1/categoria1/create-categoria1/create-categoria1.component';
-import { EditCategoria1Component } from './pages/admin/componente1/categoria1/edit-categoria1/edit-categoria1.component';
-import { CreateTabla1Component } from './pages/admin/componente1/tabla1/create-tabla1/create-tabla1.component';
-import { EditTabla1Component } from './pages/admin/componente1/tabla1/edit-tabla1/edit-tabla1.component'; */
-
 import { PortalComponent } from './paginas/login/portal/portal.component';
 import { LayoutComponent } from './layout/layout.component';
 import { ListTabla1Component } from './pages/admin/componente1/tabla1/list-tabla1/list-tabla1.component';
@@ -108,7 +68,7 @@ export const routes: Routes = [
       {
         path: 'banners',
         canActivate: [AuthGuard],
-        //component: BannersComponent,
+
         loadComponent: () =>
           import('./pages/admin/banners/banners.component').then(
             (m) => m.BannersComponent
@@ -117,16 +77,16 @@ export const routes: Routes = [
       {
         path: 'update/file',
         canActivate: [AuthGuard],
-        //component: UpdateFileComponent,
+
         loadComponent: () =>
           import(
             './pages/admin/banners/update-file/update-file.component'
           ).then((m) => m.UpdateFileComponent),
       },
-      {
+      /* {
         path: 'mision',
         canActivate: [AuthGuard],
-        //component: MisionComponent,
+
         loadComponent: () =>
           import('./pages/admin/mision/mision.component').then(
             (m) => m.MisionComponent
@@ -135,7 +95,7 @@ export const routes: Routes = [
       {
         path: 'mision/update/file',
         canActivate: [AuthGuard],
-        //component: UpdateFileMisionComponent,
+
         loadComponent: () =>
           import(
             './pages/admin/mision/update-file-mision/update-file-mision.component'
@@ -144,16 +104,16 @@ export const routes: Routes = [
       {
         path: 'mision/update',
         canActivate: [AuthGuard],
-        //component: UpdateMisionComponent,
+
         loadComponent: () =>
           import(
             './pages/admin/mision/update-mision/update-mision.component'
           ).then((m) => m.UpdateMisionComponent),
-      },
+      }, */
       {
         path: 'carousel',
         canActivate: [AuthGuard],
-        //component: CarouselComponent,
+
         loadComponent: () =>
           import('./pages/admin/carousel/carousel.component').then(
             (m) => m.CarouselComponent
@@ -162,16 +122,16 @@ export const routes: Routes = [
       {
         path: 'carousel/update/file',
         canActivate: [AuthGuard],
-        //component: UpdateFileCarouselComponent,
+
         loadComponent: () =>
           import(
             './pages/admin/carousel/update-file-carousel/update-file-carousel.component'
           ).then((m) => m.UpdateFileCarouselComponent),
       },
-      {
+      /* {
         path: 'servicio1',
         canActivate: [AuthGuard],
-        //component: ProductoComponent,
+
         loadComponent: () =>
           import('./pages/admin/producto/producto.component').then(
             (m) => m.ProductoComponent
@@ -180,7 +140,7 @@ export const routes: Routes = [
       {
         path: 'servicio1/create',
         canActivate: [AuthGuard],
-        //component: CreateComponent,
+
         loadComponent: () =>
           import('./pages/admin/producto/create/create.component').then(
             (m) => m.CreateComponent
@@ -189,7 +149,7 @@ export const routes: Routes = [
       {
         path: 'servicio1/edit',
         canActivate: [AuthGuard],
-        //component: EditComponent,
+
         loadComponent: () =>
           import('./pages/admin/producto/edit/edit.component').then(
             (m) => m.EditComponent
@@ -198,7 +158,7 @@ export const routes: Routes = [
       {
         path: 'servicio2',
         canActivate: [AuthGuard],
-        //component: EspecialidadComponent,
+
         loadComponent: () =>
           import('./pages/admin/especialidad/especialidad.component').then(
             (m) => m.EspecialidadComponent
@@ -207,7 +167,7 @@ export const routes: Routes = [
       {
         path: 'servicio2/create',
         canActivate: [AuthGuard],
-        //component: CreateEspecialidadComponent,
+
         loadComponent: () =>
           import(
             './pages/admin/especialidad/create-especialidad/create-especialidad.component'
@@ -216,25 +176,25 @@ export const routes: Routes = [
       {
         path: 'servicio2/edit',
         canActivate: [AuthGuard],
-        //component: EditEspecialidadComponent,
+
         loadComponent: () =>
           import(
             './pages/admin/especialidad/edit-especialidad/edit-especialidad.component'
           ).then((m) => m.EditEspecialidadComponent),
-      },
+      }, */
       {
         path: 'contactos',
         canActivate: [AuthGuard],
-        //component: ContactoComponent,
+
         loadComponent: () =>
           import('./pages/admin/contacto/contacto.component').then(
             (m) => m.ContactoComponent
           ),
       },
-      {
+      /*  {
         path: 'testimonios',
         canActivate: [AuthGuard],
-        //component: TestimonioComponent,
+
         loadComponent: () =>
           import('./pages/admin/testimonio/testimonio.component').then(
             (m) => m.TestimonioComponent
@@ -243,7 +203,7 @@ export const routes: Routes = [
       {
         path: 'testimonios/create',
         canActivate: [AuthGuard],
-        //component: CreateTestimonioComponent,
+
         loadComponent: () =>
           import(
             './pages/admin/testimonio/create-testimonio/create-testimonio.component'
@@ -252,7 +212,7 @@ export const routes: Routes = [
       {
         path: 'testimonios/edit',
         canActivate: [AuthGuard],
-        //component: EditTestimonioComponent,
+
         loadComponent: () =>
           import(
             './pages/admin/testimonio/edit-testimonio/edit-testimonio.component'
@@ -260,7 +220,7 @@ export const routes: Routes = [
       },
       {
         path: 'blog/posts',
-        //component: PostsListComponent,
+
         loadComponent: () =>
           import(
             './pages/admin/blog/post/posts-list/posts-list.component'
@@ -268,7 +228,7 @@ export const routes: Routes = [
       },
       {
         path: 'blog/posts/create',
-        //component: CreatePostComponent,
+
         loadComponent: () =>
           import(
             './pages/admin/blog/post/create-post/create-post.component'
@@ -276,7 +236,7 @@ export const routes: Routes = [
       },
       {
         path: 'blog/posts/edit/:id',
-        //component: EditPostComponent,
+
         loadComponent: () =>
           import('./pages/admin/blog/post/edit-post/edit-post.component').then(
             (m) => m.EditPostComponent
@@ -284,7 +244,7 @@ export const routes: Routes = [
       },
       {
         path: 'blog/users',
-        //component: UsersListComponent,
+
         loadComponent: () =>
           import(
             './pages/admin/blog/user/users-list/users-list.component'
@@ -292,7 +252,7 @@ export const routes: Routes = [
       },
       {
         path: 'blog/comments',
-        //component: CommentsListComponent,
+
         loadComponent: () =>
           import(
             './pages/admin/blog/comments/comments-list/comments-list.component'
@@ -300,7 +260,7 @@ export const routes: Routes = [
       },
       {
         path: 'blog/comments/create',
-        //component: CreateCommentComponent,
+
         loadComponent: () =>
           import(
             './pages/admin/blog/comments/create-comment/create-comment.component'
@@ -308,7 +268,7 @@ export const routes: Routes = [
       },
       {
         path: 'blog/comments/edit/:id',
-        //component: EditCommentComponent,
+
         loadComponent: () =>
           import(
             './pages/admin/blog/comments/edit-comment/edit-comment.component'
@@ -316,7 +276,7 @@ export const routes: Routes = [
       },
       {
         path: 'blog/tags',
-        //component: TagsListComponent,
+
         loadComponent: () =>
           import('./pages/admin/blog/tag/tags-list/tags-list.component').then(
             (m) => m.TagsListComponent
@@ -324,7 +284,7 @@ export const routes: Routes = [
       },
       {
         path: 'blog/tags/create',
-        //component: CreateTagComponent,
+
         loadComponent: () =>
           import('./pages/admin/blog/tag/create-tag/create-tag.component').then(
             (m) => m.CreateTagComponent
@@ -332,7 +292,7 @@ export const routes: Routes = [
       },
       {
         path: 'blog/tags/edit/:id',
-        //component: EditTagComponent,
+
         loadComponent: () =>
           import('./pages/admin/blog/tag/edit-tag/edit-tag.component').then(
             (m) => m.EditTagComponent
@@ -340,7 +300,7 @@ export const routes: Routes = [
       },
       {
         path: 'blog/categories',
-        //component: CategoriesListComponent,
+
         loadComponent: () =>
           import(
             './pages/admin/blog/categories/categories-list/categories-list.component'
@@ -348,7 +308,7 @@ export const routes: Routes = [
       },
       {
         path: 'blog/categories/create',
-        //component: CreateCategoryComponent,
+
         loadComponent: () =>
           import(
             './pages/admin/blog/categories/create-category/create-category.component'
@@ -356,12 +316,12 @@ export const routes: Routes = [
       },
       {
         path: 'blog/categories/edit/:id',
-        //component: EditCategoryComponent,
+
         loadComponent: () =>
           import(
             './pages/admin/blog/categories/edit-category/edit-category.component'
           ).then((m) => m.EditCategoryComponent),
-      },
+      }, */
       {
         path: 'clientes',
         canActivate: [AuthGuard],
