@@ -492,6 +492,14 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'medios-archivos/create',
+        canActivate: [AuthGuard],
+        loadComponent: () =>
+          import(
+            './pages/admin/medios-files/create-file/create-file.component'
+          ).then((m) => m.CreateFileComponent),
+      },
+      {
         path: 'categoria/equipo',
         //component: ListCategoria1Component,
         loadComponent: () =>

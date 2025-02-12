@@ -1,6 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { MedioFileService } from '../../../services/medios/medio-file.service';
 import { MedioCategoriaService } from '../../../services/medios/medio-categoria.service';
 
@@ -60,7 +61,7 @@ export class MediosFilesComponent implements OnInit {
   protected readonly Array = Array;
   readonly medioFileService = inject(MedioFileService);
   private readonly medioCategoriaService = inject(MedioCategoriaService);
-
+  readonly router = inject(Router);
   archivos: MediaFile[] = [];
   categorias: any[] = [];
   cargando = false;
@@ -179,6 +180,7 @@ export class MediosFilesComponent implements OnInit {
 
   crearMedio(): void {
     // TODO: Implementar lógica para crear medio
+    this.router.navigate(['/admin/medios-archivos/create']);
     console.log('Crear nuevo medio');
   }
 
