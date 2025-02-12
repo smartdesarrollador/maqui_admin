@@ -179,8 +179,7 @@ export class MediosFilesComponent implements OnInit {
   }
 
   crearMedio(): void {
-    // TODO: Implementar lógica para crear medio
-    this.router.navigate(['/admin/medios-archivos/create']);
+    this.router.navigate(['/admin/medios-files/create']);
     console.log('Crear nuevo medio');
   }
 

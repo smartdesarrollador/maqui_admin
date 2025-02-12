@@ -83,15 +83,27 @@ export class CreateFileComponent implements OnInit {
   onSubmit(): void {
     if (this.form.valid && this.archivoSeleccionado) {
       this.cargando = true;
-      const formData = this.medioFileService.prepararFormData({
-        file: this.archivoSeleccionado,
-        title: this.form.value.title,
-        description: this.form.value.description,
-        alt_text: this.form.value.alt_text,
-        is_public: this.form.value.is_public,
-        sort_order: this.form.value.sort_order,
-        category_id: this.form.value.category_id,
-      });
+      const formData = new FormData();
+
+      // Agregar el archivo
+      formData.append('file', this.archivoSeleccionado);
+
+      // Agregar los demás campos
+      formData.append('title', this.form.value.title);
+      if (this.form.value.description) {
+        formData.append('description', this.form.value.description);
+      }
+      if (this.form.value.alt_text) {
+        formData.append('alt_text', this.form.value.alt_text);
+      }
+      // Convertir explícitamente a string
+      formData.append('is_public', this.form.value.is_public ? '1' : '0');
+      if (this.form.value.sort_order !== null) {
+        formData.append('sort_order', this.form.value.sort_order.toString());
+      }
+      if (this.form.value.category_id) {
+        formData.append('category_id', this.form.value.category_id.toString());
+      }
 
       this.medioFileService.crearArchivo(formData).subscribe({
         next: (response) => {
@@ -104,7 +116,10 @@ export class CreateFileComponent implements OnInit {
         },
         error: (error) => {
           console.error('Error al crear archivo:', error);
-          this.mostrarMensaje('Error al crear el archivo', 'error');
+          this.mostrarMensaje(
+            error.error?.message || 'Error al crear el archivo',
+            'error'
+          );
           this.cargando = false;
         },
       });

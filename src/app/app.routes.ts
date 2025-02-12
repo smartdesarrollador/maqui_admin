@@ -484,7 +484,7 @@ export const routes: Routes = [
           ).then((m) => m.CategoriaMediosComponent),
       },
       {
-        path: 'medios-archivos',
+        path: 'medios-files',
         canActivate: [AuthGuard],
         loadComponent: () =>
           import('./pages/admin/medios-files/medios-files.component').then(
@@ -492,7 +492,7 @@ export const routes: Routes = [
           ),
       },
       {
-        path: 'medios-archivos/create',
+        path: 'medios-files/create',
         canActivate: [AuthGuard],
         loadComponent: () =>
           import(
