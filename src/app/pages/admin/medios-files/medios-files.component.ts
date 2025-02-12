@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MedioFileService } from '../../../services/medios/medio-file.service';
 import { MedioCategoriaService } from '../../../services/medios/medio-categoria.service';
+import { environment } from 'src/environments/environment';
 
 interface MediaFile {
   id: number;
@@ -57,6 +58,7 @@ interface MediaFile {
   styleUrl: './medios-files.component.css',
 })
 export class MediosFilesComponent implements OnInit {
+  protected readonly baseUrl = environment.urlRaiz;
   protected readonly Math = Math;
   protected readonly Array = Array;
   readonly medioFileService = inject(MedioFileService);

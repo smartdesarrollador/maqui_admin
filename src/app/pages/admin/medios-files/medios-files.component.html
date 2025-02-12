@@ -98,7 +98,7 @@
         <div class="aspect-video bg-gray-100 flex items-center justify-center">
           @if (medioFileService.esImagen(archivo.mime_type)) {
           <img
-            [src]="medioFileService.obtenerUrlArchivo(archivo.file_path)"
+            [src]="baseUrl + '/' + archivo.file_path"
             [alt]="archivo.title"
             class="object-cover w-full h-full"
           />
