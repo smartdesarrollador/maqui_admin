@@ -125,9 +125,14 @@ export class MedioFileService {
     id: number,
     formData: FormData
   ): Observable<ApiResponse<MediaFile>> {
-    return this.http.put<ApiResponse<MediaFile>>(
+    return this.http.post<ApiResponse<MediaFile>>(
       `${this.apiUrl}/${id}`,
-      formData
+      formData,
+      {
+        headers: {
+          Accept: 'application/json',
+        },
+      }
     );
   }
 
