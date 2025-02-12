@@ -189,4 +189,23 @@ export class MediosFilesComponent implements OnInit {
     // TODO: Implementar lógica para editar medio
     console.log('Editar medio:', archivo);
   }
+
+  eliminarMedio(archivo: MediaFile): void {
+    if (confirm(`¿Estás seguro de eliminar el archivo "${archivo.title}"?`)) {
+      this.cargando = true;
+      this.medioFileService.eliminarArchivo(archivo.id).subscribe({
+        next: (response) => {
+          if (response.status === 'success') {
+            this.mostrarMensaje('Archivo eliminado exitosamente', 'success');
+            this.cargarArchivos();
+          }
+        },
+        error: (error) => {
+          console.error('Error al eliminar archivo:', error);
+          this.mostrarMensaje('Error al eliminar el archivo', 'error');
+          this.cargando = false;
+        },
+      });
+    }
+  }
 }
