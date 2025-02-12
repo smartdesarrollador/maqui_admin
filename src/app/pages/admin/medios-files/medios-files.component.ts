@@ -186,8 +186,7 @@ export class MediosFilesComponent implements OnInit {
   }
 
   editarMedio(archivo: MediaFile): void {
-    // TODO: Implementar lógica para editar medio
-    console.log('Editar medio:', archivo);
+    this.router.navigate(['/admin/medios-files/edit', archivo.id]);
   }
 
   eliminarMedio(archivo: MediaFile): void {

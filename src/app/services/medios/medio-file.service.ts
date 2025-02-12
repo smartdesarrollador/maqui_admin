@@ -52,33 +52,24 @@ interface User {
   updated_at: string | null;
 }
 
-interface ApiResponse<T> {
+interface PaginatedApiResponse<T> {
   status: 'success' | 'error';
   data: {
-    current_page: number;
     data: T[];
-    first_page_url: string;
-    from: number;
-    last_page: number;
-    last_page_url: string;
-    links: Array<{
-      url: string | null;
-      label: string;
-      active: boolean;
-    }>;
-    next_page_url: string | null;
-    path: string;
-    per_page: number;
-    prev_page_url: string | null;
-    to: number;
+    current_page: number;
     total: number;
+    // ... otros campos de paginación
   };
   meta: {
     current_page: number;
-    last_page: number;
-    per_page: number;
     total: number;
   };
+}
+
+interface ApiResponse<T> {
+  status: 'success' | 'error';
+  data: T;
+  message?: string;
 }
 
 @Injectable({
@@ -99,7 +90,7 @@ export class MedioFileService {
     file_type?: string;
     sort_by?: string;
     sort_direction?: 'asc' | 'desc';
-  }): Observable<ApiResponse<MediaFile>> {
+  }): Observable<PaginatedApiResponse<MediaFile>> {
     let httpParams = new HttpParams();
 
     Object.entries(params).forEach(([key, value]) => {
@@ -108,7 +99,7 @@ export class MedioFileService {
       }
     });
 
-    return this.http.get<ApiResponse<MediaFile>>(this.apiUrl, {
+    return this.http.get<PaginatedApiResponse<MediaFile>>(this.apiUrl, {
       params: httpParams,
     });
   }

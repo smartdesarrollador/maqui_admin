@@ -500,6 +500,14 @@ export const routes: Routes = [
           ).then((m) => m.CreateFileComponent),
       },
       {
+        path: 'medios-files/edit/:id',
+        canActivate: [AuthGuard],
+        loadComponent: () =>
+          import(
+            './pages/admin/medios-files/edit-file/edit-file.component'
+          ).then((m) => m.EditFileComponent),
+      },
+      {
         path: 'categoria/equipo',
         //component: ListCategoria1Component,
         loadComponent: () =>
