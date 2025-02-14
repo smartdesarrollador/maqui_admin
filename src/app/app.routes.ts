@@ -516,6 +516,14 @@ export const routes: Routes = [
           ).then((m) => m.CategoriaArticuloComponent),
       },
       {
+        path: 'articulo',
+        canActivate: [AuthGuard],
+        loadComponent: () =>
+          import('./pages/admin/test/articulo/articulo.component').then(
+            (m) => m.ArticuloComponent
+          ),
+      },
+      {
         path: 'categoria/equipo',
         //component: ListCategoria1Component,
         loadComponent: () =>
