@@ -508,6 +508,14 @@ export const routes: Routes = [
           ).then((m) => m.EditFileComponent),
       },
       {
+        path: 'categoria-articulo',
+        canActivate: [AuthGuard],
+        loadComponent: () =>
+          import(
+            './pages/admin/test/categoria-articulo/categoria-articulo.component'
+          ).then((m) => m.CategoriaArticuloComponent),
+      },
+      {
         path: 'categoria/equipo',
         //component: ListCategoria1Component,
         loadComponent: () =>
