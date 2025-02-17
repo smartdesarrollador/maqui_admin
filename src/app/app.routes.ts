@@ -511,16 +511,25 @@ export const routes: Routes = [
         path: 'categoria-articulo',
         canActivate: [AuthGuard],
         loadComponent: () =>
-          import(
-            './pages/admin/test/categoria-articulo/categoria-articulo.component'
-          ).then((m) => m.CategoriaArticuloComponent),
+          import('./pages/admin/test/categoria/categoria.component').then(
+            (m) => m.CategoriaComponent
+          ),
       },
-      {
+
+      /* {
         path: 'articulo',
         canActivate: [AuthGuard],
         loadComponent: () =>
           import('./pages/admin/test/articulo/articulo.component').then(
             (m) => m.ArticuloComponent
+          ),
+      },  */
+      {
+        path: 'estudiante',
+        canActivate: [AuthGuard],
+        loadComponent: () =>
+          import('./pages/admin/test/estudiante/estudiante.component').then(
+            (m) => m.EstudianteComponent
           ),
       },
       {

@@ -1,0 +1,179 @@
+<div class="container mx-auto px-4 py-8">
+  <!-- Formulario de Categoría -->
+  <div class="bg-white rounded-lg shadow-lg mb-8">
+    <div
+      class="bg-gradient-to-r from-blue-600 to-blue-800 px-6 py-4 rounded-t-lg"
+    >
+      <h3 class="text-xl font-semibold text-white">
+        {{ modoEdicion ? "Editar Categoría" : "Nueva Categoría" }}
+      </h3>
+    </div>
+    <div class="p-6">
+      <form
+        (ngSubmit)="modoEdicion ? actualizarCategoria() : crearCategoria()"
+        class="space-y-6"
+      >
+        <div>
+          <label for="nombre" class="block text-sm font-medium text-gray-700"
+            >Nombre</label
+          >
+          <input
+            type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            id="nombre"
+            [(ngModel)]="categoriaSeleccionada.nombre"
+            name="nombre"
+            required
+            placeholder="Ingrese el nombre"
+          />
+        </div>
+        <div>
+          <label
+            for="descripcion"
+            class="block text-sm font-medium text-gray-700"
+            >Descripción</label
+          >
+          <textarea
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            id="descripcion"
+            [(ngModel)]="categoriaSeleccionada.descripcion"
+            name="descripcion"
+            required
+            rows="3"
+            placeholder="Ingrese la descripción"
+          ></textarea>
+        </div>
+        <div class="flex gap-4">
+          <button
+            type="submit"
+            class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          >
+            {{ modoEdicion ? "Actualizar" : "Crear" }}
+          </button>
+          @if (modoEdicion) {
+          <button
+            type="button"
+            class="inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            (click)="limpiarFormulario()"
+          >
+            Cancelar
+          </button>
+          }
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Lista de Categorías actualizada -->
+  <div class="bg-white rounded-lg shadow-lg">
+    <div
+      class="bg-gradient-to-r from-blue-600 to-blue-800 px-6 py-4 rounded-t-lg"
+    >
+      <h3 class="text-xl font-semibold text-white">Lista de Categorías</h3>
+    </div>
+    <div class="p-6">
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                ID
+              </th>
+              <th
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Nombre
+              </th>
+              <th
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Descripción
+              </th>
+              <th
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Total Artículos
+              </th>
+              <th
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Precio Promedio
+              </th>
+              <th
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Acciones
+              </th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            @for (categoria of categorias; track categoria.id) {
+            <tr class="hover:bg-gray-50">
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                {{ categoria.id }}
+              </td>
+              <td
+                class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+              >
+                {{ categoria.nombre }}
+              </td>
+              <td class="px-6 py-4 text-sm text-gray-500">
+                {{ categoria.descripcion }}
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                {{ getTotalArticulos(categoria) }}
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                S/. {{ getPrecioPromedio(categoria) }}
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                <div class="flex space-x-3">
+                  <button
+                    class="text-yellow-600 hover:text-yellow-900 bg-yellow-100 hover:bg-yellow-200 px-3 py-1 rounded-md transition-colors duration-200"
+                    (click)="editarCategoria(categoria)"
+                  >
+                    Editar
+                  </button>
+                  <button
+                    class="text-red-600 hover:text-red-900 bg-red-100 hover:bg-red-200 px-3 py-1 rounded-md transition-colors duration-200"
+                    (click)="eliminarCategoria(categoria.id)"
+                  >
+                    Eliminar
+                  </button>
+                </div>
+              </td>
+            </tr>
+            @if (categoria.articulos?.length) {
+            <tr class="bg-gray-50">
+              <td colspan="6" class="px-6 py-4">
+                <div class="ml-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Artículos:</h4>
+                  <div
+                    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+                  >
+                    @for (articulo of categoria.articulos; track articulo.id) {
+                    <div class="bg-white p-4 rounded-lg shadow">
+                      <h5 class="font-medium text-gray-900">
+                        {{ articulo.nombre }}
+                      </h5>
+                      <p class="text-sm text-gray-500">
+                        {{ articulo.descripcion }}
+                      </p>
+                      <p class="text-sm font-medium text-blue-600 mt-2">
+                        Precio: S/. {{ articulo.precio }}
+                      </p>
+                    </div>
+                    }
+                  </div>
+                </div>
+              </td>
+            </tr>
+            } }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

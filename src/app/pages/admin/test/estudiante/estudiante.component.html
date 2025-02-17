@@ -1,0 +1,161 @@
+<div class="container mx-auto px-4 py-8">
+  <!-- Formulario de Estudiante -->
+  <div class="bg-white rounded-lg shadow-lg mb-8">
+    <div
+      class="bg-gradient-to-r from-blue-600 to-blue-800 px-6 py-4 rounded-t-lg"
+    >
+      <h3 class="text-xl font-semibold text-white">
+        {{ modoEdicion ? "Editar Estudiante" : "Nuevo Estudiante" }}
+      </h3>
+    </div>
+    <div class="p-6">
+      <form
+        (ngSubmit)="modoEdicion ? actualizarEstudiante() : crearEstudiante()"
+        class="space-y-6"
+      >
+        <div>
+          <label for="nombre" class="block text-sm font-medium text-gray-700"
+            >Nombre</label
+          >
+          <input
+            type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            id="nombre"
+            [(ngModel)]="estudianteSeleccionado.nombre"
+            name="nombre"
+            required
+            placeholder="Ingrese el nombre"
+          />
+        </div>
+        <div>
+          <label for="email" class="block text-sm font-medium text-gray-700"
+            >Email</label
+          >
+          <input
+            type="email"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            id="email"
+            [(ngModel)]="estudianteSeleccionado.email"
+            name="email"
+            required
+            placeholder="correo@ejemplo.com"
+          />
+        </div>
+        <div class="flex gap-4">
+          <button
+            type="submit"
+            class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          >
+            {{ modoEdicion ? "Actualizar" : "Crear" }}
+          </button>
+          @if (modoEdicion) {
+          <button
+            type="button"
+            class="inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            (click)="limpiarFormulario()"
+          >
+            Cancelar
+          </button>
+          }
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Lista de Estudiantes -->
+  <div class="bg-white rounded-lg shadow-lg">
+    <div
+      class="bg-gradient-to-r from-blue-600 to-blue-800 px-6 py-4 rounded-t-lg"
+    >
+      <h3 class="text-xl font-semibold text-white">Lista de Estudiantes</h3>
+    </div>
+    <div class="p-6">
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                ID
+              </th>
+              <th
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Nombre
+              </th>
+              <th
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Email
+              </th>
+              <th
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Cursos
+              </th>
+              <th
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Acciones
+              </th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            @for (estudiante of estudiantes; track estudiante.id) {
+            <tr class="hover:bg-gray-50">
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                {{ estudiante.id }}
+              </td>
+              <td
+                class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+              >
+                {{ estudiante.nombre }}
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                {{ estudiante.email }}
+              </td>
+              <td class="px-6 py-4 text-sm text-gray-500">
+                @if (estudiante.cursos?.length) {
+                <ul class="space-y-1">
+                  @for (curso of estudiante.cursos; track curso.id) {
+                  <li class="flex items-center space-x-2">
+                    <span class="font-medium">{{ curso.nombre }}</span>
+                    @if (curso.inscripcion) {
+                    <span
+                      class="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-800"
+                    >
+                      Calificación: {{ curso.inscripcion.calificacion }}
+                    </span>
+                    }
+                  </li>
+                  }
+                </ul>
+                } @else {
+                <span class="text-gray-400 italic">Sin cursos</span>
+                }
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                <div class="flex space-x-3">
+                  <button
+                    class="text-yellow-600 hover:text-yellow-900 bg-yellow-100 hover:bg-yellow-200 px-3 py-1 rounded-md transition-colors duration-200"
+                    (click)="editarEstudiante(estudiante)"
+                  >
+                    Editar
+                  </button>
+                  <button
+                    class="text-red-600 hover:text-red-900 bg-red-100 hover:bg-red-200 px-3 py-1 rounded-md transition-colors duration-200"
+                    (click)="eliminarEstudiante(estudiante.id)"
+                  >
+                    Eliminar
+                  </button>
+                </div>
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
