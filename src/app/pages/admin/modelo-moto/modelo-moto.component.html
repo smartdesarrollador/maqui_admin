@@ -48,9 +48,9 @@
           [(ngModel)]="selectedTipo"
           class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
         >
-          <option value="">Todos los tipos</option>
-          @for (tipo of tiposModelos; track tipo) {
-          <option [value]="tipo">{{ tipo }}</option>
+          <option [value]="0">Todos los tipos</option>
+          @for (tipo of tiposModelos; track tipo.id) {
+          <option [value]="tipo.id">{{ tipo.nombre }}</option>
           }
         </select>
       </div>
@@ -130,7 +130,7 @@
             <span
               class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800"
             >
-              {{ modelo.tipo }}
+              {{ getTipoNombre(modelo.tipo_moto_id) }}
             </span>
           </td>
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">

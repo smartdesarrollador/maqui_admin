@@ -17,7 +17,7 @@ interface Modelo {
   id_modelo: number;
   marca_id: number;
   nombre: string;
-  tipo: string;
+  tipo_moto_id: number;
   cilindrada: number;
   imagen: string;
   marca: Marca;
@@ -38,10 +38,15 @@ export class ModeloMotoComponent implements OnInit {
   modelos: Modelo[] = [];
   isLoading = false;
   searchTerm = '';
-  selectedTipo = '';
+  selectedTipo = 0;
 
-  // Tipos de motos para filtrar
-  tiposModelos = ['Deportiva', 'Scooter', 'Adventure', 'Naked'];
+  // Tipos de motos para filtrar (ahora con IDs)
+  tiposModelos = [
+    { id: 1, nombre: 'Deportiva' },
+    { id: 2, nombre: 'Scooter' },
+    { id: 3, nombre: 'Adventure' },
+    { id: 4, nombre: 'Naked' },
+  ];
 
   ngOnInit() {
     this.loadModelos();
@@ -75,7 +80,7 @@ export class ModeloMotoComponent implements OnInit {
           .toLowerCase()
           .includes(this.searchTerm.toLowerCase());
       const matchesTipo =
-        !this.selectedTipo || modelo.tipo === this.selectedTipo;
+        this.selectedTipo === 0 || modelo.tipo_moto_id === this.selectedTipo;
       return matchesSearch && matchesTipo;
     });
   }
@@ -101,6 +106,14 @@ export class ModeloMotoComponent implements OnInit {
    */
   clearFilters() {
     this.searchTerm = '';
-    this.selectedTipo = '';
+    this.selectedTipo = 0;
+  }
+
+  /**
+   * Devuelve el nombre del tipo según el ID
+   */
+  getTipoNombre(tipoId: number): string {
+    const tipo = this.tiposModelos.find((t) => t.id === tipoId);
+    return tipo ? tipo.nombre : 'Desconocido';
   }
 }

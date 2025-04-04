@@ -16,7 +16,7 @@ interface Modelo {
   id_modelo: number;
   marca_id: number;
   nombre: string;
-  tipo: string;
+  tipo_moto_id: number;
   cilindrada: number;
   imagen: string;
   marca: Marca;
