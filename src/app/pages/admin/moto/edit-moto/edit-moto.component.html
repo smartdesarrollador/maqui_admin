@@ -222,11 +222,29 @@
               <label class="block text-sm font-medium text-gray-700"
                 >Nombre del Color</label
               >
-              <input
-                type="text"
+              <select
                 formControlName="color"
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-              />
+              >
+                <option value="">Selecciona un color</option>
+                <option value="blanco">blanco</option>
+                <option value="negro">negro</option>
+                <option value="azul">azul</option>
+                <option value="amarillo">amarillo</option>
+                <option value="verde">verde</option>
+                <option value="rojo">rojo</option>
+                <option value="naranja">naranja</option>
+                <option value="rosado">rosado</option>
+                <option value="morado">morado</option>
+                <option value="celeste">celeste</option>
+                <option value="fucsia">fucsia</option>
+                <option value="gris">gris</option>
+                <option value="oro">oro</option>
+                <option value="plata">plata</option>
+                <option value="violeta">violeta</option>
+                <option value="turquesa">turquesa</option>
+                <option value="beige">beige</option>
+              </select>
               @if (isColorFieldInvalid($index, 'color')) {
               <p class="mt-1 text-sm text-red-600">
                 El nombre del color es requerido
