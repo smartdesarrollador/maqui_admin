@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
   FormGroup,
+  FormArray,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -22,6 +23,11 @@ interface TipoMoto {
   id_tipo_moto: number;
   nombre: string;
   descripcion: string;
+}
+
+interface ColorFile {
+  file: File | null;
+  previewUrl: string | null;
 }
 
 @Component({
@@ -45,12 +51,14 @@ export class CreateMotoComponent implements OnInit {
   selectedFile: File | null = null;
   previewUrl: string | null = null;
 
+  // Array para almacenar los archivos de colores
+  colorFiles: ColorFile[] = [];
+
   motoForm: FormGroup = this.fb.group({
     modelo_id: ['', [Validators.required]],
     tipo_moto_id: ['', [Validators.required]],
     año: ['', [Validators.required]],
     precio_base: ['', [Validators.required, Validators.min(0)]],
-    color: ['', [Validators.required]],
     stock: [0, [Validators.required, Validators.min(0)]],
     descripcion: ['', [Validators.required]],
     imagen: [null, [Validators.required]],
@@ -83,7 +91,13 @@ export class CreateMotoComponent implements OnInit {
     tablero_led: [0],
     mp3: [0],
     bluetooth: [0],
+    colores: this.fb.array([]),
   });
+
+  // Getter para acceder fácilmente al FormArray de colores
+  get coloresFormArray(): FormArray {
+    return this.motoForm.get('colores') as FormArray;
+  }
 
   ngOnInit() {
     this.loadInitialData();
@@ -113,7 +127,98 @@ export class CreateMotoComponent implements OnInit {
   }
 
   /**
-   * Maneja la selección de archivo
+   * Agrega un nuevo color al formulario
+   */
+  agregarColor() {
+    const colorFormGroup = this.fb.group({
+      color: ['', Validators.required],
+      imagen_color: [null, Validators.required],
+    });
+
+    this.coloresFormArray.push(colorFormGroup);
+    this.colorFiles.push({ file: null, previewUrl: null });
+  }
+
+  /**
+   * Elimina un color del formulario
+   */
+  eliminarColor(index: number) {
+    this.coloresFormArray.removeAt(index);
+    this.colorFiles.splice(index, 1);
+  }
+
+  /**
+   * Maneja la selección de archivo para un color específico
+   */
+  onColorFileSelected(event: any, index: number) {
+    const file = event.target.files[0];
+    if (file) {
+      // Actualizar el control del formulario
+      const colorGroup = this.coloresFormArray.at(index) as FormGroup;
+      colorGroup.patchValue({
+        imagen_color: file,
+      });
+
+      // Guardar el archivo y crear preview
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.colorFiles[index] = {
+          file: file,
+          previewUrl: e.target.result,
+        };
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  /**
+   * Obtiene la URL de preview para un color específico
+   */
+  getColorPreviewUrl(index: number): string | null {
+    return this.colorFiles[index]?.previewUrl || null;
+  }
+
+  /**
+   * Verifica si hay un archivo seleccionado para un color
+   */
+  getColorSelectedFile(index: number): File | null {
+    return this.colorFiles[index]?.file || null;
+  }
+
+  /**
+   * Obtiene el nombre del archivo seleccionado para un color
+   */
+  getColorSelectedFileName(index: number): string {
+    return this.colorFiles[index]?.file?.name || '';
+  }
+
+  /**
+   * Verifica si un campo en un color específico es inválido
+   */
+  isColorFieldInvalid(index: number, field: string): boolean {
+    // Verificar si el índice es válido
+    if (index < 0 || index >= this.coloresFormArray.length) {
+      return false;
+    }
+
+    // Obtener el grupo de formulario
+    const formGroup = this.coloresFormArray.at(index);
+    if (!formGroup) {
+      return false;
+    }
+
+    // Obtener el control
+    const control = formGroup.get(field);
+    if (!control) {
+      return false;
+    }
+
+    // Verificar si el control es inválido
+    return control.invalid && (control.dirty || control.touched);
+  }
+
+  /**
+   * Maneja la selección de archivo principal
    */
   onFileSelected(event: any) {
     const file = event.target.files[0];
@@ -137,14 +242,21 @@ export class CreateMotoComponent implements OnInit {
     console.log('Form validity:', this.motoForm.valid);
     console.log('Selected file:', this.selectedFile);
     console.log('Form values:', this.motoForm.value);
+    console.log('Colors array:', this.coloresFormArray.value);
+    console.log('Color files:', this.colorFiles);
 
-    if (this.motoForm.valid && this.selectedFile) {
+    // Verificar si el formulario es válido y si hay al menos un color definido
+    if (
+      this.motoForm.valid &&
+      this.selectedFile &&
+      this.coloresFormArray.length > 0
+    ) {
       this.isSubmitting = true;
       const formData = new FormData();
 
-      // Agregar todos los campos del formulario al FormData
+      // Agregar todos los campos del formulario al FormData (excepto colores e imagen)
       Object.keys(this.motoForm.value).forEach((key) => {
-        if (key !== 'imagen') {
+        if (key !== 'imagen' && key !== 'colores') {
           let value = this.motoForm.get(key)?.value;
 
           // Convertir booleanos a números
@@ -173,8 +285,36 @@ export class CreateMotoComponent implements OnInit {
         }
       });
 
-      // Agregar el archivo de imagen
+      // Agregar el archivo de imagen principal
       formData.append('imagen', this.selectedFile);
+
+      // Agregar el primer color al formulario principal de moto
+      if (this.coloresFormArray.length > 0) {
+        const colorGroup = this.coloresFormArray.at(0);
+        if (colorGroup) {
+          const colorValue = colorGroup.get('color')?.value;
+          if (colorValue) {
+            formData.append('color', colorValue);
+          }
+        }
+      }
+
+      // Agregar información sobre colores adicionales como un campo JSON
+      const coloresData = this.coloresFormArray.value.map(
+        (color: any, index: number) => ({
+          color: color.color,
+          // Solo incluir el índice para poder relacionarlo con los archivos que se enviarán
+          fileIndex: index,
+        })
+      );
+      formData.append('colores_adicionales', JSON.stringify(coloresData));
+
+      // Agregar archivos de colores
+      this.colorFiles.forEach((colorFile, index) => {
+        if (colorFile && colorFile.file) {
+          formData.append(`color_imagen_${index}`, colorFile.file);
+        }
+      });
 
       console.log('Enviando formData:', formData);
 
@@ -200,28 +340,30 @@ export class CreateMotoComponent implements OnInit {
         },
       });
     } else {
-      console.log('Formulario inválido o archivo no seleccionado');
-      Object.keys(this.motoForm.controls).forEach((key) => {
-        const control = this.motoForm.get(key);
-        control?.markAsTouched();
-        if (control?.errors) {
-          console.log(`Errores en ${key}:`, control.errors);
-        }
-      });
+      console.log(
+        'Formulario inválido, archivo no seleccionado o no hay colores'
+      );
+
+      // Marcar todos los campos como tocados para mostrar errores
+      this.markFormGroupTouched(this.motoForm);
+
+      // Validar específicamente el array de colores
+      if (this.coloresFormArray.length === 0) {
+        alert('Debe agregar al menos un color para la moto');
+      }
     }
   }
 
-  // Agregar método para debug
-  logFormErrors() {
-    Object.keys(this.motoForm.controls).forEach((key) => {
-      const control = this.motoForm.get(key);
-      if (control?.errors) {
-        console.log(`Campo ${key}:`, {
-          valor: control.value,
-          errores: control.errors,
-          touched: control.touched,
-          dirty: control.dirty,
-        });
+  /**
+   * Marcar todos los campos de un FormGroup como tocados
+   */
+  private markFormGroupTouched(formGroup: FormGroup | FormArray) {
+    Object.keys(formGroup.controls).forEach((key) => {
+      const control = formGroup.get(key);
+      if (control instanceof FormGroup || control instanceof FormArray) {
+        this.markFormGroupTouched(control);
+      } else if (control) {
+        control.markAsTouched();
       }
     });
   }
