@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
   FormGroup,
+  FormArray,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -25,6 +26,20 @@ interface TipoMoto {
   descripcion: string;
 }
 
+interface ColorMoto {
+  id_moto_color: number;
+  modelo_id: number;
+  color: string;
+  imagen_color: string;
+}
+
+interface ColorFile {
+  file: File | null;
+  previewUrl: string | null;
+  id?: number;
+  isNew?: boolean;
+}
+
 @Component({
   selector: 'app-edit-moto',
   standalone: true,
@@ -44,9 +59,16 @@ export class EditMotoComponent implements OnInit {
   modelos: Modelo[] = [];
   tipoMotos: TipoMoto[] = [];
   motoId: number = 0;
+  coloresOriginales: ColorMoto[] = [];
 
   selectedFile: File | null = null;
   previewUrl: string | null = null;
+
+  // Array para almacenar los archivos de colores
+  colorFiles: ColorFile[] = [];
+
+  // Control para rastrear los colores eliminados (para eliminarlos en el backend)
+  coloresEliminados: number[] = [];
 
   motoForm: FormGroup = this.fb.group({
     modelo_id: ['', [Validators.required]],
@@ -80,7 +102,13 @@ export class EditMotoComponent implements OnInit {
     luz_led: [false],
     alarma: [false],
     bluetooth: [false],
+    colores: this.fb.array([]),
   });
+
+  // Getter para acceder fácilmente al FormArray de colores
+  get coloresFormArray(): FormArray {
+    return this.motoForm.get('colores') as FormArray;
+  }
 
   ngOnInit() {
     // Obtener el ID de la moto de la URL
@@ -98,6 +126,7 @@ export class EditMotoComponent implements OnInit {
       moto: this.motosService.getMotoById(this.motoId),
       modelos: this.motosService.getModelos(),
       tipoMotos: this.motosService.getTipoMotos(),
+      colores: this.motosService.getColoresPorModelo(0), // Inicializa con 0, lo actualizaremos después
     }).subscribe({
       next: (data) => {
         this.modelos = data.modelos;
@@ -117,13 +146,195 @@ export class EditMotoComponent implements OnInit {
           bluetooth: !!data.moto.data.bluetooth,
         });
 
-        this.isLoadingData = false;
+        // Después de obtener los datos de la moto, cargar los colores asociados a su modelo
+        const modeloId = data.moto.data.modelo_id;
+        if (modeloId) {
+          this.motosService.getColoresPorModelo(modeloId).subscribe({
+            next: (coloresData: ColorMoto[]) => {
+              this.coloresOriginales = coloresData;
+              // Inicializar el FormArray de colores con los colores existentes
+              this.initColoresFormArray(coloresData);
+              this.isLoadingData = false;
+            },
+            error: (error: any) => {
+              console.error('Error cargando colores:', error);
+              this.isLoadingData = false;
+            },
+          });
+        } else {
+          this.isLoadingData = false;
+        }
       },
       error: (error) => {
         console.error('Error cargando datos:', error);
         this.isLoadingData = false;
       },
     });
+  }
+
+  private initColoresFormArray(colores: ColorMoto[]) {
+    // Limpiar el FormArray existente
+    while (this.coloresFormArray.length > 0) {
+      this.coloresFormArray.removeAt(0);
+    }
+
+    // Reiniciar el array de archivos de colores
+    this.colorFiles = [];
+
+    // Agregar los colores existentes al FormArray
+    colores.forEach((color) => {
+      this.coloresFormArray.push(
+        this.fb.group({
+          id_moto_color: [color.id_moto_color],
+          color: [color.color, Validators.required],
+          imagen_color: [color.imagen_color, Validators.required],
+        })
+      );
+
+      // Agregar la previsualización de la imagen
+      this.colorFiles.push({
+        file: null,
+        previewUrl: `${environment.urlRaiz}/${color.imagen_color}`,
+        id: color.id_moto_color,
+        isNew: false,
+      });
+    });
+  }
+
+  /**
+   * Agregar un nuevo color al FormArray
+   */
+  agregarColor() {
+    this.coloresFormArray.push(
+      this.fb.group({
+        id_moto_color: [null],
+        color: ['', Validators.required],
+        imagen_color: [null, Validators.required],
+      })
+    );
+
+    this.colorFiles.push({
+      file: null,
+      previewUrl: null,
+      isNew: true,
+    });
+  }
+
+  /**
+   * Eliminar un color del FormArray
+   */
+  eliminarColor(index: number) {
+    // Si el color tiene un ID, lo guardamos para eliminarlo del backend
+    const colorId = this.getColorId(index);
+    if (colorId) {
+      this.coloresEliminados.push(colorId);
+    }
+
+    // Eliminar del FormArray y de colorFiles
+    this.coloresFormArray.removeAt(index);
+    this.colorFiles.splice(index, 1);
+  }
+
+  /**
+   * Verifica si un color es nuevo (no existía previamente)
+   */
+  isNewColor(index: number): boolean {
+    return this.colorFiles[index]?.isNew === true;
+  }
+
+  /**
+   * Obtiene el ID de un color
+   */
+  getColorId(index: number): number | null {
+    if (index < 0 || index >= this.coloresFormArray.length) {
+      return null;
+    }
+
+    const formGroup = this.coloresFormArray.at(index);
+    if (!formGroup) {
+      return null;
+    }
+
+    return formGroup.get('id_moto_color')?.value || null;
+  }
+
+  /**
+   * Maneja la selección de archivo para un color específico
+   */
+  onColorFileSelected(event: any, index: number) {
+    const file = event.target.files[0];
+    if (file) {
+      // Actualizar el FormGroup con el nuevo archivo
+      const colorGroup = this.coloresFormArray.at(index) as FormGroup;
+      if (colorGroup) {
+        colorGroup.patchValue({
+          imagen_color: file,
+        });
+
+        // Guardar el archivo y generar preview
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          if (index < this.colorFiles.length) {
+            this.colorFiles[index] = {
+              ...this.colorFiles[index],
+              file: file,
+              previewUrl: e.target.result,
+            };
+          }
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+  }
+
+  /**
+   * Obtiene la URL de preview para un color específico
+   */
+  getColorPreviewUrl(index: number): string | null {
+    return index < this.colorFiles.length
+      ? this.colorFiles[index].previewUrl
+      : null;
+  }
+
+  /**
+   * Verifica si hay un archivo seleccionado para un color
+   */
+  getColorSelectedFile(index: number): File | null {
+    return index < this.colorFiles.length ? this.colorFiles[index].file : null;
+  }
+
+  /**
+   * Obtiene el nombre del archivo seleccionado para un color
+   */
+  getColorSelectedFileName(index: number): string {
+    return index < this.colorFiles.length && this.colorFiles[index].file
+      ? this.colorFiles[index].file!.name
+      : '';
+  }
+
+  /**
+   * Verifica si un campo en un color específico es inválido
+   */
+  isColorFieldInvalid(index: number, field: string): boolean {
+    // Verificar si el índice es válido
+    if (index < 0 || index >= this.coloresFormArray.length) {
+      return false;
+    }
+
+    // Obtener el grupo de formulario
+    const formGroup = this.coloresFormArray.at(index);
+    if (!formGroup) {
+      return false;
+    }
+
+    // Obtener el control
+    const control = formGroup.get(field);
+    if (!control) {
+      return false;
+    }
+
+    // Verificar si el control es inválido
+    return control.invalid && (control.dirty || control.touched);
   }
 
   onFileSelected(event: any) {
@@ -145,14 +356,16 @@ export class EditMotoComponent implements OnInit {
   onSubmit() {
     console.log('Form validity:', this.motoForm.valid);
     console.log('Form values:', this.motoForm.value);
+    console.log('Colors array:', this.coloresFormArray.value);
+    console.log('Color files:', this.colorFiles);
 
     if (this.motoForm.valid) {
       this.isSubmitting = true;
       const formData = new FormData();
 
-      // Agregar todos los campos del formulario al FormData
+      // Agregar todos los campos del formulario al FormData (excepto colores e imagen)
       Object.keys(this.motoForm.value).forEach((key) => {
-        if (key !== 'imagen' || this.selectedFile) {
+        if (key !== 'imagen' && key !== 'colores') {
           let value = this.motoForm.get(key)?.value;
 
           if (typeof value === 'boolean') {
@@ -184,6 +397,32 @@ export class EditMotoComponent implements OnInit {
         formData.append('imagen', this.selectedFile);
       }
 
+      // Agregar información sobre colores
+      const coloresData = this.coloresFormArray.value.map(
+        (color: any, index: number) => ({
+          ...color,
+          fileIndex: index,
+          isNew: !color.id_moto_color || color.id_moto_color === null,
+        })
+      );
+
+      formData.append('colores', JSON.stringify(coloresData));
+
+      // Añadir los IDs de colores eliminados
+      if (this.coloresEliminados.length > 0) {
+        formData.append(
+          'colores_eliminados',
+          JSON.stringify(this.coloresEliminados)
+        );
+      }
+
+      // Agregar archivos de colores
+      this.colorFiles.forEach((colorFile, index) => {
+        if (colorFile && colorFile.file) {
+          formData.append(`color_imagen_${index}`, colorFile.file);
+        }
+      });
+
       this.motosService.updateMoto(this.motoId, formData).subscribe({
         next: (response) => {
           console.log('Moto actualizada:', response);
@@ -206,14 +445,23 @@ export class EditMotoComponent implements OnInit {
         },
       });
     } else {
-      Object.keys(this.motoForm.controls).forEach((key) => {
-        const control = this.motoForm.get(key);
-        control?.markAsTouched();
-        if (control?.errors) {
-          console.log(`Errores en ${key}:`, control.errors);
-        }
-      });
+      // Marcar todos los campos como tocados para mostrar errores
+      this.markFormGroupTouched(this.motoForm);
     }
+  }
+
+  /**
+   * Marca todos los controles en un FormGroup como tocados
+   */
+  private markFormGroupTouched(formGroup: FormGroup | FormArray) {
+    Object.keys(formGroup.controls).forEach((key) => {
+      const control = formGroup.get(key);
+      if (control instanceof FormGroup || control instanceof FormArray) {
+        this.markFormGroupTouched(control);
+      } else if (control) {
+        control.markAsTouched();
+      }
+    });
   }
 
   isFieldInvalid(field: string): boolean {
