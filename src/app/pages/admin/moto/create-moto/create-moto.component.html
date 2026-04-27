@@ -20,7 +20,7 @@
             [class.border-red-500]="isFieldInvalid('modelo_id')"
           >
             <option value="">Selecciona un modelo</option>
-            @for (modelo of modelos; track modelo.id_modelo) {
+            @for (modelo of modelosDisponibles; track modelo.id_modelo) {
             <option [value]="modelo.id_modelo">
               {{ modelo.nombre }} - {{ modelo.marca.nombre }}
             </option>

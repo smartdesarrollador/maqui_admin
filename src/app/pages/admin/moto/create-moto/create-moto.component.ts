@@ -46,6 +46,7 @@ export class CreateMotoComponent implements OnInit {
   isSubmitting = false;
   isLoadingData = true;
   modelos: Modelo[] = [];
+  modelosDisponibles: Modelo[] = [];
   tipoMotos: TipoMoto[] = [];
 
   selectedFile: File | null = null;
@@ -113,10 +114,15 @@ export class CreateMotoComponent implements OnInit {
     forkJoin({
       modelos: this.motosService.getModelos(),
       tipoMotos: this.motosService.getTipoMotos(),
+      motos: this.motosService.getMotos({ per_page: 100 }),
     }).subscribe({
       next: (data) => {
         this.modelos = data.modelos;
         this.tipoMotos = data.tipoMotos;
+        const modelosUsados = new Set(data.motos.data.map((m) => m.modelo_id));
+        this.modelosDisponibles = data.modelos.filter(
+          (m) => !modelosUsados.has(m.id_modelo)
+        );
         this.isLoadingData = false;
       },
       error: (error) => {
