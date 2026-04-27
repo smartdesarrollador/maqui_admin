@@ -20,12 +20,6 @@ interface Modelo {
   };
 }
 
-interface TipoMoto {
-  id_tipo_moto: number;
-  nombre: string;
-  descripcion: string;
-}
-
 interface ColorMoto {
   id_moto_color: number;
   modelo_id: number;
@@ -57,7 +51,6 @@ export class EditMotoComponent implements OnInit {
   isSubmitting = false;
   isLoadingData = true;
   modelos: Modelo[] = [];
-  tipoMotos: TipoMoto[] = [];
   motoId: number = 0;
   coloresOriginales: ColorMoto[] = [];
 
@@ -72,7 +65,6 @@ export class EditMotoComponent implements OnInit {
 
   motoForm: FormGroup = this.fb.group({
     modelo_id: ['', [Validators.required]],
-    tipo_moto_id: ['', [Validators.required]],
     año: ['', [Validators.required]],
     precio_base: ['', [Validators.required, Validators.min(0)]],
     color: ['', [Validators.required]],
@@ -125,12 +117,10 @@ export class EditMotoComponent implements OnInit {
     forkJoin({
       moto: this.motosService.getMotoById(this.motoId),
       modelos: this.motosService.getModelos(),
-      tipoMotos: this.motosService.getTipoMotos(),
-      colores: this.motosService.getColoresPorModelo(0), // Inicializa con 0, lo actualizaremos después
+      colores: this.motosService.getColoresPorModelo(0),
     }).subscribe({
       next: (data) => {
         this.modelos = data.modelos;
-        this.tipoMotos = data.tipoMotos;
 
         // Establecer la URL de la imagen actual
         if (data.moto.data.imagen) {

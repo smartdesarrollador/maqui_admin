@@ -19,12 +19,6 @@ interface Modelo {
   };
 }
 
-interface TipoMoto {
-  id_tipo_moto: number;
-  nombre: string;
-  descripcion: string;
-}
-
 interface ColorFile {
   file: File | null;
   previewUrl: string | null;
@@ -47,7 +41,6 @@ export class CreateMotoComponent implements OnInit {
   isLoadingData = true;
   modelos: Modelo[] = [];
   modelosDisponibles: Modelo[] = [];
-  tipoMotos: TipoMoto[] = [];
 
   selectedFile: File | null = null;
   previewUrl: string | null = null;
@@ -57,7 +50,6 @@ export class CreateMotoComponent implements OnInit {
 
   motoForm: FormGroup = this.fb.group({
     modelo_id: ['', [Validators.required]],
-    tipo_moto_id: ['', [Validators.required]],
     año: ['', [Validators.required]],
     precio_base: ['', [Validators.required, Validators.min(0)]],
     stock: [0, [Validators.required, Validators.min(0)]],
@@ -113,12 +105,10 @@ export class CreateMotoComponent implements OnInit {
     // Usar forkJoin para cargar datos en paralelo
     forkJoin({
       modelos: this.motosService.getModelos(),
-      tipoMotos: this.motosService.getTipoMotos(),
       motos: this.motosService.getMotos({ per_page: 100 }),
     }).subscribe({
       next: (data) => {
         this.modelos = data.modelos;
-        this.tipoMotos = data.tipoMotos;
         const modelosUsados = new Set(data.motos.data.map((m) => m.modelo_id));
         this.modelosDisponibles = data.modelos.filter(
           (m) => !modelosUsados.has(m.id_modelo)
