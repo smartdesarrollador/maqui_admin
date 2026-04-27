@@ -222,32 +222,56 @@
 
       <div class="px-6 py-4">
         @if (selectedCotizacion()) {
-        <div class="space-y-4">
-          <!-- Información del cliente -->
-          <div>
-            <h4 class="font-medium text-gray-900">Cliente</h4>
-            <p>
-              {{ selectedCotizacion().cliente?.nombre }}
-              {{ selectedCotizacion().cliente?.apellido }}
-            </p>
+        <div class="space-y-5">
+
+          <!-- Datos de la cotización -->
+          <div class="bg-gray-50 rounded-lg p-4">
+            <h4 class="font-semibold text-gray-700 mb-3 text-sm uppercase tracking-wide">Cotización</h4>
+            <div class="grid grid-cols-2 gap-2 text-sm">
+              <div><span class="text-gray-500">N°:</span> <span class="font-medium">#{{ selectedCotizacion().id_cotizacion?.toString().padStart(6, '0') }}</span></div>
+              <div><span class="text-gray-500">Estado:</span>
+                <span [class]="'ml-1 px-2 py-0.5 rounded-full text-xs font-semibold ' + (selectedCotizacion().estado === 'aprobada' ? 'bg-green-100 text-green-800' : selectedCotizacion().estado === 'rechazada' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800')">
+                  {{ selectedCotizacion().estado }}
+                </span>
+              </div>
+              <div><span class="text-gray-500">Fecha:</span> <span class="font-medium">{{ selectedCotizacion().created_at | date:'dd/MM/yyyy HH:mm' }}</span></div>
+              @if (selectedCotizacion().tiempo_compra) {
+              <div><span class="text-gray-500">¿Cuándo compra?:</span> <span class="font-medium">{{ selectedCotizacion().tiempo_compra }}</span></div>
+              }
+              <div><span class="text-gray-500">Precio Total:</span> <span class="font-semibold text-blue-600">{{ formatCurrency(selectedCotizacion().precio_total) }}</span></div>
+            </div>
           </div>
 
-          <!-- Información de la moto -->
-          <div>
-            <h4 class="font-medium text-gray-900">Moto</h4>
-            <p>
-              {{ selectedCotizacion().moto?.nombre }} -
-              {{ selectedCotizacion().moto?.modelo }}
-            </p>
+          <!-- Datos del cliente -->
+          <div class="bg-gray-50 rounded-lg p-4">
+            <h4 class="font-semibold text-gray-700 mb-3 text-sm uppercase tracking-wide">Cliente</h4>
+            <div class="grid grid-cols-2 gap-2 text-sm">
+              <div class="col-span-2"><span class="text-gray-500">Nombre:</span> <span class="font-medium">{{ selectedCotizacion().cliente?.nombre }} {{ selectedCotizacion().cliente?.apellido }}</span></div>
+              <div><span class="text-gray-500">{{ selectedCotizacion().cliente?.tipo_documento }}:</span> <span class="font-medium">{{ selectedCotizacion().cliente?.numero_documento }}</span></div>
+              <div><span class="text-gray-500">Celular:</span> <span class="font-medium">{{ selectedCotizacion().cliente?.telefono }}</span></div>
+              <div class="col-span-2"><span class="text-gray-500">Email:</span> <span class="font-medium">{{ selectedCotizacion().cliente?.email }}</span></div>
+              <div class="col-span-2"><span class="text-gray-500">Ubicación:</span> <span class="font-medium">{{ selectedCotizacion().cliente?.distrito }}, {{ selectedCotizacion().cliente?.provincia }}, {{ selectedCotizacion().cliente?.departamento }}</span></div>
+            </div>
+          </div>
+
+          <!-- Datos de la moto -->
+          <div class="bg-gray-50 rounded-lg p-4">
+            <h4 class="font-semibold text-gray-700 mb-3 text-sm uppercase tracking-wide">Moto de Interés</h4>
+            <div class="grid grid-cols-2 gap-2 text-sm">
+              <div><span class="text-gray-500">Marca:</span> <span class="font-medium">{{ selectedCotizacion().moto?.modelo?.marca?.nombre ?? '-' }}</span></div>
+              <div><span class="text-gray-500">Modelo:</span> <span class="font-medium">{{ selectedCotizacion().moto?.modelo?.nombre ?? '-' }}</span></div>
+              <div><span class="text-gray-500">Tipo:</span> <span class="font-medium">{{ selectedCotizacion().moto?.tipo_moto?.nombre ?? '-' }}</span></div>
+              <div><span class="text-gray-500">Año:</span> <span class="font-medium">{{ selectedCotizacion().moto?.año ?? '-' }}</span></div>
+              <div><span class="text-gray-500">Precio Base:</span> <span class="font-medium">{{ formatCurrency(selectedCotizacion().moto?.precio_base) }}</span></div>
+            </div>
           </div>
 
           <!-- Accesorios -->
           @if (selectedCotizacion().accesorios?.length) {
-          <div>
-            <h4 class="font-medium text-gray-900">Accesorios</h4>
-            <ul class="list-disc list-inside">
-              @for (accesorio of selectedCotizacion().accesorios; track
-              accesorio.id) {
+          <div class="bg-gray-50 rounded-lg p-4">
+            <h4 class="font-semibold text-gray-700 mb-2 text-sm uppercase tracking-wide">Accesorios</h4>
+            <ul class="list-disc list-inside text-sm space-y-1">
+              @for (accesorio of selectedCotizacion().accesorios; track accesorio.id) {
               <li>{{ accesorio.nombre }}</li>
               }
             </ul>
@@ -256,40 +280,27 @@
 
           <!-- Repuestos -->
           @if (selectedCotizacion().repuestos?.length) {
-          <div>
-            <h4 class="font-medium text-gray-900">Repuestos</h4>
-            <ul class="list-disc list-inside">
-              @for (repuesto of selectedCotizacion().repuestos; track
-              repuesto.id) {
+          <div class="bg-gray-50 rounded-lg p-4">
+            <h4 class="font-semibold text-gray-700 mb-2 text-sm uppercase tracking-wide">Repuestos</h4>
+            <ul class="list-disc list-inside text-sm space-y-1">
+              @for (repuesto of selectedCotizacion().repuestos; track repuesto.id) {
               <li>{{ repuesto.nombre }}</li>
               }
             </ul>
           </div>
           }
 
-          <!-- Información de financiamiento -->
+          <!-- Financiamiento -->
           @if (selectedCotizacion().financiamiento) {
-          <div>
-            <h4 class="font-medium text-gray-900">Financiamiento</h4>
-            <p>Cuotas: {{ selectedCotizacion().financiamiento.cuotas }}</p>
-            <p>
-              Monto mensual:
-              {{
-                formatCurrency(
-                  selectedCotizacion().financiamiento.monto_mensual
-                )
-              }}
-            </p>
+          <div class="bg-gray-50 rounded-lg p-4">
+            <h4 class="font-semibold text-gray-700 mb-2 text-sm uppercase tracking-wide">Financiamiento</h4>
+            <div class="grid grid-cols-2 gap-2 text-sm">
+              <div><span class="text-gray-500">Cuotas:</span> <span class="font-medium">{{ selectedCotizacion().financiamiento.cuotas }}</span></div>
+              <div><span class="text-gray-500">Monto mensual:</span> <span class="font-medium">{{ formatCurrency(selectedCotizacion().financiamiento.monto_mensual) }}</span></div>
+            </div>
           </div>
           }
 
-          <!-- Precio total -->
-          <div>
-            <h4 class="font-medium text-gray-900">Precio Total</h4>
-            <p class="text-lg font-semibold text-primary-600">
-              {{ formatCurrency(selectedCotizacion().precio_total) }}
-            </p>
-          </div>
         </div>
         }
       </div>
