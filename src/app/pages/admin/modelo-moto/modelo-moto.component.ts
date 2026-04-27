@@ -31,7 +31,7 @@ interface Modelo {
   marca_id: number;
   nombre: string;
   tipo_moto_id: number;
-  cilindrada: string;
+  cilindrada: number;
   imagen: string;
   marca: Marca;
   motos: any[];
