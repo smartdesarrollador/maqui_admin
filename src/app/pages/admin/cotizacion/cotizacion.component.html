@@ -261,7 +261,7 @@
               <div><span class="text-gray-500">Marca:</span> <span class="font-medium">{{ selectedCotizacion().moto?.modelo?.marca?.nombre ?? '-' }}</span></div>
               <div><span class="text-gray-500">Modelo:</span> <span class="font-medium">{{ selectedCotizacion().moto?.modelo?.nombre ?? '-' }}</span></div>
               <div><span class="text-gray-500">Tipo:</span> <span class="font-medium">{{ selectedCotizacion().moto?.tipo_moto?.nombre ?? '-' }}</span></div>
-              <div><span class="text-gray-500">Año:</span> <span class="font-medium">{{ selectedCotizacion().moto?.año ?? '-' }}</span></div>
+              <div><span class="text-gray-500">Año:</span> <span class="font-medium">{{ getMotoAnio(selectedCotizacion().moto) }}</span></div>
               <div><span class="text-gray-500">Precio Base:</span> <span class="font-medium">{{ formatCurrency(selectedCotizacion().moto?.precio_base) }}</span></div>
             </div>
           </div>

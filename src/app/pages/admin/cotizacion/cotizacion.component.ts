@@ -114,6 +114,10 @@ export class CotizacionComponent implements OnInit {
     }).format(amount);
   }
 
+  getMotoAnio(moto: any): string {
+    return moto?.['año'] ?? '-';
+  }
+
   getPages(): number[] {
     return Array(Math.ceil(this.totalItems() / this.filters().per_page!))
       .fill(0)
