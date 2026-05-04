@@ -43,7 +43,7 @@ export class MarcaComponent implements OnInit {
     nombre: ['', [Validators.required]],
     origen: ['', [Validators.required]],
     fundacion: ['', [Validators.required]],
-    logo: ['', [Validators.required]],
+    logo: [''],
   });
 
   ngOnInit(): void {
